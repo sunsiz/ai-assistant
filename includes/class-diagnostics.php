@@ -43,193 +43,267 @@ class AI_Assistant_Diagnostics {
      */
     public function render_diagnostics_page() {
         ?>
+        <?php $this->add_diagnostics_styles(); ?>
+        
         <div class="wrap">
             <h1><?php _e('AI Assistant Diagnostics', 'ai-assistant'); ?></h1>
             
+            <!-- Header Notice -->
             <div class="notice notice-info">
                 <p>
-                    <strong><?php _e('Diagnostics & System Information', 'ai-assistant'); ?></strong><br>
-                    <?php _e('This page provides detailed system information and debugging tools for troubleshooting AI Assistant issues.', 'ai-assistant'); ?>
+                    <strong><?php _e('🔍 Diagnostics & System Information', 'ai-assistant'); ?></strong><br>
+                    <?php _e('This page provides comprehensive system information and debugging tools for troubleshooting AI Assistant issues.', 'ai-assistant'); ?>
                 </p>
             </div>
             
-            <!-- Quick Status Overview -->
+            <!-- Quick Status Dashboard -->
             <div class="postbox">
-                <h2 class="hndle"><?php _e('System Status Overview', 'ai-assistant'); ?></h2>
+                <h2 class="hndle"><span><?php _e('📊 System Status Dashboard', 'ai-assistant'); ?></span></h2>
                 <div class="inside">
-                    <div class="ai-diagnostics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0;">
+                    <div class="ai-diagnostics-dashboard">
                         
-                        <!-- Plugin Status -->
-                        <div class="ai-status-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                            <h3 style="margin-top: 0;">🔧 Plugin Status</h3>
-                            <ul style="list-style: none; margin: 0; padding: 0;">
-                                <li>✅ <strong><?php _e('Version:', 'ai-assistant'); ?></strong> <?php echo AI_ASSISTANT_VERSION; ?></li>
-                                <li><?php echo is_plugin_active('ai-assistant/ai-assistant.php') ? '✅' : '❌'; ?> <strong><?php _e('Plugin Active:', 'ai-assistant'); ?></strong> <?php echo is_plugin_active('ai-assistant/ai-assistant.php') ? __('Yes', 'ai-assistant') : __('No', 'ai-assistant'); ?></li>
-                                <li><?php echo file_exists(AI_ASSISTANT_PLUGIN_DIR) ? '✅' : '❌'; ?> <strong><?php _e('Plugin Directory:', 'ai-assistant'); ?></strong> <?php echo file_exists(AI_ASSISTANT_PLUGIN_DIR) ? __('Found', 'ai-assistant') : __('Missing', 'ai-assistant'); ?></li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Language Status -->
-                        <div class="ai-status-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                            <h3 style="margin-top: 0;">🌍 Language Status</h3>
-                            <ul style="list-style: none; margin: 0; padding: 0;">
-                                <li><strong><?php _e('WP Locale:', 'ai-assistant'); ?></strong> <?php echo get_locale(); ?></li>
-                                <li><strong><?php _e('Plugin Language:', 'ai-assistant'); ?></strong> <?php echo get_option('ai_assistant_admin_language', get_locale()); ?></li>
-                                <li><?php echo is_textdomain_loaded('ai-assistant') ? '✅' : '❌'; ?> <strong><?php _e('Textdomain Loaded:', 'ai-assistant'); ?></strong> <?php echo is_textdomain_loaded('ai-assistant') ? __('Yes', 'ai-assistant') : __('No', 'ai-assistant'); ?></li>
-                            </ul>
-                        </div>
-                        
-                        <!-- API Status -->
-                        <div class="ai-status-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                            <h3 style="margin-top: 0;">🤖 API Status</h3>
-                            <?php 
-                            $api_keys = get_option('ai_assistant_api_keys', array());
-                            $has_openai = !empty($api_keys['openai']);
-                            $has_anthropic = !empty($api_keys['anthropic']);
-                            $has_gemini = !empty($api_keys['gemini']);
-                            ?>
-                            <ul style="list-style: none; margin: 0; padding: 0;">
-                                <li><?php echo $has_openai ? '✅' : '❌'; ?> <strong><?php _e('OpenAI API:', 'ai-assistant'); ?></strong> <?php echo $has_openai ? __('Configured', 'ai-assistant') : __('Not Set', 'ai-assistant'); ?></li>
-                                <li><?php echo $has_anthropic ? '✅' : '❌'; ?> <strong><?php _e('Anthropic API:', 'ai-assistant'); ?></strong> <?php echo $has_anthropic ? __('Configured', 'ai-assistant') : __('Not Set', 'ai-assistant'); ?></li>
-                                <li><?php echo $has_gemini ? '✅' : '❌'; ?> <strong><?php _e('Gemini API:', 'ai-assistant'); ?></strong> <?php echo $has_gemini ? __('Configured', 'ai-assistant') : __('Not Set', 'ai-assistant'); ?></li>
-                            </ul>
-                        </div>
-                        
-                        <!-- Translation Files -->
-                        <div class="ai-status-card" style="padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
-                            <h3 style="margin-top: 0;">📄 Translation Files</h3>
-                            <?php 
-                            $lang_dir = AI_ASSISTANT_PLUGIN_DIR . 'languages/';
-                            $po_files = glob($lang_dir . '*.po');
-                            $mo_files = glob($lang_dir . '*.mo');
-                            ?>
-                            <ul style="list-style: none; margin: 0; padding: 0;">
-                                <li><strong><?php _e('.po Files:', 'ai-assistant'); ?></strong> <?php echo count($po_files); ?></li>
-                                <li><strong><?php _e('.mo Files:', 'ai-assistant'); ?></strong> <?php echo count($mo_files); ?></li>
-                                <li><strong><?php _e('Languages Dir:', 'ai-assistant'); ?></strong> <?php echo file_exists($lang_dir) ? '✅' : '❌'; ?></li>
-                            </ul>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Detailed Language Debug Information -->
-            <div class="postbox">
-                <h2 class="hndle"><?php _e('Language Debug Information', 'ai-assistant'); ?></h2>
-                <div class="inside">
-                    <div class="ai-debug-info" style="background: #f9f9f9; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 13px;">
-                        <h4><?php _e('Current Language Configuration', 'ai-assistant'); ?></h4>
-                        <ul style="list-style: disc; margin-left: 20px;">
-                            <li><strong><?php _e('Current WordPress Locale:', 'ai-assistant'); ?></strong> <?php echo get_locale(); ?></li>
-                            <li><strong><?php _e('AI Assistant Admin Language Setting:', 'ai-assistant'); ?></strong> <?php echo get_option('ai_assistant_admin_language', 'NOT SET'); ?></li>
-                            <li><strong><?php _e('Plugin Textdomain Loaded:', 'ai-assistant'); ?></strong> <?php echo is_textdomain_loaded('ai-assistant') ? 'YES' : 'NO'; ?></li>
-                            <li><strong><?php _e('Test Translation:', 'ai-assistant'); ?></strong> "<?php echo __('AI Assistant Dashboard', 'ai-assistant'); ?>" <em><?php _e('(should change if language is working)', 'ai-assistant'); ?></em></li>
-                        </ul>
-                        
-                        <h4><?php _e('Translation Files Status', 'ai-assistant'); ?></h4>
-                        <ul style="list-style: disc; margin-left: 20px;">
-                            <?php
-                            $current_lang = get_option('ai_assistant_admin_language', 'en_US');
-                            $mo_file = AI_ASSISTANT_PLUGIN_DIR . 'languages/ai-assistant-' . $current_lang . '.mo';
-                            $turkish_mo = AI_ASSISTANT_PLUGIN_DIR . 'languages/ai-assistant-tr_TR.mo';
-                            $chinese_mo = AI_ASSISTANT_PLUGIN_DIR . 'languages/ai-assistant-zh_CN.mo';
-                            ?>
-                            <li><strong><?php _e('.mo File for Current Language:', 'ai-assistant'); ?></strong> <?php echo file_exists($mo_file) ? 'EXISTS' : 'MISSING'; ?> (<?php echo basename($mo_file); ?>)</li>
-                            <li><strong><?php _e('Turkish .mo File Status:', 'ai-assistant'); ?></strong> <?php echo file_exists($turkish_mo) ? 'EXISTS (' . number_format(filesize($turkish_mo)) . ' bytes)' : 'MISSING'; ?></li>
-                            <li><strong><?php _e('Chinese .mo File Status:', 'ai-assistant'); ?></strong> <?php echo file_exists($chinese_mo) ? 'EXISTS (' . number_format(filesize($chinese_mo)) . ' bytes)' : 'MISSING'; ?></li>
-                            <li><strong><?php _e('Available Translations:', 'ai-assistant'); ?></strong> 
-                                <?php 
-                                $lang_dir = AI_ASSISTANT_PLUGIN_DIR . 'languages/';
-                                $mo_files = glob($lang_dir . '*.mo');
-                                echo count($mo_files) . ' .mo files found';
-                                ?>
-                            </li>
-                            <li><strong><?php _e('Languages Directory:', 'ai-assistant'); ?></strong> <?php echo AI_ASSISTANT_PLUGIN_DIR . 'languages/'; ?></li>
-                        </ul>
-                        
-                        <h4><?php _e('Available Language Files', 'ai-assistant'); ?></h4>
-                        <div style="max-height: 200px; overflow-y: auto; background: #fff; padding: 10px; border: 1px solid #ddd;">
-                            <?php
-                            $lang_dir = AI_ASSISTANT_PLUGIN_DIR . 'languages/';
-                            $po_files = glob($lang_dir . '*.po');
-                            $mo_files = glob($lang_dir . '*.mo');
+                        <!-- Status Overview Cards -->
+                        <div class="status-cards-grid">
                             
-                            echo "<strong>" . __('.po Files:', 'ai-assistant') . "</strong><br>";
-                            foreach ($po_files as $po_file) {
-                                $size = filesize($po_file);
-                                echo "• " . basename($po_file) . " (" . number_format($size) . " bytes)<br>";
-                            }
+                            <!-- Plugin Status Card -->
+                            <div class="status-card plugin-status">
+                                <div class="card-header">
+                                    <h3><span class="dashicons dashicons-admin-plugins"></span> <?php _e('Plugin Status', 'ai-assistant'); ?></h3>
+                                </div>
+                                <div class="card-content">
+                                    <div class="status-item">
+                                        <span class="status-icon success">✅</span>
+                                        <span class="status-label"><?php _e('Version:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo AI_ASSISTANT_VERSION; ?></span>
+                                    </div>
+                                    <div class="status-item">
+                                        <?php $plugin_active = is_plugin_active('ai-assistant/ai-assistant.php'); ?>
+                                        <span class="status-icon <?php echo $plugin_active ? 'success' : 'error'; ?>"><?php echo $plugin_active ? '✅' : '❌'; ?></span>
+                                        <span class="status-label"><?php _e('Plugin Active:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo $plugin_active ? __('Yes', 'ai-assistant') : __('No', 'ai-assistant'); ?></span>
+                                    </div>
+                                    <div class="status-item">
+                                        <?php $dir_exists = file_exists(AI_ASSISTANT_PLUGIN_DIR); ?>
+                                        <span class="status-icon <?php echo $dir_exists ? 'success' : 'error'; ?>"><?php echo $dir_exists ? '✅' : '❌'; ?></span>
+                                        <span class="status-label"><?php _e('Directory:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo $dir_exists ? __('Found', 'ai-assistant') : __('Missing', 'ai-assistant'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
                             
-                            echo "<br><strong>" . __('.mo Files:', 'ai-assistant') . "</strong><br>";
-                            foreach ($mo_files as $mo_file) {
-                                $size = filesize($mo_file);
-                                echo "• " . basename($mo_file) . " (" . number_format($size) . " bytes)<br>";
-                            }
-                            ?>
+                            <!-- Language Status Card -->
+                            <div class="status-card language-status">
+                                <div class="card-header">
+                                    <h3><span class="dashicons dashicons-translation"></span> <?php _e('Language System', 'ai-assistant'); ?></h3>
+                                </div>
+                                <div class="card-content">
+                                    <div class="status-item">
+                                        <span class="status-icon info">🌍</span>
+                                        <span class="status-label"><?php _e('WP Locale:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo get_locale(); ?></span>
+                                    </div>
+                                    <div class="status-item">
+                                        <span class="status-icon info">🔧</span>
+                                        <span class="status-label"><?php _e('Plugin Language:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo get_option('ai_assistant_admin_language', get_locale()); ?></span>
+                                    </div>
+                                    <div class="status-item">
+                                        <?php $textdomain_loaded = is_textdomain_loaded('ai-assistant'); ?>
+                                        <span class="status-icon <?php echo $textdomain_loaded ? 'success' : 'warning'; ?>"><?php echo $textdomain_loaded ? '✅' : '⚠️'; ?></span>
+                                        <span class="status-label"><?php _e('Textdomain:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo $textdomain_loaded ? __('Loaded', 'ai-assistant') : __('Not Loaded', 'ai-assistant'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- API Configuration Card -->
+                            <div class="status-card api-status">
+                                <div class="card-header">
+                                    <h3><span class="dashicons dashicons-cloud"></span> <?php _e('AI API Status', 'ai-assistant'); ?></h3>
+                                </div>
+                                <div class="card-content">
+                                    <?php 
+                                    $api_keys = get_option('ai_assistant_api_keys', array());
+                                    $providers = array(
+                                        'openai' => array('name' => 'OpenAI', 'icon' => '🤖'),
+                                        'anthropic' => array('name' => 'Anthropic', 'icon' => '🧠'),
+                                        'gemini' => array('name' => 'Gemini', 'icon' => '💎')
+                                    );
+                                    
+                                    foreach ($providers as $key => $provider) {
+                                        $configured = !empty($api_keys[$key]);
+                                        ?>
+                                        <div class="status-item">
+                                            <span class="status-icon <?php echo $configured ? 'success' : 'error'; ?>"><?php echo $configured ? '✅' : '❌'; ?></span>
+                                            <span class="status-label"><?php echo $provider['icon'] . ' ' . $provider['name']; ?>:</span>
+                                            <span class="status-value <?php echo $configured ? 'configured' : 'not-configured'; ?>"><?php echo $configured ? __('Configured', 'ai-assistant') : __('Not Set', 'ai-assistant'); ?></span>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            
+                            <!-- Translation Files Card -->
+                            <div class="status-card files-status">
+                                <div class="card-header">
+                                    <h3><span class="dashicons dashicons-media-document"></span> <?php _e('Translation Files', 'ai-assistant'); ?></h3>
+                                </div>
+                                <div class="card-content">
+                                    <?php 
+                                    $lang_dir = AI_ASSISTANT_PLUGIN_DIR . 'languages/';
+                                    $po_files = glob($lang_dir . '*.po');
+                                    $mo_files = glob($lang_dir . '*.mo');
+                                    $dir_writable = is_writable($lang_dir);
+                                    ?>
+                                    <div class="status-item">
+                                        <span class="status-icon info">📄</span>
+                                        <span class="status-label"><?php _e('.po Files:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo count($po_files); ?></span>
+                                    </div>
+                                    <div class="status-item">
+                                        <span class="status-icon info">📦</span>
+                                        <span class="status-label"><?php _e('.mo Files:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo count($mo_files); ?></span>
+                                    </div>
+                                    <div class="status-item">
+                                        <span class="status-icon <?php echo $dir_writable ? 'success' : 'warning'; ?>"><?php echo $dir_writable ? '✅' : '⚠️'; ?></span>
+                                        <span class="status-label"><?php _e('Directory:', 'ai-assistant'); ?></span>
+                                        <span class="status-value"><?php echo $dir_writable ? __('Writable', 'ai-assistant') : __('Read-only', 'ai-assistant'); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- System Information -->
+            <!-- System Environment Details -->
             <div class="postbox">
-                <h2 class="hndle"><?php _e('System Information', 'ai-assistant'); ?></h2>
+                <h2 class="hndle"><span><?php _e('🖥️ System Environment', 'ai-assistant'); ?></span></h2>
                 <div class="inside">
-                    <div class="ai-system-info" style="background: #f9f9f9; padding: 15px; border-radius: 5px; font-family: monospace; font-size: 13px;">
-                        <h4><?php _e('WordPress Environment', 'ai-assistant'); ?></h4>
-                        <ul style="list-style: disc; margin-left: 20px;">
-                            <li><strong><?php _e('WordPress Version:', 'ai-assistant'); ?></strong> <?php echo get_bloginfo('version'); ?></li>
-                            <li><strong><?php _e('PHP Version:', 'ai-assistant'); ?></strong> <?php echo PHP_VERSION; ?></li>
-                            <li><strong><?php _e('MySQL Version:', 'ai-assistant'); ?></strong> <?php global $wpdb; echo $wpdb->db_version(); ?></li>
-                            <li><strong><?php _e('WordPress Memory Limit:', 'ai-assistant'); ?></strong> <?php echo WP_MEMORY_LIMIT; ?></li>
-                            <li><strong><?php _e('PHP Memory Limit:', 'ai-assistant'); ?></strong> <?php echo ini_get('memory_limit'); ?></li>
-                            <li><strong><?php _e('Max Execution Time:', 'ai-assistant'); ?></strong> <?php echo ini_get('max_execution_time'); ?> seconds</li>
-                        </ul>
-                        
-                        <h4><?php _e('Plugin Paths', 'ai-assistant'); ?></h4>
-                        <ul style="list-style: disc; margin-left: 20px;">
-                            <li><strong><?php _e('Plugin Directory:', 'ai-assistant'); ?></strong> <?php echo AI_ASSISTANT_PLUGIN_DIR; ?></li>
-                            <li><strong><?php _e('Plugin URL:', 'ai-assistant'); ?></strong> <?php echo AI_ASSISTANT_PLUGIN_URL; ?></li>
-                            <li><strong><?php _e('Languages Directory:', 'ai-assistant'); ?></strong> <?php echo AI_ASSISTANT_PLUGIN_DIR . 'languages/'; ?></li>
-                        </ul>
+                    <div class="system-environment">
+                        <div class="environment-grid">
+                            
+                            <div class="environment-section">
+                                <h4><?php _e('WordPress Environment', 'ai-assistant'); ?></h4>
+                                <table class="environment-table">
+                                    <tr>
+                                        <td><?php _e('WordPress Version:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo get_bloginfo('version'); ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php _e('WordPress Language:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo get_locale(); ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php _e('Site URL:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo get_site_url(); ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php _e('Multisite:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo is_multisite() ? __('Yes', 'ai-assistant') : __('No', 'ai-assistant'); ?></strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <div class="environment-section">
+                                <h4><?php _e('Server Environment', 'ai-assistant'); ?></h4>
+                                <table class="environment-table">
+                                    <tr>
+                                        <td><?php _e('PHP Version:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo PHP_VERSION; ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php _e('MySQL Version:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php global $wpdb; echo $wpdb->db_version(); ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php _e('Memory Limit:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo ini_get('memory_limit'); ?></strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php _e('Max Execution Time:', 'ai-assistant'); ?></td>
+                                        <td><strong><?php echo ini_get('max_execution_time'); ?>s</strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Debug Tools -->
+            <!-- Advanced Diagnostics Tools -->
             <div class="postbox">
-                <h2 class="hndle"><?php _e('Debug Tools', 'ai-assistant'); ?></h2>
+                <h2 class="hndle"><span><?php _e('🔧 Diagnostic Tools', 'ai-assistant'); ?></span></h2>
                 <div class="inside">
-                    <div class="ai-debug-tools" style="padding: 15px;">
+                    <div class="diagnostic-tools">
                         
-                        <div style="margin-bottom: 20px;">
-                            <h4><?php _e('Language Loading Test', 'ai-assistant'); ?></h4>
-                            <p><?php _e('Test language loading functionality and view detailed debug information.', 'ai-assistant'); ?></p>
-                            <button type="button" id="test-language-loading" class="button button-secondary">
-                                <?php _e('Run Language Test', 'ai-assistant'); ?>
-                            </button>
-                            <div id="language-test-results" style="margin-top: 15px;"></div>
+                        <div class="tools-grid">
+                            
+                            <!-- Language Testing Tool -->
+                            <div class="diagnostic-tool">
+                                <div class="tool-header">
+                                    <h4><span class="dashicons dashicons-translation"></span> <?php _e('Language System Test', 'ai-assistant'); ?></h4>
+                                    <p><?php _e('Test language loading functionality and view detailed debug information.', 'ai-assistant'); ?></p>
+                                </div>
+                                <div class="tool-actions">
+                                    <button type="button" id="test-language-loading" class="button button-primary">
+                                        <span class="dashicons dashicons-admin-tools"></span>
+                                        <?php _e('Run Language Test', 'ai-assistant'); ?>
+                                    </button>
+                                </div>
+                                <div id="language-test-results" class="tool-results"></div>
+                            </div>
+                            
+                            <!-- API Testing Tool -->
+                            <div class="diagnostic-tool">
+                                <div class="tool-header">
+                                    <h4><span class="dashicons dashicons-cloud"></span> <?php _e('API Connection Test', 'ai-assistant'); ?></h4>
+                                    <p><?php _e('Test API connections and verify configuration for all providers.', 'ai-assistant'); ?></p>
+                                </div>
+                                <div class="tool-actions">
+                                    <button type="button" id="test-api-connection" class="button button-primary">
+                                        <span class="dashicons dashicons-cloud"></span>
+                                        <?php _e('Test API Connections', 'ai-assistant'); ?>
+                                    </button>
+                                </div>
+                                <div id="api-test-results" class="tool-results"></div>
+                            </div>
+                            
+                            <!-- System Report Tool -->
+                            <div class="diagnostic-tool">
+                                <div class="tool-header">
+                                    <h4><span class="dashicons dashicons-media-text"></span> <?php _e('System Report Generator', 'ai-assistant'); ?></h4>
+                                    <p><?php _e('Generate a comprehensive system report for troubleshooting and support requests.', 'ai-assistant'); ?></p>
+                                </div>
+                                <div class="tool-actions">
+                                    <button type="button" id="generate-system-report" class="button button-primary">
+                                        <span class="dashicons dashicons-download"></span>
+                                        <?php _e('Generate Report', 'ai-assistant'); ?>
+                                    </button>
+                                </div>
+                                <div id="system-report-results" class="tool-results"></div>
+                            </div>
+                            
+                            <!-- Database Health Tool -->
+                            <div class="diagnostic-tool">
+                                <div class="tool-header">
+                                    <h4><span class="dashicons dashicons-database"></span> <?php _e('Database Health Check', 'ai-assistant'); ?></h4>
+                                    <p><?php _e('Check database tables and data integrity for AI Assistant.', 'ai-assistant'); ?></p>
+                                </div>
+                                <div class="tool-actions">
+                                    <button type="button" id="check-database-health" class="button button-primary">
+                                        <span class="dashicons dashicons-database"></span>
+                                        <?php _e('Check Database', 'ai-assistant'); ?>
+                                    </button>
+                                </div>
+                                <div id="database-health-results" class="tool-results"></div>
+                            </div>
+                            
                         </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <h4><?php _e('API Connection Test', 'ai-assistant'); ?></h4>
-                            <p><?php _e('Test API connections and verify configuration.', 'ai-assistant'); ?></p>
-                            <button type="button" id="test-api-connection" class="button button-secondary">
-                                <?php _e('Test API Connections', 'ai-assistant'); ?>
-                            </button>
-                            <div id="api-test-results" style="margin-top: 15px;"></div>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <h4><?php _e('Generate System Report', 'ai-assistant'); ?></h4>
-                            <p><?php _e('Generate a comprehensive system report for troubleshooting.', 'ai-assistant'); ?></p>
-                            <button type="button" id="generate-system-report" class="button button-secondary">
-                                <?php _e('Generate Report', 'ai-assistant'); ?>
-                            </button>
-                            <div id="system-report-results" style="margin-top: 15px;"></div>
-                        </div>
-                        
                     </div>
                 </div>
             </div>
@@ -306,28 +380,259 @@ class AI_Assistant_Diagnostics {
         </script>
         
         <style>
-        .ai-status-card h3 {
-            color: #333;
+        /* Diagnostics Page Styling */
+        .ai-diagnostics-dashboard {
+            margin: 20px 0;
+        }
+        
+        .status-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .status-card {
+            background: #fff;
+            border: 1px solid #c3c4c7;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: box-shadow 0.2s ease;
+        }
+        
+        .status-card:hover {
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        
+        .status-card .card-header {
+            background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+            color: white;
+            padding: 15px 20px;
+            border-bottom: 1px solid #c3c4c7;
+        }
+        
+        .status-card .card-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-card .card-content {
+            padding: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f1;
+        }
+        
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-icon {
+            width: 20px;
+            text-align: center;
             font-size: 14px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
         }
-        .ai-status-card ul li {
-            margin-bottom: 5px;
+        
+        .status-icon.success { color: #00a32a; }
+        .status-icon.error { color: #d63638; }
+        .status-icon.warning { color: #dba617; }
+        .status-icon.info { color: #2271b1; }
+        
+        .status-label {
+            min-width: 120px;
+            font-weight: 500;
+            color: #50575e;
+        }
+        
+        .status-value {
+            font-weight: 600;
+            color: #1d2327;
+        }
+        
+        .status-value.configured {
+            color: #00a32a;
+        }
+        
+        .status-value.not-configured {
+            color: #d63638;
+        }
+        
+        /* Environment Section */
+        .system-environment {
+            margin: 20px 0;
+        }
+        
+        .environment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        
+        .environment-section h4 {
+            color: #2271b1;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #2271b1;
+        }
+        
+        .environment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .environment-table td {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f1;
+            vertical-align: top;
+        }
+        
+        .environment-table td:first-child {
+            width: 40%;
+            font-weight: 500;
+            color: #50575e;
+        }
+        
+        .environment-table td:last-child {
+            color: #1d2327;
+        }
+        
+        /* Diagnostic Tools */
+        .diagnostic-tools {
+            margin: 20px 0;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .diagnostic-tool {
+            background: #fff;
+            border: 1px solid #c3c4c7;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        
+        .diagnostic-tool:hover {
+            border-color: #2271b1;
+            box-shadow: 0 2px 8px rgba(34, 113, 177, 0.1);
+        }
+        
+        .diagnostic-tool .tool-header {
+            padding: 20px;
+            background: #f9f9f9;
+            border-bottom: 1px solid #c3c4c7;
+        }
+        
+        .diagnostic-tool .tool-header h4 {
+            margin: 0 0 10px 0;
+            color: #2271b1;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .diagnostic-tool .tool-header p {
+            margin: 0;
+            color: #50575e;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .diagnostic-tool .tool-actions {
+            padding: 20px;
+        }
+        
+        .diagnostic-tool .tool-actions .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            font-weight: 500;
+        }
+        
+        .tool-results {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #2271b1;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
+            line-height: 1.4;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
         }
-        .ai-debug-info, .ai-system-info {
-            border-left: 4px solid #0073aa;
+        
+        .tool-results.show {
+            display: block;
         }
-        .ai-debug-tools h4 {
-            color: #333;
-            margin-bottom: 5px;
+        
+        .tool-results.success {
+            border-left-color: #00a32a;
+            background: #f0f9f0;
         }
-        .ai-debug-tools p {
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: #666;
+        
+        .tool-results.error {
+            border-left-color: #d63638;
+            background: #fdf0f0;
+        }
+        
+        .tool-results.warning {
+            border-left-color: #dba617;
+            background: #fdf9f0;
+        }
+        
+        /* Loading States */
+        .button.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        .button.loading::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .status-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .environment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
         }
         </style>
         <?php
