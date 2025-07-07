@@ -1,0 +1,159 @@
+# AI Assistant for WordPress - Translation Template
+# Template File
+
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Assistant for WordPress 1.0.25\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-30 00:00:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "AI-powered translation and content writing assistant for multilingual WordPress websites with Islamic content support. Developed for Suleymaniye Foundation's 16+ language network."
+msgstr ""
+
+msgid "AI Assistant"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Translation History"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "Translating..."
+msgstr ""
+
+msgid "Fetching..."
+msgstr ""
+
+msgid "Generating..."
+msgstr ""
+
+msgid "Translate Content"
+msgstr ""
+
+msgid "Fetch Content"
+msgstr ""
+
+msgid "Translate Article"
+msgstr ""
+
+msgid "Generate"
+msgstr ""
+
+msgid "Content fetched successfully!"
+msgstr ""
+
+msgid "has been successfully activated!"
+msgstr ""
+
+msgid "Failed to fetch content"
+msgstr ""
+
+msgid "Translation failed"
+msgstr ""
+
+msgid "Content generation failed"
+msgstr ""
+
+msgid "A connection error occurred."
+msgstr ""
+
+msgid "Please enter content to translate."
+msgstr ""
+
+msgid "Please enter a URL to fetch."
+msgstr ""
+
+msgid "Please enter a topic or context."
+msgstr ""
+
+msgid "Please configure your AI provider API keys to start using the plugin."
+msgstr ""
+
+msgid "Go to Settings"
+msgstr ""
+
+msgid "Language Settings"
+msgstr ""
+
+msgid "Admin Interface Language"
+msgstr ""
+
+msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
+msgstr ""
+
+msgid "Save Language Settings"
+msgstr ""
+
+msgid "API Configuration"
+msgstr ""
+
+msgid "Save API Settings"
+msgstr ""
+
+msgid "Language settings saved successfully."
+msgstr ""
+
+msgid "Review the generated content above, then choose an action"
+msgstr ""
+
+msgid "Translation Management"
+msgstr ""
+
+msgid "Customize the plugin interface translations for different languages. This allows you to override default translations or add new ones."
+msgstr ""
+
+msgid "Select Language to Edit"
+msgstr ""
+
+msgid "Common Interface Translations"
+msgstr ""
+
+msgid "English Text"
+msgstr ""
+
+msgid "Translation"
+msgstr ""
+
+msgid "Add Custom Translation"
+msgstr ""
+
+msgid "Enter English text..."
+msgstr ""
+
+msgid "Enter translation..."
+msgstr ""
+
+msgid "Save Translations"
+msgstr ""
+
+msgid "Export/Import Translations"
+msgstr ""
+
+msgid "Export Current Language"
+msgstr ""
+
+msgid "Import Translations"
+msgstr ""
+
+msgid "Translations imported successfully!"
+msgstr ""
+
+msgid "Error importing translations. Please check the file format."
+msgstr ""
+
+msgid "Security check failed."
+msgstr ""
+
+msgid "Translations saved successfully!"
+msgstr ""

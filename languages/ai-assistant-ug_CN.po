@@ -1,0 +1,625 @@
+# AI Assistant WordPress Plugin Translation
+# Language: ئۇيغۇرچە (Uyghur) ✅ (ug_CN)
+# Generated: 2025-07-04 08:48:24 +0000
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Assistant\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-04 08:48:24 +0000\n"
+"PO-Revision-Date: 2025-07-04 08:48:24 +0000\n"
+"Language: ug_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: AI Assistant Translation Manager\n"
+
+msgid "AI-powered translation and content writing assistant for multilingual WordPress websites with Islamic content support. Developed for Suleymaniye Foundation\\'s 16+ language network."
+msgstr "ئىسلامى مەزمۇنلارنى قوللايدىغان كۆپ تىللىق ۋوردپرەس تور بېكەتلىرىنىڭ سۈنئىي ئەقىل ئارقىلىق تەرجىمە ۋە مەزمۇن يېزىش ياردەمچىسى. سۇلايمانىيە فوندىنىڭ 16+ تىل تورى ئۈچۈن ياسالغان."
+
+msgid "AI Assistant"
+msgstr "AI ياردەمچىسى"
+
+msgid "Settings"
+msgstr "تەڭشەكلەر"
+
+msgid "Translation History"
+msgstr "تەرجىمە تارىخى"
+
+msgid "Translation Management"
+msgstr "تەرجىمە باشقۇرۇش"
+
+msgid "AI Assistant Dashboard"
+msgstr "سۈنئىي ئەقىل يارەدمچىسى باش بېتى"
+
+msgid "Usage Statistics"
+msgstr "ئىشلىتىش سىتاتسىتىكىسى"
+
+msgid "Translations this month"
+msgstr "بۇ ئايدىكى تەرجىمىلەر"
+
+msgid "Content suggestions"
+msgstr "مەزمۇن تەۋسىيەلىرى"
+
+msgid "Active AI models"
+msgstr "ئاكتىپ سۈنئىي ئەقىل مودېلى"
+
+msgid "Quick Actions"
+msgstr "تىز مەشغۇلاتلار"
+
+msgid "Configure Settings"
+msgstr "تەڭشەكلەرنى تەڭشەش"
+
+msgid "Create New Post"
+msgstr "يېڭى يازما يېزىش"
+
+msgid "View History"
+msgstr "تارىخنى كۆرۈش"
+
+msgid "System Status"
+msgstr "سىستېما ھالىتى"
+
+msgid "AI Assistant Settings"
+msgstr "سۈنئىي ئەقىل ياردەمچىسى تەڭشىكى"
+
+msgid "Language Settings"
+msgstr "تىل تەڭشىكى"
+
+msgid "Admin Interface Language"
+msgstr "باشقۇرۇش بېتى تىلى"
+
+msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
+msgstr "سۈنئىي ئەقىل ياردەمچىسىنىڭ ئارا يۈز تىلىنى تاللاڭ. بۇ قىستۇرمىنىڭ تىلىنى بەلگىلەيدۇ."
+
+msgid "Save Language Settings"
+msgstr "تىل تەڭشىكىنى ساقلاش"
+
+msgid "Language settings saved successfully."
+msgstr "تىل تەڭشەكلىرى مۇۋەپپەقىيەتلىك ساقلاندى"
+
+msgid "API Configuration"
+msgstr "API سەپلىمىلىرى"
+
+msgid "Save API Settings"
+msgstr "API سەپلىمىلىرىنى ساقلاش"
+
+msgid "Test API Connection"
+msgstr "API ئۇلىنىشىنى سىناش"
+
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "API ئاچقۇچىنىڭ توغرا ئىشلەۋاتقانلىقىنى جەزىملەشتۈرۈش ئۈچۈن سىناپ بېقىڭ."
+
+msgid "Test Gemini API"
+msgstr "API ئاچقۇچىنى سىناش"
+
+msgid "Debug Language Loading"
+msgstr ""
+
+msgid "Manually test language loading and view debug information."
+msgstr ""
+
+msgid "Run Debug Test"
+msgstr ""
+
+msgid "Date"
+msgstr "چېسلا"
+
+msgid "Post"
+msgstr "يازما"
+
+msgid "From"
+msgstr "نېمىدىن"
+
+msgid "To"
+msgstr "نېمىگە"
+
+msgid "Status"
+msgstr "ھالەت"
+
+msgid "Actions"
+msgstr "مەشغۇلاتلار"
+
+msgid "No translations found."
+msgstr "تەرجىمە تېپىلمىدى."
+
+msgid "Post not found"
+msgstr "بەت تېپىلمىدى"
+
+msgid "View"
+msgstr "كۆرۈش"
+
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr ""
+
+msgid "Select Language to Edit"
+msgstr "تەھرىرلىمەكچى بولغان تىلنى تاللاڭ"
+
+msgid "Translation file exists"
+msgstr "تەرجىمە ھۆججىتى مەۋجۇت"
+
+msgid "No translation file found - will create new"
+msgstr ""
+
+msgid "Editing: %s"
+msgstr ""
+
+msgid "total strings"
+msgstr "جەمئىي جۈملە"
+
+msgid "translated"
+msgstr "تەرجىمە قىلىنغىنى"
+
+msgid "untranslated"
+msgstr "تەرجىمە قىلىنمىغىنى"
+
+msgid "Search translations..."
+msgstr "تەرجىمىلەردىن ئىزدەش"
+
+msgid "Show untranslated only"
+msgstr "تەرجىمە قىلىنمىغانلارنى كۆرسىتىش"
+
+msgid "English Text (msgid)"
+msgstr "ئىنگلىزچە تېكىست (msgid)"
+
+msgid "Translation (msgstr)"
+msgstr "تەرجىمىسى (msgstr)"
+
+msgid "Enter translation..."
+msgstr "تەرجىمىسىنى كىرگۈزۈڭ..."
+
+msgid "Translated"
+msgstr "تەرجىمە قىلىندى"
+
+msgid "Untranslated"
+msgstr "تەرجىمە قىلىنمىدى"
+
+msgid "Save Translations to .po File"
+msgstr "تەرجىمىنى ساقلاش"
+
+msgid "Auto-translate Empty Strings"
+msgstr ""
+
+msgid "Download .po File"
+msgstr "تەرجىمە ھۆججىتىنى چۈشۈرىۋىلىش"
+
+msgid "No untranslated strings found."
+msgstr "تەرجىمە قىلىنمىغان جۈملە تېپىلمىدى"
+
+msgid "This will attempt to auto-translate %d empty strings using AI. Continue?"
+msgstr ""
+
+msgid "Translating..."
+msgstr "تەرجىمە قىلىۋاتىدۇ..."
+
+msgid "Successfully translated %d strings!"
+msgstr ""
+
+msgid "Translation failed: "
+msgstr "تەرجىمە مەغلۇپ بولدى:"
+
+msgid "Translation request failed. Please try again."
+msgstr ""
+
+msgid "Translation Status Overview"
+msgstr "تەرجىمە ھالىتىگە كۆز يۈگۈرتۈش"
+
+msgid "Edit"
+msgstr "تەھرىرلەش"
+
+msgid "Auto-Translate"
+msgstr ""
+
+msgid "Editing: %s (%s)"
+msgstr ""
+
+msgid "Auto-Translate Missing"
+msgstr ""
+
+msgid "Save All Changes"
+msgstr "پۈتۈن ئۆزگىرىشلەرنى ساقلاش"
+
+msgid "No translations found for this language."
+msgstr ""
+
+msgid "Missing"
+msgstr "كەم"
+
+msgid "AI Translate"
+msgstr "سۈنئىي ئەقىل بىلەن تەرجىمە قىلىش"
+
+msgid "bytes)"
+msgstr ""
+
+msgid "file found"
+msgstr "ھۆججەت تېپىلدى"
+
+msgid "General Settings"
+msgstr "ئادەتتىكى تەڭشەكلەر"
+
+msgid "Configure general AI Assistant settings."
+msgstr "ئادەتتىكى سۈنئىي ئەقىل ياردەمچىسى تەڭشەكلىرىنى سەپلەش"
+
+msgid "Enable AI Assistant"
+msgstr "سۈنئىي ئەقىل ياردەمچىسىنى ئاكتىپلاشتۇرۇش"
+
+msgid "Enable AI Assistant functionality"
+msgstr "سۈنئىي ئەقىل ياردەمچىسى ئىقتىدارلىرىنى ئاكتىپلاشتۇرۇش"
+
+msgid "Default AI Model"
+msgstr "سۈكۈتتىكى سۈنئىي ئەقىل مودېلى"
+
+msgid "Select the default AI model to use for requests."
+msgstr "ئىشلىتىدىغان سۈكۈتتىكى سۈنئىي ئەقىل مودېلىنى تاللاڭ"
+
+msgid "Preferred AI Provider"
+msgstr "خالىغان سۈنئىي ئەقىل مودېلى تەمىنلىگۈچىڭىز"
+
+msgid "Select your preferred AI provider for requests."
+msgstr "ئىشلىتىدىغان خالىغان سۈنئىي ئەقىل مودېلى تەمىنلىگۈچىڭىزنى تاللاڭ"
+
+msgid "API Keys"
+msgstr "API ئاچقۇچلىرى"
+
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr "ئوخشىمىغان سۈنئىي ئەقىل تەمىنلىگۈچىلەر ئۈچۈن API ئاچقۇچىنى سەپلەڭ. ھازىر Gemini نى تەرجىمە ئۈچۈن ئىشلىتىۋاتىسىز ، ئەمما كەلگۈسىدىكى ئىشلىتىش ئۈچۈن كۆپ تەمىنلىگۈچىلەرنى تەڭشىيەلەيسىز."
+
+msgid "OpenAI API Key"
+msgstr "OpenAI API ئاچقۇچى"
+
+msgid "Enter your OpenAI API key. Get it from"
+msgstr "OpenAI API ئاچقۇچىنى كىرگۈزۈڭ. ئۇنى بۇ يەردىن ئالالايسىز"
+
+msgid "Anthropic API Key"
+msgstr "Anthropic API ئاچقۇچى"
+
+msgid "Enter your Anthropic API key. Get it from"
+msgstr "Anthropic API ئاچقۇچىنى كىرگۈزۈڭ. ئۇنى بۇ يەردىن ئالالايسىز"
+
+msgid "Gemini API Key"
+msgstr "Gemini API ئاچقۇچى"
+
+msgid "Enter your Google Gemini API key. Get it from"
+msgstr "Gemini API ئاچقۇچىنى كىرگۈزۈڭ. ئۇنى بۇ يەردىن ئالالايسىز"
+
+msgid "Custom Prompts"
+msgstr "خاسلاشتۇرۇلغان بۇيرۇق ئەسكەرتمىلىرى"
+
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr "سۈنئىي ئەقىلگە يوللىنىدىغان بۇيرۇق ئەسكەرتمىلىرىنى خاسلاشتۇرۇڭ. مەنبە تىل ۋە نىشان تىل ئورنىغا {source_language} ۋە {target_language} لارنى ئىشلىتىڭ."
+
+msgid "Translation Prompt"
+msgstr "تەرجىمە بۇيرۇق ئەسكەرتمىلىرى"
+
+msgid "Translate the following content from {source_language} to {target_language}. Maintain the original meaning and tone, keeping any formatting intact:"
+msgstr ""
+
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr ""
+
+msgid "Content Suggestion Prompt"
+msgstr "مەزمۇن ھاسىل قىلىش بۇيرۇق ئەسكەرتمىلىرى"
+
+msgid "Based on the following title and existing content on the website, suggest relevant content:"
+msgstr ""
+
+msgid "Customize the prompt for content suggestions."
+msgstr "مەزمۇن ھاسىل قىلىش بۇيرۇق ئەسكەرتمىلىرىنى خاسلاشتۇرۇش"
+
+msgid "SEO Keywords Prompt"
+msgstr "ئىزدەش موتورى ئۈچۈن ئاچقۇچلۇق سۆز تەۋسىيەسى ئەسكەرتمىسى"
+
+msgid "Suggest SEO-friendly keywords for the following content:"
+msgstr ""
+
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr "ئىزدەش موتورى ئۈچۈن ئاچقۇچلۇق سۆز تەۋسىيەسى ئەسكەرتمىسىنى خاسلاشتۇرۇش."
+
+msgid "Save Settings"
+msgstr "تەڭشەكلەرنى ساقلاش"
+
+msgid "Reset to Defaults"
+msgstr "سۈكۈتتىكى تەڭشەككە قايتۇرۇش"
+
+msgid "Import Settings"
+msgstr "تەڭشەكلەرنى كىرگۈزۈش"
+
+msgid "Export Settings"
+msgstr "تەڭشەكلەرنى چىقىرىش"
+
+msgid "API Configuration Status"
+msgstr "API سەپلىمە ھالىتى"
+
+msgid "Connection Status"
+msgstr "ئۇلىنىش ھالىتى"
+
+msgid "Last Tested"
+msgstr "ئاخىرقى سىناق"
+
+msgid "Response Time"
+msgstr "ئىنكاس ۋاقتى"
+
+msgid "API Quota"
+msgstr "API نورمىسى"
+
+msgid "Usage This Month"
+msgstr "بۇ ئايلىق ئىشلىتىلىشى"
+
+msgid "Settings saved successfully!"
+msgstr "تەڭشەكلەر مۇۋەپپەقىيەتلىك ساقلاندى!"
+
+msgid "Settings reset to defaults."
+msgstr "تەڭشەكلەر سۈكۈتتىكى قىممەتكە قايتۇرۇلدى."
+
+msgid "Failed to save settings."
+msgstr "تەڭشەكلەرنى ساقلاش مەغلۇپ بولدى."
+
+msgid "Invalid API key format."
+msgstr "ئىناۋەتسىز API ئاچقۇچى فورماتى."
+
+msgid "API connection successful."
+msgstr "API ئۇلىنىشى مۇۋەپپەقىيەتلىك بولدى."
+
+msgid "API connection failed."
+msgstr "API ئۇلىنىشى مەغلۇپ بولدى."
+
+msgid "Compile All .mo Files"
+msgstr ""
+
+msgid "Compile .mo files for all languages"
+msgstr ""
+
+msgid "Compiling .mo files..."
+msgstr ""
+
+msgid "Successfully compiled %d .mo files"
+msgstr ""
+
+msgid "Failed to compile some .mo files"
+msgstr ""
+
+msgid "Auto-compile .mo files when saving .po files"
+msgstr ""
+
+msgid "SOURCE LANGUAGE"
+msgstr "مەنبە تىل"
+
+msgid "TARGET LANGUAGE"
+msgstr "نىشان تىل"
+
+msgid "AI MODEL"
+msgstr "سۈنئىي ئەقىل مودېلى"
+
+msgid "Source Language"
+msgstr "مەنبە تىل"
+
+msgid "Target Language"
+msgstr "نىشان تىل"
+
+msgid "AI Model"
+msgstr "سۈنئىي ئەقىل مودېلى"
+
+msgid "Use Post Content"
+msgstr "ماقالە مەزمۇنىنى ئىشلىتىش"
+
+msgid "Translate Content"
+msgstr "مەزمۇننى تەرجىمە قىلىش"
+
+msgid "Source Content"
+msgstr "مەنبە مەزمۇن"
+
+msgid "Translated Content"
+msgstr "تەرجىمە قىلىنغان مەزمۇن"
+
+msgid "Enter or paste content to translate..."
+msgstr "تەرجىمە قىلىنىدىغان مەزمۇننى يېزىڭ ياكى چاپلاڭ"
+
+msgid "Translation will appear here..."
+msgstr "تەرجىمە بۇ يەردە كۆرۈنىدۇ"
+
+msgid "SOURCE CONTENT (Editable)"
+msgstr "مەنبە مەزمۇن (تەھرىرلىيەلەيدىغان)"
+
+msgid "TRANSLATED CONTENT (Editable)"
+msgstr "تەرجىمە قىلىنغان مەزمۇن (تەھرىرلىيەلەيدىغان)"
+
+msgid "Editable"
+msgstr "تەھرىرلىيەلەيدىغان"
+
+msgid "Article URL"
+msgstr "ماقالە ئۇلىنىشى"
+
+msgid "Fetch Content"
+msgstr "مەزمۇننى ئېلىش"
+
+msgid "Translate Article"
+msgstr "ماقالىنى تەرجىمە قىلىش"
+
+msgid "Original Article"
+msgstr "ئەسلى ماقالە"
+
+msgid "Translated Article"
+msgstr "تەرجىمە قىلىنغان ماقالە"
+
+msgid "Fetched content will appear here..."
+msgstr "ئۇلىنىشتىن ئوقۇپ ئالغان ماقالە مەزمۇنى بۇ يەردە كۆرۈنىدۇ"
+
+msgid "Translated article will appear here..."
+msgstr "تەرجىمە قىلىنغان ماقالە مەزمۇنى بۇ يەردە كۆرۈنىدۇ"
+
+msgid "Insert Translated Content"
+msgstr "تەرجىمە قىلغان مەزمۇننى يازما مەزمۇنى قىسمىغا قىستۇرۇش"
+
+msgid "Review and edit the translation above, then click to insert into WordPress editor"
+msgstr "يۇقارقى تەرجىمىنى كۆزدىن كەچۈرۈڭ ۋە تەھرىرلەڭ، ئاندىن بۇ كۇنۇكىنى بېسىپ WordPress  نىڭ تەھرىرلىگۈچىسىگە قىستۇرۇڭ"
+
+msgid "Content Type"
+msgstr "مەزمۇن تۈرى"
+
+msgid "Content Suggestions"
+msgstr "مەزمۇن تەۋسىيەلىرى"
+
+msgid "Full Article"
+msgstr "تولۇق ماقالە يېزىش"
+
+msgid "SEO Keywords"
+msgstr "ئاچقۇچلۇق سۆز تەۋسىيەلىرى"
+
+msgid "Meta Description"
+msgstr "ماقالە ئۈچۈن قىسقىچە تونۇشتۇرۇش"
+
+msgid "Title Ideas"
+msgstr "ماۋزۇ قويۇش پىكىرلىرى"
+
+msgid "Topic/Context"
+msgstr "تىما، پىكىر ياكى ئىدىيە"
+
+msgid "Enter topic or context..."
+msgstr "تىما، پىكىر ياكى ئىدىيەنى كىرگۈزۈڭ"
+
+msgid "Use Post Title"
+msgstr "ماقالە ماۋزۇسىنى ئىشلىتىش"
+
+msgid "Generate"
+msgstr "ھاسىل قىلىش"
+
+msgid "Generated Content"
+msgstr "مەزمۇن ھاسىل قىلىش"
+
+msgid "Generated content will appear here..."
+msgstr "ھاسىل قىلىنغان مەزمۇن بۇ يەردە كۆرۈنىدۇ"
+
+msgid "Insert to Editor"
+msgstr "مەزمۇننى ئۈستىدىكى تەھرىرىلىگۈچكە قىستۇرۇش"
+
+msgid "Apply to Yoast SEO"
+msgstr ""
+
+msgid "Review the generated content above, then choose an action"
+msgstr "يۇقارقى ھاسىل قىلىنغان مەزمۇننى كۆزدىن كەچۈرۈڭ، ئاندىن بىر مەشغۇلات تاللاڭ"
+
+msgid "Auto-detect"
+msgstr "ئۆزلۈكىدىن بايقاش"
+
+msgid "English"
+msgstr "ئىنگىلىزچە"
+
+msgid "Turkish"
+msgstr "تۈركچە"
+
+msgid "Arabic"
+msgstr "ئەرەبچە"
+
+msgid "Spanish"
+msgstr "ئىسپانچە"
+
+msgid "French"
+msgstr "فرانسۇزچە"
+
+msgid "German"
+msgstr "گىرمانچە"
+
+msgid "Russian"
+msgstr "رۇسچە"
+
+msgid "Uyghur"
+msgstr "ئۇيغۇرچە"
+
+msgid "Chinese"
+msgstr ""
+
+msgid "Persian"
+msgstr "پارسچە"
+
+msgid "Portuguese"
+msgstr ""
+
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
+msgid "Korean"
+msgstr ""
+
+msgid "Hindi"
+msgstr ""
+
+msgid "Dutch"
+msgstr "گوللاندىيەچە"
+
+msgid "Swedish"
+msgstr ""
+
+msgid "Danish"
+msgstr "دانىيەچە"
+
+msgid "Norwegian"
+msgstr ""
+
+msgid "Finnish"
+msgstr "فىنلاندىيەچە"
+
+msgid "Error"
+msgstr "خاتا"
+
+msgid "Fetching..."
+msgstr "ماقالىنى ئوقۇۋاتىدۇ"
+
+msgid "Generating..."
+msgstr "ھاسىل قىلىۋاتىدۇ"
+
+msgid "Content fetched successfully!"
+msgstr "ماقالە مەزمۇنى مۇۋەپپەقىيەتلىك ئېلىندى"
+
+msgid "Failed to fetch content"
+msgstr "ماقالە مەزمۇنىنى ئالالمىدى"
+
+msgid "Translation failed"
+msgstr "تەرجىمە مەغلۇپ بولدى"
+
+msgid "Content generation failed"
+msgstr "مەزمۇن ھاسىل قىلىش مەغلۇپ بولدى"
+
+msgid "A connection error occurred."
+msgstr "ئۇلىنىشتا خاتالىق كۆرۈلدى"
+
+msgid "Please enter content to translate."
+msgstr "تەرجىمە قىلىدىغان مەزمۇننى كىرگۈزۈڭ"
+
+msgid "Please enter a URL to fetch."
+msgstr "مەزمۇنىنى ئالىدىغان ئۇلىنىشنى كىرگۈزۈڭ"
+
+msgid "Please enter a topic or context."
+msgstr "تىما ياكى پىكىرىڭىزنى كىرگۈزۈڭ."
+
+msgid "Gemini 2.5 Flash"
+msgstr ""
+
+msgid "Gemini 2.5 Flash (Default)"
+msgstr ""
+
+msgid "GPT-4"
+msgstr ""
+
+msgid "Content generated successfully!"
+msgstr "مەزمۇن مۇۋەپپەقىيەتلىك ھاسىل قىلىندى"
+
+msgid "Keywords applied to Yoast SEO successfully!"
+msgstr ""
+
+msgid "Content inserted successfully!"
+msgstr "مەزمۇن مۇۋەپپەقىيەتلىك قىستۇرۇلدى"
+
+msgid "Content translated successfully!"
+msgstr "مەزمۇن مۇۋەپپەقىيەتلىك تەرجىمە قىلىندى"
+
+msgid "Translate"
+msgstr "تەرجىمە قىلىش"
+
+msgid "URL Translation"
+msgstr "ئۇلىنىشتىن تەرجىمە قىلىش"
+
+msgid "Content Tools"
+msgstr "مەزمۇن ھاسىل قىلىش"
+

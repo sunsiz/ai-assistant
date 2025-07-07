@@ -1,0 +1,627 @@
+# AI Assistant for WordPress - 中文 Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Assistant for WordPress 1.0.41\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-01 11:39:30+0000\n"
+"PO-Revision-Date: 2025-07-01 11:39:30+0000\n"
+"Last-Translator: Süleymaniye Vakfı\n"
+"Language-Team: 中文\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Manual Translation System\n"
+
+msgid "AI-powered translation and content writing assistant for multilingual WordPress websites with Islamic content support. Developed for Suleymaniye Foundation's 16+ language network."
+msgstr "基于人工智能的翻译和内容写作助手，为多语言WordPress网站提供伊斯兰内容支持。为苏莱曼叶基金会的16+语言网络开发。"
+
+msgid "AI Assistant"
+msgstr "AI助手"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Translation History"
+msgstr "翻译历史"
+
+msgid "Translation Management"
+msgstr "翻译管理"
+
+msgid "AI Assistant Dashboard"
+msgstr "AI助手仪表板"
+
+msgid "Usage Statistics"
+msgstr "使用统计"
+
+msgid "Translations this month"
+msgstr "本月翻译"
+
+msgid "Content suggestions"
+msgstr "内容建议"
+
+msgid "Active AI models"
+msgstr "活跃的AI模型"
+
+msgid "Quick Actions"
+msgstr "快速操作"
+
+msgid "Configure Settings"
+msgstr "配置设置"
+
+msgid "Create New Post"
+msgstr "创建新文章"
+
+msgid "View History"
+msgstr "查看历史"
+
+msgid "System Status"
+msgstr "系统状态"
+
+msgid "AI Assistant Settings"
+msgstr "AI助手设置"
+
+msgid "Language Settings"
+msgstr "语言设置"
+
+msgid "Admin Interface Language"
+msgstr "管理界面语言"
+
+msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
+msgstr "选择AI助手管理界面的语言。这会影响插件界面语言。"
+
+msgid "Save Language Settings"
+msgstr "保存语言设置"
+
+msgid "Language settings saved successfully."
+msgstr "语言设置保存成功。"
+
+msgid "API Configuration"
+msgstr "API配置"
+
+msgid "Save API Settings"
+msgstr "保存API设置"
+
+msgid "Test API Connection"
+msgstr "测试API连接"
+
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "测试您的Gemini API密钥以确保其正常工作。"
+
+msgid "Test Gemini API"
+msgstr "测试Gemini API"
+
+msgid "Debug Language Loading"
+msgstr "调试语言加载"
+
+msgid "Manually test language loading and view debug information."
+msgstr "手动测试语言加载并查看调试信息。"
+
+msgid "Run Debug Test"
+msgstr "运行调试测试"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Post"
+msgstr "文章"
+
+msgid "From"
+msgstr "从"
+
+msgid "To"
+msgstr "到"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "No translations found."
+msgstr "未找到翻译。"
+
+msgid "Post not found"
+msgstr "未找到文章"
+
+msgid "View"
+msgstr "查看"
+
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr "直接从.po文件编辑插件界面翻译。更改保存到语言文件并自动编译。"
+
+msgid "Select Language to Edit"
+msgstr "选择要编辑的语言"
+
+msgid "Translation file exists"
+msgstr "翻译文件存在"
+
+msgid "No translation file found - will create new"
+msgstr "未找到翻译文件 - 将创建新文件"
+
+msgid "Editing: %s"
+msgstr "编辑：%s"
+
+msgid "total strings"
+msgstr "总字符串"
+
+msgid "translated"
+msgstr "已翻译"
+
+msgid "untranslated"
+msgstr "未翻译"
+
+msgid "Search translations..."
+msgstr "搜索翻译..."
+
+msgid "Show untranslated only"
+msgstr "仅显示未翻译"
+
+msgid "English Text (msgid)"
+msgstr "英文文本 (msgid)"
+
+msgid "Translation (msgstr)"
+msgstr "翻译 (msgstr)"
+
+msgid "Enter translation..."
+msgstr "输入翻译..."
+
+msgid "Translated"
+msgstr "已翻译"
+
+msgid "Untranslated"
+msgstr "未翻译"
+
+msgid "Save Translations to .po File"
+msgstr "保存翻译到 .po 文件"
+
+msgid "Auto-translate Empty Strings"
+msgstr "自动翻译空字符串"
+
+msgid "Download .po File"
+msgstr "下载 .po 文件"
+
+msgid "No untranslated strings found."
+msgstr "未找到未翻译的字符串。"
+
+msgid "This will attempt to auto-translate %d empty strings using AI. Continue?"
+msgstr "这将尝试使用AI自动翻译 %d 个空字符串。继续吗？"
+
+msgid "Translating..."
+msgstr "翻译中..."
+
+msgid "Successfully translated %d strings!"
+msgstr "成功翻译了 %d 个字符串！"
+
+msgid "Translation failed: "
+msgstr "翻译失败："
+
+msgid "Translation request failed. Please try again."
+msgstr "翻译请求失败。请重试。"
+
+msgid "Translation Status Overview"
+msgstr "翻译状态概览"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Auto-Translate"
+msgstr "自动翻译"
+
+msgid "Editing: %s (%s)"
+msgstr "编辑：%s (%s)"
+
+msgid "Auto-Translate Missing"
+msgstr "自动翻译缺失"
+
+msgid "Save All Changes"
+msgstr "保存所有更改"
+
+msgid "No translations found for this language."
+msgstr "此语言未找到翻译。"
+
+msgid "Missing"
+msgstr "缺失"
+
+msgid "AI Translate"
+msgstr "AI翻译"
+
+msgid "bytes)"
+msgstr "字节）"
+
+msgid "file found"
+msgstr "找到文件"
+
+msgid "General Settings"
+msgstr "常规设置"
+
+msgid "Configure general AI Assistant settings."
+msgstr "配置AI助手常规设置。"
+
+msgid "Enable AI Assistant"
+msgstr "启用AI助手"
+
+msgid "Enable AI Assistant functionality"
+msgstr "启用AI助手功能"
+
+msgid "Default AI Model"
+msgstr "默认AI模型"
+
+msgid "Select the default AI model to use for requests."
+msgstr "选择请求使用的默认AI模型。"
+
+msgid "Preferred AI Provider"
+msgstr "首选AI提供商"
+
+msgid "Select your preferred AI provider for requests."
+msgstr "选择您首选的请求AI提供商。"
+
+msgid "API Keys"
+msgstr "API密钥"
+
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr "为不同的AI提供商配置API密钥。目前使用Gemini进行翻译，但您可以配置多个提供商以备将来使用。"
+
+msgid "OpenAI API Key"
+msgstr "OpenAI API密钥"
+
+msgid "Enter your OpenAI API key. Get it from"
+msgstr "输入您的OpenAI API密钥。从以下位置获取"
+
+msgid "Anthropic API Key"
+msgstr "Anthropic API密钥"
+
+msgid "Enter your Anthropic API key. Get it from"
+msgstr "输入您的Anthropic API密钥。从以下位置获取"
+
+msgid "Gemini API Key"
+msgstr "Gemini API密钥"
+
+msgid "Enter your Google Gemini API key. Get it from"
+msgstr "输入您的Google Gemini API密钥。从以下位置获取"
+
+msgid "Custom Prompts"
+msgstr "自定义提示"
+
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr "自定义发送到AI模型的提示。在翻译提示中使用占位符，如 {source_language} 和 {target_language}。"
+
+msgid "Translation Prompt"
+msgstr "翻译提示"
+
+msgid "Translate the following content from {source_language} to {target_language}. Maintain the original meaning and tone, keeping any formatting intact:"
+msgstr "将以下内容从 {source_language} 翻译为 {target_language}。保持原意和语调，保持格式不变："
+
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr "自定义翻译请求的提示。使用 {source_language} 和 {target_language} 作为占位符。"
+
+msgid "Content Suggestion Prompt"
+msgstr "内容建议提示"
+
+msgid "Based on the following title and existing content on the website, suggest relevant content:"
+msgstr "基于以下标题和网站现有内容，建议相关内容："
+
+msgid "Customize the prompt for content suggestions."
+msgstr "自定义内容建议的提示。"
+
+msgid "SEO Keywords Prompt"
+msgstr "SEO关键词提示"
+
+msgid "Suggest SEO-friendly keywords for the following content:"
+msgstr "为以下内容建议SEO友好的关键词："
+
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr "自定义SEO关键词建议的提示。"
+
+msgid "Save Settings"
+msgstr "保存设置"
+
+msgid "Reset to Defaults"
+msgstr "重置为默认值"
+
+msgid "Import Settings"
+msgstr "导入设置"
+
+msgid "Export Settings"
+msgstr "导出设置"
+
+msgid "API Configuration Status"
+msgstr "API配置状态"
+
+msgid "Connection Status"
+msgstr "连接状态"
+
+msgid "Last Tested"
+msgstr "最后测试"
+
+msgid "Response Time"
+msgstr "响应时间"
+
+msgid "API Quota"
+msgstr "API配额"
+
+msgid "Usage This Month"
+msgstr "本月使用量"
+
+msgid "Settings saved successfully!"
+msgstr "设置保存成功！"
+
+msgid "Settings reset to defaults."
+msgstr "设置已重置为默认值。"
+
+msgid "Failed to save settings."
+msgstr "保存设置失败。"
+
+msgid "Invalid API key format."
+msgstr "API密钥格式无效。"
+
+msgid "API connection successful."
+msgstr "API连接成功。"
+
+msgid "API connection failed."
+msgstr "API连接失败。"
+
+msgid "Compile All .mo Files"
+msgstr "编译所有 .mo 文件"
+
+msgid "Compile .mo files for all languages"
+msgstr "为所有语言编译 .mo 文件"
+
+msgid "Compiling .mo files..."
+msgstr "编译 .mo 文件中..."
+
+msgid "Successfully compiled %d .mo files"
+msgstr "成功编译了 %d 个 .mo 文件"
+
+msgid "Failed to compile some .mo files"
+msgstr "编译某些 .mo 文件失败"
+
+msgid "Auto-compile .mo files when saving .po files"
+msgstr "保存 .po 文件时自动编译 .mo 文件"
+
+msgid "SOURCE LANGUAGE"
+msgstr "源语言"
+
+msgid "TARGET LANGUAGE"
+msgstr "目标语言"
+
+msgid "AI MODEL"
+msgstr "AI模型"
+
+msgid "Source Language"
+msgstr "源语言"
+
+msgid "Target Language"
+msgstr "目标语言"
+
+msgid "AI Model"
+msgstr "AI模型"
+
+msgid "Use Post Content"
+msgstr "使用文章内容"
+
+msgid "Translate Content"
+msgstr "翻译内容"
+
+msgid "Source Content"
+msgstr "源内容"
+
+msgid "Translated Content"
+msgstr "翻译内容"
+
+msgid "Enter or paste content to translate..."
+msgstr "输入或粘贴要翻译的内容..."
+
+msgid "Translation will appear here..."
+msgstr "翻译将在此处显示..."
+
+msgid "SOURCE CONTENT (Editable)"
+msgstr "源内容（可编辑）"
+
+msgid "TRANSLATED CONTENT (Editable)"
+msgstr "翻译内容（可编辑）"
+
+msgid "Editable"
+msgstr "可编辑"
+
+msgid "Article URL"
+msgstr "文章URL"
+
+msgid "Fetch Content"
+msgstr "获取内容"
+
+msgid "Translate Article"
+msgstr "翻译文章"
+
+msgid "Original Article"
+msgstr "原文章"
+
+msgid "Translated Article"
+msgstr "翻译文章"
+
+msgid "Fetched content will appear here..."
+msgstr "获取的内容将在此处显示..."
+
+msgid "Translated article will appear here..."
+msgstr "翻译的文章将在此处显示..."
+
+msgid "Insert Translated Content"
+msgstr "插入翻译内容"
+
+msgid "Review and edit the translation above, then click to insert into WordPress editor"
+msgstr "查看并编辑上面的翻译，然后点击插入到WordPress编辑器"
+
+msgid "Content Type"
+msgstr "内容类型"
+
+msgid "Content Suggestions"
+msgstr "内容建议"
+
+msgid "Full Article"
+msgstr "完整文章"
+
+msgid "SEO Keywords"
+msgstr "SEO关键词"
+
+msgid "Meta Description"
+msgstr "元描述"
+
+msgid "Title Ideas"
+msgstr "标题创意"
+
+msgid "Topic/Context"
+msgstr "主题/上下文"
+
+msgid "Enter topic or context..."
+msgstr "输入主题或上下文..."
+
+msgid "Use Post Title"
+msgstr "使用文章标题"
+
+msgid "Generate"
+msgstr "生成"
+
+msgid "Generated Content"
+msgstr "生成的内容"
+
+msgid "Generated content will appear here..."
+msgstr "生成的内容将在此处显示..."
+
+msgid "Insert to Editor"
+msgstr "插入到编辑器"
+
+msgid "Apply to Yoast SEO"
+msgstr "应用到Yoast SEO"
+
+msgid "Review the generated content above, then choose an action"
+msgstr "查看上面生成的内容，然后选择一个操作"
+
+msgid "Auto-detect"
+msgstr "自动检测"
+
+msgid "English"
+msgstr "英语"
+
+msgid "Turkish"
+msgstr "土耳其语"
+
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+msgid "Spanish"
+msgstr "西班牙语"
+
+msgid "French"
+msgstr "法语"
+
+msgid "German"
+msgstr "德语"
+
+msgid "Russian"
+msgstr "俄语"
+
+msgid "Chinese"
+msgstr "中文"
+
+msgid "Persian"
+msgstr "波斯语"
+
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+msgid "Italian"
+msgstr "意大利语"
+
+msgid "Japanese"
+msgstr "日语"
+
+msgid "Korean"
+msgstr "韩语"
+
+msgid "Hindi"
+msgstr "印地语"
+
+msgid "Dutch"
+msgstr "荷兰语"
+
+msgid "Swedish"
+msgstr "瑞典语"
+
+msgid "Danish"
+msgstr "丹麦语"
+
+msgid "Norwegian"
+msgstr "挪威语"
+
+msgid "Finnish"
+msgstr "芬兰语"
+
+msgid "Error"
+msgstr "错误"
+
+msgid "Fetching..."
+msgstr "获取中..."
+
+msgid "Generating..."
+msgstr "生成中..."
+
+msgid "Content fetched successfully!"
+msgstr "内容获取成功！"
+
+msgid "Failed to fetch content"
+msgstr "获取内容失败"
+
+msgid "Translation failed"
+msgstr "翻译失败"
+
+msgid "Content generation failed"
+msgstr "内容生成失败"
+
+msgid "A connection error occurred."
+msgstr "发生连接错误。"
+
+msgid "Please enter content to translate."
+msgstr "请输入要翻译的内容。"
+
+msgid "Please enter a URL to fetch."
+msgstr "请输入要获取的URL。"
+
+msgid "Please enter a topic or context."
+msgstr "请输入主题或上下文。"
+
+msgid "Gemini 2.5 Flash"
+msgstr "Gemini 2.5 Flash"
+
+msgid "Gemini 2.5 Flash (Default)"
+msgstr "Gemini 2.5 Flash（默认）"
+
+msgid "GPT-4"
+msgstr "GPT-4"
+
+msgid "Content generated successfully!"
+msgstr "内容生成成功！"
+
+msgid "Keywords applied to Yoast SEO successfully!"
+msgstr "关键词已成功应用到Yoast SEO！"
+
+msgid "Content inserted successfully!"
+msgstr "内容插入成功！"
+
+msgid "Content translated successfully!"
+msgstr "内容翻译成功！"
+
+msgid "Translate"
+msgstr "翻译"
+
+msgid "URL Translation"
+msgstr "URL翻译"
+
+msgid "Content Tools"
+msgstr "内容工具"
+
+
+msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+msgstr "翻译已成功保存到 %s 并编译到 %s。更改现在在插件界面中生效。"
+
+msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
+msgstr "翻译已成功保存到 %s。警告：编译 .mo 文件失败 - 翻译可能不会在插件界面中显示。"

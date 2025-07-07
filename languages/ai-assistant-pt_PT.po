@@ -1,0 +1,627 @@
+# AI Assistant for WordPress - Português Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Assistant for WordPress 1.0.41\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-01 11:39:30+0000\n"
+"PO-Revision-Date: 2025-07-01 11:39:30+0000\n"
+"Last-Translator: Süleymaniye Vakfı\n"
+"Language-Team: Português\n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Manual Translation System\n"
+
+msgid "AI-powered translation and content writing assistant for multilingual WordPress websites with Islamic content support. Developed for Suleymaniye Foundation's 16+ language network."
+msgstr "Assistente de tradução e escrita de conteúdo alimentado por IA para sites WordPress multilíngues com suporte a conteúdo islâmico. Desenvolvido para a rede de mais de 16 idiomas da Fundação Süleymaniye."
+
+msgid "AI Assistant"
+msgstr "Assistente IA"
+
+msgid "Settings"
+msgstr "Configurações"
+
+msgid "Translation History"
+msgstr "Histórico de Traduções"
+
+msgid "Translation Management"
+msgstr "Gestão de Traduções"
+
+msgid "AI Assistant Dashboard"
+msgstr "Painel do Assistente IA"
+
+msgid "Usage Statistics"
+msgstr "Estatísticas de Uso"
+
+msgid "Translations this month"
+msgstr "Traduções este mês"
+
+msgid "Content suggestions"
+msgstr "Sugestões de conteúdo"
+
+msgid "Active AI models"
+msgstr "Modelos IA ativos"
+
+msgid "Quick Actions"
+msgstr "Ações Rápidas"
+
+msgid "Configure Settings"
+msgstr "Configurar Definições"
+
+msgid "Create New Post"
+msgstr "Criar Nova Publicação"
+
+msgid "View History"
+msgstr "Ver Histórico"
+
+msgid "System Status"
+msgstr "Estado do Sistema"
+
+msgid "AI Assistant Settings"
+msgstr "Configurações do Assistente IA"
+
+msgid "Language Settings"
+msgstr "Configurações de Idioma"
+
+msgid "Admin Interface Language"
+msgstr "Idioma da Interface de Administração"
+
+msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
+msgstr "Selecione o idioma para a interface de administração do Assistente IA. Isto afeta o idioma da interface do plugin."
+
+msgid "Save Language Settings"
+msgstr "Guardar Configurações de Idioma"
+
+msgid "Language settings saved successfully."
+msgstr "Configurações de idioma guardadas com sucesso."
+
+msgid "API Configuration"
+msgstr "Configuração da API"
+
+msgid "Save API Settings"
+msgstr "Guardar Configurações da API"
+
+msgid "Test API Connection"
+msgstr "Testar Ligação da API"
+
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "Teste a sua chave API do Gemini para garantir que está a funcionar corretamente."
+
+msgid "Test Gemini API"
+msgstr "Testar API do Gemini"
+
+msgid "Debug Language Loading"
+msgstr "Depurar Carregamento de Idioma"
+
+msgid "Manually test language loading and view debug information."
+msgstr "Teste manualmente o carregamento do idioma e veja informações de depuração."
+
+msgid "Run Debug Test"
+msgstr "Executar Teste de Depuração"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Post"
+msgstr "Publicação"
+
+msgid "From"
+msgstr "De"
+
+msgid "To"
+msgstr "Para"
+
+msgid "Status"
+msgstr "Estado"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "No translations found."
+msgstr "Nenhuma tradução encontrada."
+
+msgid "Post not found"
+msgstr "Publicação não encontrada"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr ""
+
+msgid "Select Language to Edit"
+msgstr ""
+
+msgid "Translation file exists"
+msgstr ""
+
+msgid "No translation file found - will create new"
+msgstr ""
+
+msgid "Editing: %s"
+msgstr ""
+
+msgid "total strings"
+msgstr ""
+
+msgid "translated"
+msgstr ""
+
+msgid "untranslated"
+msgstr ""
+
+msgid "Search translations..."
+msgstr ""
+
+msgid "Show untranslated only"
+msgstr ""
+
+msgid "English Text (msgid)"
+msgstr ""
+
+msgid "Translation (msgstr)"
+msgstr ""
+
+msgid "Enter translation..."
+msgstr ""
+
+msgid "Translated"
+msgstr ""
+
+msgid "Untranslated"
+msgstr ""
+
+msgid "Save Translations to .po File"
+msgstr ""
+
+msgid "Auto-translate Empty Strings"
+msgstr ""
+
+msgid "Download .po File"
+msgstr ""
+
+msgid "No untranslated strings found."
+msgstr ""
+
+msgid "This will attempt to auto-translate %d empty strings using AI. Continue?"
+msgstr ""
+
+msgid "Translating..."
+msgstr ""
+
+msgid "Successfully translated %d strings!"
+msgstr ""
+
+msgid "Translation failed: "
+msgstr ""
+
+msgid "Translation request failed. Please try again."
+msgstr ""
+
+msgid "Translation Status Overview"
+msgstr ""
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Auto-Translate"
+msgstr ""
+
+msgid "Editing: %s (%s)"
+msgstr ""
+
+msgid "Auto-Translate Missing"
+msgstr ""
+
+msgid "Save All Changes"
+msgstr ""
+
+msgid "No translations found for this language."
+msgstr ""
+
+msgid "Missing"
+msgstr ""
+
+msgid "AI Translate"
+msgstr ""
+
+msgid "bytes)"
+msgstr ""
+
+msgid "file found"
+msgstr ""
+
+msgid "General Settings"
+msgstr ""
+
+msgid "Configure general AI Assistant settings."
+msgstr ""
+
+msgid "Enable AI Assistant"
+msgstr ""
+
+msgid "Enable AI Assistant functionality"
+msgstr ""
+
+msgid "Default AI Model"
+msgstr ""
+
+msgid "Select the default AI model to use for requests."
+msgstr ""
+
+msgid "Preferred AI Provider"
+msgstr ""
+
+msgid "Select your preferred AI provider for requests."
+msgstr ""
+
+msgid "API Keys"
+msgstr ""
+
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr ""
+
+msgid "OpenAI API Key"
+msgstr ""
+
+msgid "Enter your OpenAI API key. Get it from"
+msgstr ""
+
+msgid "Anthropic API Key"
+msgstr ""
+
+msgid "Enter your Anthropic API key. Get it from"
+msgstr ""
+
+msgid "Gemini API Key"
+msgstr ""
+
+msgid "Enter your Google Gemini API key. Get it from"
+msgstr ""
+
+msgid "Custom Prompts"
+msgstr ""
+
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr ""
+
+msgid "Translation Prompt"
+msgstr ""
+
+msgid "Translate the following content from {source_language} to {target_language}. Maintain the original meaning and tone, keeping any formatting intact:"
+msgstr ""
+
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr ""
+
+msgid "Content Suggestion Prompt"
+msgstr ""
+
+msgid "Based on the following title and existing content on the website, suggest relevant content:"
+msgstr ""
+
+msgid "Customize the prompt for content suggestions."
+msgstr ""
+
+msgid "SEO Keywords Prompt"
+msgstr ""
+
+msgid "Suggest SEO-friendly keywords for the following content:"
+msgstr ""
+
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Reset to Defaults"
+msgstr ""
+
+msgid "Import Settings"
+msgstr ""
+
+msgid "Export Settings"
+msgstr ""
+
+msgid "API Configuration Status"
+msgstr ""
+
+msgid "Connection Status"
+msgstr ""
+
+msgid "Last Tested"
+msgstr ""
+
+msgid "Response Time"
+msgstr ""
+
+msgid "API Quota"
+msgstr ""
+
+msgid "Usage This Month"
+msgstr ""
+
+msgid "Settings saved successfully!"
+msgstr ""
+
+msgid "Settings reset to defaults."
+msgstr ""
+
+msgid "Failed to save settings."
+msgstr ""
+
+msgid "Invalid API key format."
+msgstr ""
+
+msgid "API connection successful."
+msgstr ""
+
+msgid "API connection failed."
+msgstr ""
+
+msgid "Compile All .mo Files"
+msgstr ""
+
+msgid "Compile .mo files for all languages"
+msgstr ""
+
+msgid "Compiling .mo files..."
+msgstr ""
+
+msgid "Successfully compiled %d .mo files"
+msgstr ""
+
+msgid "Failed to compile some .mo files"
+msgstr ""
+
+msgid "Auto-compile .mo files when saving .po files"
+msgstr ""
+
+msgid "SOURCE LANGUAGE"
+msgstr ""
+
+msgid "TARGET LANGUAGE"
+msgstr ""
+
+msgid "AI MODEL"
+msgstr ""
+
+msgid "Source Language"
+msgstr "Idioma Fonte"
+
+msgid "Target Language"
+msgstr "Idioma Destino"
+
+msgid "AI Model"
+msgstr "Modelo IA"
+
+msgid "Use Post Content"
+msgstr "Usar Conteúdo da Publicação"
+
+msgid "Translate Content"
+msgstr "Traduzir Conteúdo"
+
+msgid "Source Content"
+msgstr "Conteúdo Fonte"
+
+msgid "Translated Content"
+msgstr "Conteúdo Traduzido"
+
+msgid "Enter or paste content to translate..."
+msgstr "Digite ou cole conteúdo para traduzir..."
+
+msgid "Translation will appear here..."
+msgstr "A tradução aparecerá aqui..."
+
+msgid "SOURCE CONTENT (Editable)"
+msgstr ""
+
+msgid "TRANSLATED CONTENT (Editable)"
+msgstr ""
+
+msgid "Editable"
+msgstr "Editável"
+
+msgid "Article URL"
+msgstr "URL do Artigo"
+
+msgid "Fetch Content"
+msgstr "Buscar Conteúdo"
+
+msgid "Translate Article"
+msgstr "Traduzir Artigo"
+
+msgid "Original Article"
+msgstr "Artigo Original"
+
+msgid "Translated Article"
+msgstr "Artigo Traduzido"
+
+msgid "Fetched content will appear here..."
+msgstr ""
+
+msgid "Translated article will appear here..."
+msgstr ""
+
+msgid "Insert Translated Content"
+msgstr ""
+
+msgid "Review and edit the translation above, then click to insert into WordPress editor"
+msgstr ""
+
+msgid "Content Type"
+msgstr "Tipo de Conteúdo"
+
+msgid "Content Suggestions"
+msgstr ""
+
+msgid "Full Article"
+msgstr ""
+
+msgid "SEO Keywords"
+msgstr ""
+
+msgid "Meta Description"
+msgstr ""
+
+msgid "Title Ideas"
+msgstr ""
+
+msgid "Topic/Context"
+msgstr "Tópico/Contexto"
+
+msgid "Enter topic or context..."
+msgstr "Digite tópico ou contexto..."
+
+msgid "Use Post Title"
+msgstr "Usar Título da Publicação"
+
+msgid "Generate"
+msgstr "Gerar"
+
+msgid "Generated Content"
+msgstr "Conteúdo Gerado"
+
+msgid "Generated content will appear here..."
+msgstr ""
+
+msgid "Insert to Editor"
+msgstr ""
+
+msgid "Apply to Yoast SEO"
+msgstr ""
+
+msgid "Review the generated content above, then choose an action"
+msgstr ""
+
+msgid "Auto-detect"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Turkish"
+msgstr ""
+
+msgid "Arabic"
+msgstr ""
+
+msgid "Spanish"
+msgstr ""
+
+msgid "French"
+msgstr ""
+
+msgid "German"
+msgstr ""
+
+msgid "Russian"
+msgstr ""
+
+msgid "Chinese"
+msgstr ""
+
+msgid "Persian"
+msgstr ""
+
+msgid "Portuguese"
+msgstr ""
+
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
+msgid "Korean"
+msgstr ""
+
+msgid "Hindi"
+msgstr ""
+
+msgid "Dutch"
+msgstr ""
+
+msgid "Swedish"
+msgstr ""
+
+msgid "Danish"
+msgstr ""
+
+msgid "Norwegian"
+msgstr ""
+
+msgid "Finnish"
+msgstr ""
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "Fetching..."
+msgstr "Buscando..."
+
+msgid "Generating..."
+msgstr "Gerando..."
+
+msgid "Content fetched successfully!"
+msgstr ""
+
+msgid "Failed to fetch content"
+msgstr ""
+
+msgid "Translation failed"
+msgstr "Tradução falhou"
+
+msgid "Content generation failed"
+msgstr ""
+
+msgid "A connection error occurred."
+msgstr ""
+
+msgid "Please enter content to translate."
+msgstr ""
+
+msgid "Please enter a URL to fetch."
+msgstr ""
+
+msgid "Please enter a topic or context."
+msgstr ""
+
+msgid "Gemini 2.5 Flash"
+msgstr ""
+
+msgid "Gemini 2.5 Flash (Default)"
+msgstr ""
+
+msgid "GPT-4"
+msgstr ""
+
+msgid "Content generated successfully!"
+msgstr ""
+
+msgid "Keywords applied to Yoast SEO successfully!"
+msgstr ""
+
+msgid "Content inserted successfully!"
+msgstr ""
+
+msgid "Content translated successfully!"
+msgstr ""
+
+msgid "Translate"
+msgstr "Traduzir"
+
+msgid "URL Translation"
+msgstr "Tradução de URL"
+
+msgid "Content Tools"
+msgstr "Ferramentas de Conteúdo"
+
+
+msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+msgstr "Traduções salvas com sucesso em %s e compiladas em %s. As mudanças estão agora ativas na interface do plugin."
+
+msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
+msgstr "Traduções salvas com sucesso em %s. Aviso: Falha ao compilar arquivo .mo - traduções podem não aparecer na interface do plugin."

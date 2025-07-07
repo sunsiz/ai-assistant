@@ -1,0 +1,627 @@
+# AI Assistant for WordPress - Türkçe Translation
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Assistant for WordPress 1.0.41\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-01 11:39:30+0000\n"
+"PO-Revision-Date: 2025-07-01 11:39:30+0000\n"
+"Last-Translator: Süleymaniye Vakfı\n"
+"Language-Team: Türkçe\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Manual Translation System\n"
+
+msgid "AI-powered translation and content writing assistant for multilingual WordPress websites with Islamic content support. Developed for Suleymaniye Foundation's 16+ language network."
+msgstr "İslami içerik desteği ile çok dilli WordPress web siteleri için AI destekli çeviri ve içerik yazma asistanı. Süleymaniye Vakfı'nın 16+ dil ağı için geliştirilmiştir."
+
+msgid "AI Assistant"
+msgstr "AI Asistan"
+
+msgid "Settings"
+msgstr "Ayarlar"
+
+msgid "Translation History"
+msgstr "Çeviri Geçmişi"
+
+msgid "Translation Management"
+msgstr "Çeviri Yönetimi"
+
+msgid "AI Assistant Dashboard"
+msgstr "AI Asistan Kontrol Paneli"
+
+msgid "Usage Statistics"
+msgstr "Kullanım İstatistikleri"
+
+msgid "Translations this month"
+msgstr "Bu ayki çeviriler"
+
+msgid "Content suggestions"
+msgstr "İçerik önerileri"
+
+msgid "Active AI models"
+msgstr "Aktif AI modelleri"
+
+msgid "Quick Actions"
+msgstr "Hızlı İşlemler"
+
+msgid "Configure Settings"
+msgstr "Ayarları Yapılandır"
+
+msgid "Create New Post"
+msgstr "Yeni Yazı Oluştur"
+
+msgid "View History"
+msgstr "Geçmişi Görüntüle"
+
+msgid "System Status"
+msgstr "Sistem Durumu"
+
+msgid "AI Assistant Settings"
+msgstr "AI Asistan Ayarları"
+
+msgid "Language Settings"
+msgstr "Dil Ayarları"
+
+msgid "Admin Interface Language"
+msgstr "Yönetici Arayüzü Dili"
+
+msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
+msgstr "AI Asistan yönetici arayüzü için dil seçin. Bu, eklenti arayüz dilini etkiler."
+
+msgid "Save Language Settings"
+msgstr "Dil Ayarlarını Kaydet"
+
+msgid "Language settings saved successfully."
+msgstr "Dil ayarları başarıyla kaydedildi."
+
+msgid "API Configuration"
+msgstr "API Yapılandırması"
+
+msgid "Save API Settings"
+msgstr "API Ayarlarını Kaydet"
+
+msgid "Test API Connection"
+msgstr "API Bağlantısını Test Et"
+
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "Gemini API anahtarınızın doğru çalıştığından emin olmak için test edin."
+
+msgid "Test Gemini API"
+msgstr "Gemini API'yi Test Et"
+
+msgid "Debug Language Loading"
+msgstr "Dil Yükleme Hata Ayıklama"
+
+msgid "Manually test language loading and view debug information."
+msgstr "Dil yüklemeyi manuel olarak test edin ve hata ayıklama bilgilerini görüntüleyin."
+
+msgid "Run Debug Test"
+msgstr "Hata Ayıklama Testi Çalıştır"
+
+msgid "Date"
+msgstr "Tarih"
+
+msgid "Post"
+msgstr "Yazı"
+
+msgid "From"
+msgstr "Kaynak"
+
+msgid "To"
+msgstr "Hedef"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Actions"
+msgstr "İşlemler"
+
+msgid "No translations found."
+msgstr "Çeviri bulunamadı."
+
+msgid "Post not found"
+msgstr "Yazı bulunamadı"
+
+msgid "View"
+msgstr "Görüntüle"
+
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr "Eklenti arayüz çevirilerini doğrudan .po dosyalarından düzenleyin. Değişiklikler dil dosyalarına kaydedilir ve otomatik olarak derlenir."
+
+msgid "Select Language to Edit"
+msgstr "Düzenlenecek Dili Seçin"
+
+msgid "Translation file exists"
+msgstr "Çeviri dosyası mevcut"
+
+msgid "No translation file found - will create new"
+msgstr "Çeviri dosyası bulunamadı - yeni oluşturulacak"
+
+msgid "Editing: %s"
+msgstr "Düzenleniyor: %s"
+
+msgid "total strings"
+msgstr "toplam dize"
+
+msgid "translated"
+msgstr "çevrilmiş"
+
+msgid "untranslated"
+msgstr "çevrilmemiş"
+
+msgid "Search translations..."
+msgstr "Çevirileri ara..."
+
+msgid "Show untranslated only"
+msgstr "Sadece çevrilmemişleri göster"
+
+msgid "English Text (msgid)"
+msgstr "İngilizce Metin (msgid)"
+
+msgid "Translation (msgstr)"
+msgstr "Çeviri (msgstr)"
+
+msgid "Enter translation..."
+msgstr "Çeviri girin..."
+
+msgid "Translated"
+msgstr "Çevrildi"
+
+msgid "Untranslated"
+msgstr "Çevrilmemiş"
+
+msgid "Save Translations to .po File"
+msgstr "Çevirileri .po Dosyasına Kaydet"
+
+msgid "Auto-translate Empty Strings"
+msgstr "Boş Dizeleri Otomatik Çevir"
+
+msgid "Download .po File"
+msgstr ".po Dosyasını İndir"
+
+msgid "No untranslated strings found."
+msgstr "Çevrilmemiş dize bulunamadı."
+
+msgid "This will attempt to auto-translate %d empty strings using AI. Continue?"
+msgstr "Bu, AI kullanarak %d boş dizeyi otomatik çevirmeye çalışacak. Devam edilsin mi?"
+
+msgid "Translating..."
+msgstr "Çeviriliyor..."
+
+msgid "Successfully translated %d strings!"
+msgstr "%d dize başarıyla çevrildi!"
+
+msgid "Translation failed: "
+msgstr "Çeviri başarısız: "
+
+msgid "Translation request failed. Please try again."
+msgstr "Çeviri isteği başarısız. Lütfen tekrar deneyin."
+
+msgid "Translation Status Overview"
+msgstr "Çeviri Durumu Genel Bakış"
+
+msgid "Edit"
+msgstr "Düzenle"
+
+msgid "Auto-Translate"
+msgstr "Otomatik Çevir"
+
+msgid "Editing: %s (%s)"
+msgstr "Düzenleniyor: %s (%s)"
+
+msgid "Auto-Translate Missing"
+msgstr "Eksik Olanları Otomatik Çevir"
+
+msgid "Save All Changes"
+msgstr "Tüm Değişiklikleri Kaydet"
+
+msgid "No translations found for this language."
+msgstr "Bu dil için çeviri bulunamadı."
+
+msgid "Missing"
+msgstr "Eksik"
+
+msgid "AI Translate"
+msgstr "AI Çevir"
+
+msgid "bytes)"
+msgstr "bayt)"
+
+msgid "file found"
+msgstr "dosya bulundu"
+
+msgid "General Settings"
+msgstr "Genel Ayarlar"
+
+msgid "Configure general AI Assistant settings."
+msgstr "Genel AI Asistan ayarlarını yapılandır."
+
+msgid "Enable AI Assistant"
+msgstr "AI Asistan'ı Etkinleştir"
+
+msgid "Enable AI Assistant functionality"
+msgstr "AI Asistan işlevselliğini etkinleştir"
+
+msgid "Default AI Model"
+msgstr "Varsayılan AI Modeli"
+
+msgid "Select the default AI model to use for requests."
+msgstr "İstekler için kullanılacak varsayılan AI modelini seçin."
+
+msgid "Preferred AI Provider"
+msgstr "Tercih Edilen AI Sağlayıcısı"
+
+msgid "Select your preferred AI provider for requests."
+msgstr "İstekler için tercih ettiğiniz AI sağlayıcısını seçin."
+
+msgid "API Keys"
+msgstr "API Anahtarları"
+
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr "Farklı AI sağlayıcıları için API anahtarlarını yapılandırın. Şu anda çeviriler için Gemini kullanılıyor, ancak gelecekte kullanım için birden fazla sağlayıcı yapılandırabilirsiniz."
+
+msgid "OpenAI API Key"
+msgstr "OpenAI API Anahtarı"
+
+msgid "Enter your OpenAI API key. Get it from"
+msgstr "OpenAI API anahtarınızı girin. Şuradan alın"
+
+msgid "Anthropic API Key"
+msgstr "Anthropic API Anahtarı"
+
+msgid "Enter your Anthropic API key. Get it from"
+msgstr "Anthropic API anahtarınızı girin. Şuradan alın"
+
+msgid "Gemini API Key"
+msgstr "Gemini API Anahtarı"
+
+msgid "Enter your Google Gemini API key. Get it from"
+msgstr "Google Gemini API anahtarınızı girin. Şuradan alın"
+
+msgid "Custom Prompts"
+msgstr "Özel Komutlar"
+
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr "AI modellerine gönderilen komutları özelleştirin. Çeviri komutları için {source_language} ve {target_language} gibi yer tutucular kullanın."
+
+msgid "Translation Prompt"
+msgstr "Çeviri Komutu"
+
+msgid "Translate the following content from {source_language} to {target_language}. Maintain the original meaning and tone, keeping any formatting intact:"
+msgstr "Aşağıdaki içeriği {source_language} dilinden {target_language} diline çevirin. Özgün anlamı ve tonu koruyun, formatlamayı bozulmadan bırakın:"
+
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr "Çeviri istekleri için komutu özelleştirin. {source_language} ve {target_language} yer tutucular olarak kullanın."
+
+msgid "Content Suggestion Prompt"
+msgstr "İçerik Önerisi Komutu"
+
+msgid "Based on the following title and existing content on the website, suggest relevant content:"
+msgstr "Aşağıdaki başlık ve web sitesindeki mevcut içeriğe dayanarak, ilgili içerik önerin:"
+
+msgid "Customize the prompt for content suggestions."
+msgstr "İçerik önerileri için komutu özelleştirin."
+
+msgid "SEO Keywords Prompt"
+msgstr "SEO Anahtar Kelimeleri Komutu"
+
+msgid "Suggest SEO-friendly keywords for the following content:"
+msgstr "Aşağıdaki içerik için SEO dostu anahtar kelimeler önerin:"
+
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr "SEO anahtar kelime önerileri için komutu özelleştirin."
+
+msgid "Save Settings"
+msgstr "Ayarları Kaydet"
+
+msgid "Reset to Defaults"
+msgstr "Varsayılanlara Sıfırla"
+
+msgid "Import Settings"
+msgstr "Ayarları İçe Aktar"
+
+msgid "Export Settings"
+msgstr "Ayarları Dışa Aktar"
+
+msgid "API Configuration Status"
+msgstr "API Yapılandırma Durumu"
+
+msgid "Connection Status"
+msgstr "Bağlantı Durumu"
+
+msgid "Last Tested"
+msgstr "Son Test"
+
+msgid "Response Time"
+msgstr "Yanıt Süresi"
+
+msgid "API Quota"
+msgstr "API Kotası"
+
+msgid "Usage This Month"
+msgstr "Bu Ayki Kullanım"
+
+msgid "Settings saved successfully!"
+msgstr "Ayarlar başarıyla kaydedildi!"
+
+msgid "Settings reset to defaults."
+msgstr "Ayarlar varsayılanlara sıfırlandı."
+
+msgid "Failed to save settings."
+msgstr "Ayarlar kaydedilemedi."
+
+msgid "Invalid API key format."
+msgstr "Geçersiz API anahtarı formatı."
+
+msgid "API connection successful."
+msgstr "API bağlantısı başarılı."
+
+msgid "API connection failed."
+msgstr "API bağlantısı başarısız."
+
+msgid "Compile All .mo Files"
+msgstr "Tüm .mo Dosyalarını Derle"
+
+msgid "Compile .mo files for all languages"
+msgstr "Tüm diller için .mo dosyalarını derle"
+
+msgid "Compiling .mo files..."
+msgstr ".mo dosyaları derleniyor..."
+
+msgid "Successfully compiled %d .mo files"
+msgstr "%d .mo dosyası başarıyla derlendi"
+
+msgid "Failed to compile some .mo files"
+msgstr "Bazı .mo dosyaları derlenemedi"
+
+msgid "Auto-compile .mo files when saving .po files"
+msgstr ".po dosyaları kaydedilirken .mo dosyalarını otomatik derle"
+
+msgid "SOURCE LANGUAGE"
+msgstr "KAYNAK DİL"
+
+msgid "TARGET LANGUAGE"
+msgstr "HEDEF DİL"
+
+msgid "AI MODEL"
+msgstr "AI MODELİ"
+
+msgid "Source Language"
+msgstr "Kaynak Dil"
+
+msgid "Target Language"
+msgstr "Hedef Dil"
+
+msgid "AI Model"
+msgstr "AI Modeli"
+
+msgid "Use Post Content"
+msgstr "Yazı İçeriğini Kullan"
+
+msgid "Translate Content"
+msgstr "İçeriği Çevir"
+
+msgid "Source Content"
+msgstr "Kaynak İçerik"
+
+msgid "Translated Content"
+msgstr "Çevrilen İçerik"
+
+msgid "Enter or paste content to translate..."
+msgstr "Çevrilecek içeriği girin veya yapıştırın..."
+
+msgid "Translation will appear here..."
+msgstr "Çeviri burada görünecek..."
+
+msgid "SOURCE CONTENT (Editable)"
+msgstr "KAYNAK İÇERİK (Düzenlenebilir)"
+
+msgid "TRANSLATED CONTENT (Editable)"
+msgstr "ÇEVRİLEN İÇERİK (Düzenlenebilir)"
+
+msgid "Editable"
+msgstr "Düzenlenebilir"
+
+msgid "Article URL"
+msgstr "Makale URL'si"
+
+msgid "Fetch Content"
+msgstr "İçeriği Getir"
+
+msgid "Translate Article"
+msgstr "Makaleyi Çevir"
+
+msgid "Original Article"
+msgstr "Orijinal Makale"
+
+msgid "Translated Article"
+msgstr "Çevrilen Makale"
+
+msgid "Fetched content will appear here..."
+msgstr "Getirilen içerik burada görünecek..."
+
+msgid "Translated article will appear here..."
+msgstr "Çevrilen makale burada görünecek..."
+
+msgid "Insert Translated Content"
+msgstr "Çevrilen İçeriği Ekle"
+
+msgid "Review and edit the translation above, then click to insert into WordPress editor"
+msgstr "Yukarıdaki çeviriyi inceleyin ve düzenleyin, ardından WordPress düzenleyicisine eklemek için tıklayın"
+
+msgid "Content Type"
+msgstr "İçerik Türü"
+
+msgid "Content Suggestions"
+msgstr "İçerik Önerileri"
+
+msgid "Full Article"
+msgstr "Tam Makale"
+
+msgid "SEO Keywords"
+msgstr "SEO Anahtar Kelimeleri"
+
+msgid "Meta Description"
+msgstr "Meta Açıklama"
+
+msgid "Title Ideas"
+msgstr "Başlık Önerileri"
+
+msgid "Topic/Context"
+msgstr "Konu/Bağlam"
+
+msgid "Enter topic or context..."
+msgstr "Konu veya bağlam girin..."
+
+msgid "Use Post Title"
+msgstr "Yazı Başlığını Kullan"
+
+msgid "Generate"
+msgstr "Oluştur"
+
+msgid "Generated Content"
+msgstr "Oluşturulan İçerik"
+
+msgid "Generated content will appear here..."
+msgstr "Oluşturulan içerik burada görünecek..."
+
+msgid "Insert to Editor"
+msgstr "Düzenleyiciye Ekle"
+
+msgid "Apply to Yoast SEO"
+msgstr "Yoast SEO'ya Uygula"
+
+msgid "Review the generated content above, then choose an action"
+msgstr "Yukarıdaki oluşturulan içeriği inceleyin, ardından bir eylem seçin"
+
+msgid "Auto-detect"
+msgstr "Otomatik algıla"
+
+msgid "English"
+msgstr "İngilizce"
+
+msgid "Turkish"
+msgstr "Türkçe"
+
+msgid "Arabic"
+msgstr "Arapça"
+
+msgid "Spanish"
+msgstr "İspanyolca"
+
+msgid "French"
+msgstr "Fransızca"
+
+msgid "German"
+msgstr "Almanca"
+
+msgid "Russian"
+msgstr "Rusça"
+
+msgid "Chinese"
+msgstr "Çince"
+
+msgid "Persian"
+msgstr "Farsça"
+
+msgid "Portuguese"
+msgstr "Portekizce"
+
+msgid "Italian"
+msgstr "İtalyanca"
+
+msgid "Japanese"
+msgstr "Japonca"
+
+msgid "Korean"
+msgstr "Korece"
+
+msgid "Hindi"
+msgstr "Hintçe"
+
+msgid "Dutch"
+msgstr "Hollandaca"
+
+msgid "Swedish"
+msgstr "İsveççe"
+
+msgid "Danish"
+msgstr "Danca"
+
+msgid "Norwegian"
+msgstr "Norveççe"
+
+msgid "Finnish"
+msgstr "Fince"
+
+msgid "Error"
+msgstr "Hata"
+
+msgid "Fetching..."
+msgstr "Getiriliyor..."
+
+msgid "Generating..."
+msgstr "Oluşturuluyor..."
+
+msgid "Content fetched successfully!"
+msgstr "İçerik başarıyla getirildi!"
+
+msgid "Failed to fetch content"
+msgstr "İçerik getirilemedi"
+
+msgid "Translation failed"
+msgstr "Çeviri başarısız"
+
+msgid "Content generation failed"
+msgstr "İçerik oluşturma başarısız"
+
+msgid "A connection error occurred."
+msgstr "Bir bağlantı hatası oluştu."
+
+msgid "Please enter content to translate."
+msgstr "Lütfen çevrilecek içeriği girin."
+
+msgid "Please enter a URL to fetch."
+msgstr "Lütfen getirilecek bir URL girin."
+
+msgid "Please enter a topic or context."
+msgstr "Lütfen bir konu veya bağlam girin."
+
+msgid "Gemini 2.5 Flash"
+msgstr "Gemini 2.5 Flash"
+
+msgid "Gemini 2.5 Flash (Default)"
+msgstr "Gemini 2.5 Flash (Varsayılan)"
+
+msgid "GPT-4"
+msgstr "GPT-4"
+
+msgid "Content generated successfully!"
+msgstr "İçerik başarıyla oluşturuldu!"
+
+msgid "Keywords applied to Yoast SEO successfully!"
+msgstr "Anahtar kelimeler Yoast SEO'ya başarıyla uygulandı!"
+
+msgid "Content inserted successfully!"
+msgstr "İçerik başarıyla eklendi!"
+
+msgid "Content translated successfully!"
+msgstr "İçerik başarıyla çevrildi!"
+
+msgid "Translate"
+msgstr "Çevir"
+
+msgid "URL Translation"
+msgstr "URL Çevirisi"
+
+msgid "Content Tools"
+msgstr "İçerik Araçları"
+
+
+msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+msgstr "Çeviriler başarıyla %s dosyasına kaydedildi ve %s dosyasına derlendi. Değişiklikler artık eklenti arayüzünde aktif."
+
+msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
+msgstr "Çeviriler başarıyla %s dosyasına kaydedildi. Uyarı: .mo dosyası derlenemedi - çeviriler eklenti arayüzünde görünmeyebilir."
