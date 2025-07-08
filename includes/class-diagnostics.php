@@ -22,6 +22,8 @@ class AI_Assistant_Diagnostics {
         add_action('wp_ajax_ai_assistant_diagnostics_test', array($this, 'ajax_diagnostics_test'));
         add_action('wp_ajax_ai_assistant_system_info', array($this, 'ajax_system_info'));
         add_action('wp_ajax_ai_assistant_debug_language_loading', array($this, 'ajax_debug_language_loading'));
+        add_action('wp_ajax_ai_assistant_test_api_connection', array($this, 'ajax_test_api_connection'));
+        add_action('wp_ajax_ai_assistant_check_database_health', array($this, 'ajax_check_database_health'));
     }
     
     /**
@@ -39,11 +41,17 @@ class AI_Assistant_Diagnostics {
     }
     
     /**
+     * Add diagnostics styles
+     */
+    private function add_diagnostics_styles() {
+        // Styles are now included inline at the bottom of the page
+    }
+    
+    /**
      * Render diagnostics page
      */
     public function render_diagnostics_page() {
         ?>
-        <?php $this->add_diagnostics_styles(); ?>
         
         <div class="wrap">
             <h1><?php _e('AI Assistant Diagnostics', 'ai-assistant'); ?></h1>
@@ -319,19 +327,19 @@ class AI_Assistant_Diagnostics {
                 var $results = $('#language-test-results');
                 
                 $button.prop('disabled', true).text('<?php _e('Testing...', 'ai-assistant'); ?>');
-                $results.html('<div class="notice notice-info"><p><?php _e('Running language loading test...', 'ai-assistant'); ?></p></div>');
+                $results.addClass('show').html('<div class="notice notice-info"><p><?php _e('Running language loading test...', 'ai-assistant'); ?></p></div>');
                 
                 $.post(ajaxurl, {
                     action: 'ai_assistant_debug_language_loading',
                     nonce: '<?php echo wp_create_nonce('ai_assistant_admin_nonce'); ?>'
                 }, function(response) {
                     if (response.success) {
-                        $results.html('<div class="notice notice-success"><p><strong><?php _e('Language Test Results:', 'ai-assistant'); ?></strong></p><div>' + response.data + '</div></div>');
+                        $results.addClass('show success').html('<div class="notice notice-success"><p><strong><?php _e('Language Test Results:', 'ai-assistant'); ?></strong></p><div>' + response.data + '</div></div>');
                     } else {
-                        $results.html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
+                        $results.addClass('show error').html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
                     }
                 }).fail(function() {
-                    $results.html('<div class="notice notice-error"><p><?php _e('Test failed - AJAX error', 'ai-assistant'); ?></p></div>');
+                    $results.addClass('show error').html('<div class="notice notice-error"><p><?php _e('Test failed - AJAX error', 'ai-assistant'); ?></p></div>');
                 }).always(function() {
                     $button.prop('disabled', false).text('<?php _e('Run Language Test', 'ai-assistant'); ?>');
                 });
@@ -343,13 +351,36 @@ class AI_Assistant_Diagnostics {
                 var $results = $('#api-test-results');
                 
                 $button.prop('disabled', true).text('<?php _e('Testing...', 'ai-assistant'); ?>');
-                $results.html('<div class="notice notice-info"><p><?php _e('Testing API connections...', 'ai-assistant'); ?></p></div>');
+                $results.addClass('show').html('<div class="notice notice-info"><p><?php _e('Testing API connections...', 'ai-assistant'); ?></p></div>');
                 
-                // Simulate API test (implement actual test in AJAX handler)
-                setTimeout(function() {
-                    $results.html('<div class="notice notice-success"><p><?php _e('API connection test feature coming soon...', 'ai-assistant'); ?></p></div>');
+                $.post(ajaxurl, {
+                    action: 'ai_assistant_test_api_connection',
+                    nonce: '<?php echo wp_create_nonce('ai_assistant_admin_nonce'); ?>'
+                }, function(response) {
+                    if (response.success) {
+                        var html = '<div class="notice notice-success"><p><strong><?php _e('API Connection Test Results:', 'ai-assistant'); ?></strong></p>';
+                        html += '<div style="font-family: monospace; background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">';
+                        
+                        $.each(response.data, function(api, result) {
+                            var statusClass = result.status === 'success' ? 'success' : 'error';
+                            var statusIcon = result.status === 'success' ? '✅' : '❌';
+                            html += '<div style="margin-bottom: 8px;"><strong>' + api.toUpperCase() + ':</strong> ' + statusIcon + ' ' + result.message;
+                            if (result.code) {
+                                html += ' (' + result.code + ')';
+                            }
+                            html += '</div>';
+                        });
+                        
+                        html += '</div></div>';
+                        $results.addClass('show success').html(html);
+                    } else {
+                        $results.addClass('show error').html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
+                    }
+                }).fail(function() {
+                    $results.addClass('show error').html('<div class="notice notice-error"><p><?php _e('API test failed - AJAX error', 'ai-assistant'); ?></p></div>');
+                }).always(function() {
                     $button.prop('disabled', false).text('<?php _e('Test API Connections', 'ai-assistant'); ?>');
-                }, 2000);
+                });
             });
             
             // System report generation
@@ -358,21 +389,69 @@ class AI_Assistant_Diagnostics {
                 var $results = $('#system-report-results');
                 
                 $button.prop('disabled', true).text('<?php _e('Generating...', 'ai-assistant'); ?>');
-                $results.html('<div class="notice notice-info"><p><?php _e('Generating system report...', 'ai-assistant'); ?></p></div>');
+                $results.addClass('show').html('<div class="notice notice-info"><p><?php _e('Generating system report...', 'ai-assistant'); ?></p></div>');
                 
                 $.post(ajaxurl, {
                     action: 'ai_assistant_system_info',
                     nonce: '<?php echo wp_create_nonce('ai_assistant_admin_nonce'); ?>'
                 }, function(response) {
                     if (response.success) {
-                        $results.html('<div class="notice notice-success"><p><strong><?php _e('System Report Generated:', 'ai-assistant'); ?></strong></p><textarea style="width: 100%; height: 200px; font-family: monospace; font-size: 12px;">' + response.data.report + '</textarea><p><em><?php _e('Copy the above information when reporting issues.', 'ai-assistant'); ?></em></p></div>');
+                        $results.addClass('show success').html('<div class="notice notice-success"><p><strong><?php _e('System Report Generated:', 'ai-assistant'); ?></strong></p><textarea style="width: 100%; height: 200px; font-family: monospace; font-size: 12px;">' + response.data.report + '</textarea><p><em><?php _e('Copy the above information when reporting issues.', 'ai-assistant'); ?></em></p></div>');
                     } else {
-                        $results.html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
+                        $results.addClass('show error').html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
                     }
                 }).fail(function() {
-                    $results.html('<div class="notice notice-error"><p><?php _e('Report generation failed - AJAX error', 'ai-assistant'); ?></p></div>');
+                    $results.addClass('show error').html('<div class="notice notice-error"><p><?php _e('Report generation failed - AJAX error', 'ai-assistant'); ?></p></div>');
                 }).always(function() {
                     $button.prop('disabled', false).text('<?php _e('Generate Report', 'ai-assistant'); ?>');
+                });
+            });
+            
+            // Database health check
+            $('#check-database-health').on('click', function() {
+                var $button = $(this);
+                var $results = $('#database-health-results');
+                
+                $button.prop('disabled', true).text('<?php _e('Checking...', 'ai-assistant'); ?>');
+                $results.addClass('show').html('<div class="notice notice-info"><p><?php _e('Checking database health...', 'ai-assistant'); ?></p></div>');
+                
+                $.post(ajaxurl, {
+                    action: 'ai_assistant_check_database_health',
+                    nonce: '<?php echo wp_create_nonce('ai_assistant_admin_nonce'); ?>'
+                }, function(response) {
+                    if (response.success) {
+                        var html = '<div class="notice notice-success"><p><strong><?php _e('Database Health Check Results:', 'ai-assistant'); ?></strong></p>';
+                        html += '<div style="font-family: monospace; background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">';
+                        
+                        var data = response.data;
+                        
+                        // Translations table
+                        var transIcon = data.translations_table.exists ? '✅' : '❌';
+                        html += '<div style="margin-bottom: 8px;"><strong><?php _e('Translations Table:', 'ai-assistant'); ?></strong> ' + transIcon + ' ';
+                        html += data.translations_table.exists ? '<?php _e('Exists', 'ai-assistant'); ?> (' + data.translations_table.count + ' <?php _e('records', 'ai-assistant'); ?>)' : '<?php _e('Missing', 'ai-assistant'); ?>';
+                        html += '</div>';
+                        
+                        // Suggestions table
+                        var suggIcon = data.suggestions_table.exists ? '✅' : '❌';
+                        html += '<div style="margin-bottom: 8px;"><strong><?php _e('Suggestions Table:', 'ai-assistant'); ?></strong> ' + suggIcon + ' ';
+                        html += data.suggestions_table.exists ? '<?php _e('Exists', 'ai-assistant'); ?> (' + data.suggestions_table.count + ' <?php _e('records', 'ai-assistant'); ?>)' : '<?php _e('Missing', 'ai-assistant'); ?>';
+                        html += '</div>';
+                        
+                        // Database connection
+                        var dbIcon = data.database_connection.connected ? '✅' : '❌';
+                        html += '<div style="margin-bottom: 8px;"><strong><?php _e('Database Connection:', 'ai-assistant'); ?></strong> ' + dbIcon + ' ';
+                        html += data.database_connection.connected ? '<?php _e('Connected', 'ai-assistant'); ?> (v' + data.database_connection.version + ')' : '<?php _e('Failed', 'ai-assistant'); ?>';
+                        html += '</div>';
+                        
+                        html += '</div></div>';
+                        $results.addClass('show success').html(html);
+                    } else {
+                        $results.addClass('show error').html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
+                    }
+                }).fail(function() {
+                    $results.addClass('show error').html('<div class="notice notice-error"><p><?php _e('Database check failed - AJAX error', 'ai-assistant'); ?></p></div>');
+                }).always(function() {
+                    $button.prop('disabled', false).text('<?php _e('Check Database', 'ai-assistant'); ?>');
                 });
             });
             
@@ -864,6 +943,172 @@ class AI_Assistant_Diagnostics {
         $report .= "\n=== End Report ===";
         
         return $report;
+    }
+    
+    /**
+     * AJAX handler for API connection test
+     */
+    public function ajax_test_api_connection() {
+        check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Insufficient permissions');
+        }
+        
+        $api_keys = get_option('ai_assistant_api_keys', array());
+        $results = array();
+        
+        // Test available APIs
+        if (!empty($api_keys['gemini'])) {
+            $results['gemini'] = $this->test_gemini_api($api_keys['gemini']);
+        }
+        
+        if (!empty($api_keys['openai'])) {
+            $results['openai'] = $this->test_openai_api($api_keys['openai']);
+        }
+        
+        if (!empty($api_keys['anthropic'])) {
+            $results['anthropic'] = $this->test_anthropic_api($api_keys['anthropic']);
+        }
+        
+        if (empty($results)) {
+            wp_send_json_error('No API keys configured for testing');
+        }
+        
+        wp_send_json_success($results);
+    }
+    
+    /**
+     * AJAX handler for database health check
+     */
+    public function ajax_check_database_health() {
+        check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
+        
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Insufficient permissions');
+        }
+        
+        global $wpdb;
+        
+        $health_status = array();
+        
+        // Check translation table
+        $translations_table = $wpdb->prefix . 'ai_assistant_translations';
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$translations_table'") === $translations_table;
+        $health_status['translations_table'] = array(
+            'exists' => $table_exists,
+            'count' => $table_exists ? $wpdb->get_var("SELECT COUNT(*) FROM $translations_table") : 0
+        );
+        
+        // Check suggestions table
+        $suggestions_table = $wpdb->prefix . 'ai_assistant_suggestions';
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$suggestions_table'") === $suggestions_table;
+        $health_status['suggestions_table'] = array(
+            'exists' => $table_exists,
+            'count' => $table_exists ? $wpdb->get_var("SELECT COUNT(*) FROM $suggestions_table") : 0
+        );
+        
+        // Check database connectivity
+        $health_status['database_connection'] = array(
+            'connected' => !empty($wpdb->dbh),
+            'version' => $wpdb->db_version(),
+            'charset' => $wpdb->charset,
+            'collate' => $wpdb->collate
+        );
+        
+        wp_send_json_success($health_status);
+    }
+    
+    /**
+     * Test Gemini API connection
+     */
+    private function test_gemini_api($api_key) {
+        $test_url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' . $api_key;
+        
+        $response = wp_remote_post($test_url, array(
+            'timeout' => 15,
+            'headers' => array(
+                'Content-Type' => 'application/json'
+            ),
+            'body' => json_encode(array(
+                'contents' => array(
+                    array(
+                        'parts' => array(
+                            array('text' => 'Test')
+                        )
+                    )
+                )
+            ))
+        ));
+        
+        if (is_wp_error($response)) {
+            return array('status' => 'error', 'message' => $response->get_error_message());
+        }
+        
+        $code = wp_remote_retrieve_response_code($response);
+        return array(
+            'status' => ($code === 200) ? 'success' : 'error',
+            'code' => $code,
+            'message' => ($code === 200) ? 'Connection successful' : 'HTTP ' . $code
+        );
+    }
+    
+    /**
+     * Test OpenAI API connection
+     */
+    private function test_openai_api($api_key) {
+        $response = wp_remote_get('https://api.openai.com/v1/models', array(
+            'timeout' => 15,
+            'headers' => array(
+                'Authorization' => 'Bearer ' . $api_key
+            )
+        ));
+        
+        if (is_wp_error($response)) {
+            return array('status' => 'error', 'message' => $response->get_error_message());
+        }
+        
+        $code = wp_remote_retrieve_response_code($response);
+        return array(
+            'status' => ($code === 200) ? 'success' : 'error',
+            'code' => $code,
+            'message' => ($code === 200) ? 'Connection successful' : 'HTTP ' . $code
+        );
+    }
+    
+    /**
+     * Test Anthropic API connection
+     */
+    private function test_anthropic_api($api_key) {
+        $response = wp_remote_post('https://api.anthropic.com/v1/messages', array(
+            'timeout' => 15,
+            'headers' => array(
+                'x-api-key' => $api_key,
+                'anthropic-version' => '2023-06-01',
+                'content-type' => 'application/json'
+            ),
+            'body' => json_encode(array(
+                'model' => 'claude-3-haiku-20240307',
+                'max_tokens' => 10,
+                'messages' => array(
+                    array(
+                        'role' => 'user',
+                        'content' => 'Test'
+                    )
+                )
+            ))
+        ));
+        
+        if (is_wp_error($response)) {
+            return array('status' => 'error', 'message' => $response->get_error_message());
+        }
+        
+        $code = wp_remote_retrieve_response_code($response);
+        return array(
+            'status' => ($code === 200) ? 'success' : 'error',
+            'code' => $code,
+            'message' => ($code === 200) ? 'Connection successful' : 'HTTP ' . $code
+        );
     }
 }
 

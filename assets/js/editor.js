@@ -1,5 +1,5 @@
 /**
- * AI Assistant Editor JS - v1.0.49
+ * AI Assistant Editor JS - v1.0.53
  * Handles meta box UI, tabs, and AJAX calls for translation, content generation, and image generation.
  */
 (function($) {
@@ -12,7 +12,7 @@
                 return;
             }
             
-            console.log('AI Assistant: Initializing editor script v1.0.49');
+            console.log('AI Assistant: Initializing editor script v1.0.53');
             this.initializeTabs();
             this.populateLanguageDropdowns();
             this.bindEvents();
@@ -26,8 +26,11 @@
         bindEvents: function() {
             var container = $('#ai-assistant-meta-box');
 
-            // Tab switching
-            container.on('click', '.ai-tab-button', this.handleTabSwitch);
+            // Intro section toggle
+            container.on('click', '.ai-intro-toggle', this.handleIntroToggle);
+
+            // Tab switching - updated for WordPress nav-tab structure
+            container.on('click', '.nav-tab', this.handleTabSwitch);
 
             // Translate Tab Actions
             container.on('click', '.ai-assistant-translate-btn', this.handleTranslateContent);
@@ -61,17 +64,34 @@
             });
         },
 
+        handleIntroToggle: function(e) {
+            e.preventDefault();
+            var $toggle = $(this);
+            var $content = $toggle.closest('.ai-assistant-intro').find('.ai-intro-content');
+            var isExpanded = $toggle.attr('aria-expanded') === 'true';
+            
+            if (isExpanded) {
+                $content.slideUp(300);
+                $toggle.attr('aria-expanded', 'false');
+            } else {
+                $content.slideDown(300);
+                $toggle.attr('aria-expanded', 'true');
+            }
+        },
+
         handleTabSwitch: function(e) {
             e.preventDefault();
-            var $button = $(this);
-            var tabId = $button.data('tab');
-            var container = $button.closest('.ai-assistant-meta-box-container');
+            var $tab = $(this);
+            var tabId = $tab.data('tab');
+            var container = $tab.closest('.ai-assistant-meta-box-container');
 
             console.log('AI Assistant: Switching to tab: ' + tabId);
 
-            container.find('.ai-tab-button').removeClass('active');
-            $button.addClass('active');
+            // Update nav-tab active states
+            container.find('.nav-tab').removeClass('nav-tab-active');
+            $tab.addClass('nav-tab-active');
 
+            // Switch tab content
             container.find('.ai-tab-content').removeClass('active').hide();
             container.find('#ai-tab-' + tabId).addClass('active').show();
         },
@@ -670,7 +690,7 @@
             
             // Hide suggestions when clicking outside
             $(document).on('click', function(e) {
-                if (!$(e.target).closest('#ai-suggestion-overlay, .ai-assistant-textarea').length) {
+                if (!$(e.target).closest('#ai-suggestion-overlay, .ai-assistant-textarea, .nav-tab').length) {
                     hideSuggestions();
                 }
             });
@@ -967,11 +987,11 @@
             
             // Hide all tab content first
             $('.ai-tab-content').removeClass('active').hide();
-            $('.ai-tab-button').removeClass('active');
+            $('.nav-tab').removeClass('nav-tab-active');
             
             // Show only the first tab
             $('.ai-tab-content').first().addClass('active').show();
-            $('.ai-tab-button').first().addClass('active');
+            $('.nav-tab').first().addClass('nav-tab-active');
             
             console.log('AI Assistant: Tabs initialized - first tab active');
         },

@@ -1,11 +1,8 @@
-# AI Assistant WordPress Plugin Translation
-# Language: ئۇيغۇرچە (Uyghur) ✅ (ug_CN)
-# Generated: 2025-07-04 08:48:24 +0000
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Assistant\n"
+"Project-Id-Version: AI Assistant 1.0.50nt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-04 08:48:24 +0000\n"
+"POT-Creation-Date: 2025-07-07 11:03:46+0000\n"
 "PO-Revision-Date: 2025-07-04 08:48:24 +0000\n"
 "Language: ug_CN\n"
 "MIME-Version: 1.0\n"
@@ -14,380 +11,215 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: AI Assistant Translation Manager\n"
 
-msgid "AI-powered translation and content writing assistant for multilingual WordPress websites with Islamic content support. Developed for Suleymaniye Foundation\\'s 16+ language network."
-msgstr "ئىسلامى مەزمۇنلارنى قوللايدىغان كۆپ تىللىق ۋوردپرەس تور بېكەتلىرىنىڭ سۈنئىي ئەقىل ئارقىلىق تەرجىمە ۋە مەزمۇن يېزىش ياردەمچىسى. سۇلايمانىيە فوندىنىڭ 16+ تىل تورى ئۈچۈن ياسالغان."
-
-msgid "AI Assistant"
-msgstr "AI ياردەمچىسى"
-
-msgid "Settings"
-msgstr "تەڭشەكلەر"
-
-msgid "Translation History"
-msgstr "تەرجىمە تارىخى"
-
-msgid "Translation Management"
-msgstr "تەرجىمە باشقۇرۇش"
-
-msgid "AI Assistant Dashboard"
-msgstr "سۈنئىي ئەقىل يارەدمچىسى باش بېتى"
-
-msgid "Usage Statistics"
-msgstr "ئىشلىتىش سىتاتسىتىكىسى"
-
-msgid "Translations this month"
-msgstr "بۇ ئايدىكى تەرجىمىلەر"
-
-msgid "Content suggestions"
-msgstr "مەزمۇن تەۋسىيەلىرى"
-
-msgid "Active AI models"
-msgstr "ئاكتىپ سۈنئىي ئەقىل مودېلى"
-
-msgid "Quick Actions"
-msgstr "تىز مەشغۇلاتلار"
-
-msgid "Configure Settings"
-msgstr "تەڭشەكلەرنى تەڭشەش"
-
-msgid "Create New Post"
-msgstr "يېڭى يازما يېزىش"
-
-msgid "View History"
-msgstr "تارىخنى كۆرۈش"
-
-msgid "System Status"
-msgstr "سىستېما ھالىتى"
-
-msgid "AI Assistant Settings"
-msgstr "سۈنئىي ئەقىل ياردەمچىسى تەڭشىكى"
-
-msgid "Language Settings"
-msgstr "تىل تەڭشىكى"
-
-msgid "Admin Interface Language"
-msgstr "باشقۇرۇش بېتى تىلى"
-
-msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
-msgstr "سۈنئىي ئەقىل ياردەمچىسىنىڭ ئارا يۈز تىلىنى تاللاڭ. بۇ قىستۇرمىنىڭ تىلىنى بەلگىلەيدۇ."
-
-msgid "Save Language Settings"
-msgstr "تىل تەڭشىكىنى ساقلاش"
-
-msgid "Language settings saved successfully."
-msgstr "تىل تەڭشەكلىرى مۇۋەپپەقىيەتلىك ساقلاندى"
-
-msgid "API Configuration"
-msgstr "API سەپلىمىلىرى"
-
-msgid "Save API Settings"
-msgstr "API سەپلىمىلىرىنى ساقلاش"
-
-msgid "Test API Connection"
-msgstr "API ئۇلىنىشىنى سىناش"
-
-msgid "Test your Gemini API key to ensure it is working correctly."
-msgstr "API ئاچقۇچىنىڭ توغرا ئىشلەۋاتقانلىقىنى جەزىملەشتۈرۈش ئۈچۈن سىناپ بېقىڭ."
-
-msgid "Test Gemini API"
-msgstr "API ئاچقۇچىنى سىناش"
-
-msgid "Debug Language Loading"
-msgstr ""
-
-msgid "Manually test language loading and view debug information."
-msgstr ""
-
-msgid "Run Debug Test"
-msgstr ""
-
-msgid "Date"
-msgstr "چېسلا"
-
-msgid "Post"
-msgstr "يازما"
-
-msgid "From"
-msgstr "نېمىدىن"
-
-msgid "To"
-msgstr "نېمىگە"
-
-msgid "Status"
-msgstr "ھالەت"
-
-msgid "Actions"
-msgstr "مەشغۇلاتلار"
-
-msgid "No translations found."
-msgstr "تەرجىمە تېپىلمىدى."
-
-msgid "Post not found"
-msgstr "بەت تېپىلمىدى"
-
-msgid "View"
-msgstr "كۆرۈش"
-
-msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
-msgstr ""
-
-msgid "Select Language to Edit"
-msgstr "تەھرىرلىمەكچى بولغان تىلنى تاللاڭ"
-
-msgid "Translation file exists"
-msgstr "تەرجىمە ھۆججىتى مەۋجۇت"
-
-msgid "No translation file found - will create new"
-msgstr ""
-
-msgid "Editing: %s"
-msgstr ""
-
-msgid "total strings"
-msgstr "جەمئىي جۈملە"
-
-msgid "translated"
-msgstr "تەرجىمە قىلىنغىنى"
-
-msgid "untranslated"
-msgstr "تەرجىمە قىلىنمىغىنى"
-
-msgid "Search translations..."
-msgstr "تەرجىمىلەردىن ئىزدەش"
-
-msgid "Show untranslated only"
-msgstr "تەرجىمە قىلىنمىغانلارنى كۆرسىتىش"
-
-msgid "English Text (msgid)"
-msgstr "ئىنگلىزچە تېكىست (msgid)"
-
-msgid "Translation (msgstr)"
-msgstr "تەرجىمىسى (msgstr)"
-
-msgid "Enter translation..."
-msgstr "تەرجىمىسىنى كىرگۈزۈڭ..."
-
-msgid "Translated"
-msgstr "تەرجىمە قىلىندى"
-
-msgid "Untranslated"
-msgstr "تەرجىمە قىلىنمىدى"
-
-msgid "Save Translations to .po File"
-msgstr "تەرجىمىنى ساقلاش"
-
-msgid "Auto-translate Empty Strings"
-msgstr ""
-
-msgid "Download .po File"
-msgstr "تەرجىمە ھۆججىتىنى چۈشۈرىۋىلىش"
-
-msgid "No untranslated strings found."
-msgstr "تەرجىمە قىلىنمىغان جۈملە تېپىلمىدى"
-
-msgid "This will attempt to auto-translate %d empty strings using AI. Continue?"
-msgstr ""
+msgid "Error"
+msgstr "خاتا"
 
 msgid "Translating..."
 msgstr "تەرجىمە قىلىۋاتىدۇ..."
 
-msgid "Successfully translated %d strings!"
-msgstr ""
+msgid "Fetching..."
+msgstr "ماقالىنى ئوقۇۋاتىدۇ"
 
-msgid "Translation failed: "
-msgstr "تەرجىمە مەغلۇپ بولدى:"
+msgid "Generating..."
+msgstr "ھاسىل قىلىۋاتىدۇ"
 
-msgid "Translation request failed. Please try again."
-msgstr ""
+msgid "Translate Content"
+msgstr "مەزمۇننى تەرجىمە قىلىش"
 
-msgid "Translation Status Overview"
-msgstr "تەرجىمە ھالىتىگە كۆز يۈگۈرتۈش"
+msgid "Fetch Content"
+msgstr "مەزمۇننى ئېلىش"
 
-msgid "Edit"
-msgstr "تەھرىرلەش"
+msgid "Translate Article"
+msgstr "ماقالىنى تەرجىمە قىلىش"
 
-msgid "Auto-Translate"
-msgstr ""
+msgid "Generate"
+msgstr "ھاسىل قىلىش"
 
-msgid "Editing: %s (%s)"
-msgstr ""
+msgid "Content fetched successfully!"
+msgstr "ماقالە مەزمۇنى مۇۋەپپەقىيەتلىك ئېلىندى"
 
-msgid "Auto-Translate Missing"
-msgstr ""
+msgid "Failed to fetch content"
+msgstr "ماقالە مەزمۇنىنى ئالالمىدى"
 
-msgid "Save All Changes"
-msgstr "پۈتۈن ئۆزگىرىشلەرنى ساقلاش"
+msgid "Translation failed"
+msgstr "تەرجىمە مەغلۇپ بولدى"
 
-msgid "No translations found for this language."
-msgstr ""
+msgid "Content generation failed"
+msgstr "مەزمۇن ھاسىل قىلىش مەغلۇپ بولدى"
 
-msgid "Missing"
-msgstr "كەم"
+msgid "A connection error occurred."
+msgstr "ئۇلىنىشتا خاتالىق كۆرۈلدى"
 
-msgid "AI Translate"
-msgstr "سۈنئىي ئەقىل بىلەن تەرجىمە قىلىش"
+msgid "Please enter content to translate."
+msgstr "تەرجىمە قىلىدىغان مەزمۇننى كىرگۈزۈڭ"
 
-msgid "bytes)"
-msgstr ""
+msgid "Please enter a URL to fetch."
+msgstr "مەزمۇنىنى ئالىدىغان ئۇلىنىشنى كىرگۈزۈڭ"
 
-msgid "file found"
-msgstr "ھۆججەت تېپىلدى"
+msgid "Please enter a topic or context."
+msgstr "تىما ياكى پىكىرىڭىزنى كىرگۈزۈڭ."
 
-msgid "General Settings"
-msgstr "ئادەتتىكى تەڭشەكلەر"
+msgid "Generating prompt..."
+msgstr "يىتەكچى سۆز ھاسىل قىلىۋاتىدۇ..."
 
-msgid "Configure general AI Assistant settings."
-msgstr "ئادەتتىكى سۈنئىي ئەقىل ياردەمچىسى تەڭشەكلىرىنى سەپلەش"
+msgid "Generating image..."
+msgstr "رەسىم ھاسىل قىلىۋاتىدۇ..."
 
-msgid "Enable AI Assistant"
-msgstr "سۈنئىي ئەقىل ياردەمچىسىنى ئاكتىپلاشتۇرۇش"
+msgid "Image generated successfully!"
+msgstr "رەسىم مۇۋەپپەقىيەتلىك ھاسىل قىلىندى!"
 
-msgid "Enable AI Assistant functionality"
-msgstr "سۈنئىي ئەقىل ياردەمچىسى ئىقتىدارلىرىنى ئاكتىپلاشتۇرۇش"
+msgid "Image generation failed"
+msgstr "رەسىم ھاسىل قىلىش مەغلۇپ بولدى"
 
-msgid "Default AI Model"
-msgstr "سۈكۈتتىكى سۈنئىي ئەقىل مودېلى"
+msgid "Setting featured image..."
+msgstr "ئالاھىدە رەسىم تەڭشەۋاتىدۇ..."
 
-msgid "Select the default AI model to use for requests."
-msgstr "ئىشلىتىدىغان سۈكۈتتىكى سۈنئىي ئەقىل مودېلىنى تاللاڭ"
+msgid "Featured image set successfully!"
+msgstr "ئالاھىدە رەسىم مۇۋەپپەقىيەتلىك تەڭشەلدى!"
 
-msgid "Preferred AI Provider"
-msgstr "خالىغان سۈنئىي ئەقىل مودېلى تەمىنلىگۈچىڭىز"
+msgid "Failed to set featured image"
+msgstr "ئالاھىدە رەسىم تەڭشىيەلمىدى"
 
-msgid "Select your preferred AI provider for requests."
-msgstr "ئىشلىتىدىغان خالىغان سۈنئىي ئەقىل مودېلى تەمىنلىگۈچىڭىزنى تاللاڭ"
+msgid "Please enter an image description."
+msgstr "رەسىم چۈشەندۈرۈشىنى كىرگۈزۈڭ."
 
-msgid "API Keys"
-msgstr "API ئاچقۇچلىرى"
+msgid "Auto-detect"
+msgstr "ئۆزلۈكىدىن بايقاش"
 
-msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
-msgstr "ئوخشىمىغان سۈنئىي ئەقىل تەمىنلىگۈچىلەر ئۈچۈن API ئاچقۇچىنى سەپلەڭ. ھازىر Gemini نى تەرجىمە ئۈچۈن ئىشلىتىۋاتىسىز ، ئەمما كەلگۈسىدىكى ئىشلىتىش ئۈچۈن كۆپ تەمىنلىگۈچىلەرنى تەڭشىيەلەيسىز."
+msgid "English"
+msgstr "ئىنگىلىزچە"
 
-msgid "OpenAI API Key"
-msgstr "OpenAI API ئاچقۇچى"
+msgid "Turkish"
+msgstr "تۈركچە"
 
-msgid "Enter your OpenAI API key. Get it from"
-msgstr "OpenAI API ئاچقۇچىنى كىرگۈزۈڭ. ئۇنى بۇ يەردىن ئالالايسىز"
+msgid "Arabic"
+msgstr "ئەرەبچە"
 
-msgid "Anthropic API Key"
-msgstr "Anthropic API ئاچقۇچى"
+msgid "Spanish"
+msgstr "ئىسپانچە"
 
-msgid "Enter your Anthropic API key. Get it from"
-msgstr "Anthropic API ئاچقۇچىنى كىرگۈزۈڭ. ئۇنى بۇ يەردىن ئالالايسىز"
+msgid "French"
+msgstr "فرانسۇزچە"
 
-msgid "Gemini API Key"
-msgstr "Gemini API ئاچقۇچى"
+msgid "German"
+msgstr "گىرمانچە"
 
-msgid "Enter your Google Gemini API key. Get it from"
-msgstr "Gemini API ئاچقۇچىنى كىرگۈزۈڭ. ئۇنى بۇ يەردىن ئالالايسىز"
+msgid "Russian"
+msgstr "رۇسچە"
 
-msgid "Custom Prompts"
-msgstr "خاسلاشتۇرۇلغان بۇيرۇق ئەسكەرتمىلىرى"
+msgid "Chinese"
+msgstr "خىتايچە"
 
-msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
-msgstr "سۈنئىي ئەقىلگە يوللىنىدىغان بۇيرۇق ئەسكەرتمىلىرىنى خاسلاشتۇرۇڭ. مەنبە تىل ۋە نىشان تىل ئورنىغا {source_language} ۋە {target_language} لارنى ئىشلىتىڭ."
+msgid "Persian"
+msgstr "پارسچە"
 
-msgid "Translation Prompt"
-msgstr "تەرجىمە بۇيرۇق ئەسكەرتمىلىرى"
+msgid "Portuguese"
+msgstr "پورتۇگالچە"
 
-msgid "Translate the following content from {source_language} to {target_language}. Maintain the original meaning and tone, keeping any formatting intact:"
-msgstr ""
+msgid "Dutch"
+msgstr "گوللاندىيەچە"
 
-msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
-msgstr ""
+msgid "Danish"
+msgstr "دانىيەچە"
 
-msgid "Content Suggestion Prompt"
-msgstr "مەزمۇن ھاسىل قىلىش بۇيرۇق ئەسكەرتمىلىرى"
+msgid "Azerbaijani"
+msgstr "ئازەربايجانچە"
 
-msgid "Based on the following title and existing content on the website, suggest relevant content:"
-msgstr ""
+msgid "Uzbek"
+msgstr "ئۆزبەكچە"
 
-msgid "Customize the prompt for content suggestions."
-msgstr "مەزمۇن ھاسىل قىلىش بۇيرۇق ئەسكەرتمىلىرىنى خاسلاشتۇرۇش"
+msgid "Kyrgyz"
+msgstr "قىرغىزچە"
 
-msgid "SEO Keywords Prompt"
-msgstr "ئىزدەش موتورى ئۈچۈن ئاچقۇچلۇق سۆز تەۋسىيەسى ئەسكەرتمىسى"
+msgid "Uyghur"
+msgstr "ئۇيغۇرچە"
 
-msgid "Suggest SEO-friendly keywords for the following content:"
-msgstr ""
+msgid "Urdu"
+msgstr "ئۇردۇچە"
 
-msgid "Customize the prompt for SEO keyword suggestions."
-msgstr "ئىزدەش موتورى ئۈچۈن ئاچقۇچلۇق سۆز تەۋسىيەسى ئەسكەرتمىسىنى خاسلاشتۇرۇش."
+msgid "Finnish"
+msgstr "فىنلاندىيەچە"
 
-msgid "Save Settings"
-msgstr "تەڭشەكلەرنى ساقلاش"
+msgid "Turkmen"
+msgstr "تۈركمەنچە"
 
-msgid "Reset to Defaults"
-msgstr "سۈكۈتتىكى تەڭشەككە قايتۇرۇش"
+msgid "AI Assistant"
+msgstr "AI ياردەمچىسى"
 
-msgid "Import Settings"
-msgstr "تەڭشەكلەرنى كىرگۈزۈش"
+msgid "AI Assistant (Compact)"
+msgstr "AI ياردەمچىسى (ئىخچام)"
 
-msgid "Export Settings"
-msgstr "تەڭشەكلەرنى چىقىرىش"
+msgid "Source Content"
+msgstr "مەنبە مەزمۇن"
 
-msgid "API Configuration Status"
-msgstr "API سەپلىمە ھالىتى"
+msgid "Editable"
+msgstr "تەھرىرلىيەلەيدىغان"
 
-msgid "Connection Status"
-msgstr "ئۇلىنىش ھالىتى"
+msgid "Translated Content"
+msgstr "تەرجىمە قىلىنغان مەزمۇن"
 
-msgid "Last Tested"
-msgstr "ئاخىرقى سىناق"
+msgid "You do not have permission to perform this action."
+msgstr "سىزگە بۇ مەشغۇلاتنى ئىجرا قىلىش ھوقۇقى يوق."
 
-msgid "Response Time"
-msgstr "ئىنكاس ۋاقتى"
+msgid "Please provide a topic or context for content generation."
+msgstr "مەزمۇن ياسىغان ئۈچۈن تېما ياكى مۇھىت بىلەن تەمىنلەڭ."
 
-msgid "API Quota"
-msgstr "API نورمىسى"
+msgid "No text provided for suggestions."
+msgstr "No text provided for suggestions."
 
-msgid "Usage This Month"
-msgstr "بۇ ئايلىق ئىشلىتىلىشى"
+msgid "No cache key provided."
+msgstr "No cache key provided."
 
-msgid "Settings saved successfully!"
-msgstr "تەڭشەكلەر مۇۋەپپەقىيەتلىك ساقلاندى!"
+msgid "HTML content not found or expired."
+msgstr "HTML content not found or expired."
 
-msgid "Settings reset to defaults."
-msgstr "تەڭشەكلەر سۈكۈتتىكى قىممەتكە قايتۇرۇلدى."
+msgid "Unauthorized access."
+msgstr "Unauthorized access."
 
-msgid "Failed to save settings."
-msgstr "تەڭشەكلەرنى ساقلاش مەغلۇپ بولدى."
+msgid "Translation file not found."
+msgstr "Translation file not found."
 
-msgid "Invalid API key format."
-msgstr "ئىناۋەتسىز API ئاچقۇچى فورماتى."
+msgid "Auto-translate function not available."
+msgstr "Auto-translate function not available."
 
-msgid "API connection successful."
-msgstr "API ئۇلىنىشى مۇۋەپپەقىيەتلىك بولدى."
+msgid "Language settings saved successfully."
+msgstr "تىل تەڭشەكلىرى مۇۋەپپەقىيەتلىك ساقلاندى"
 
-msgid "API connection failed."
-msgstr "API ئۇلىنىشى مەغلۇپ بولدى."
+msgid "Please provide an image description."
+msgstr "مەرھەمەت"
 
-msgid "Compile All .mo Files"
-msgstr ""
+msgid "Image generation is not available. Please check your AI service configuration."
+msgstr "مەرھەمەت"
 
-msgid "Compile .mo files for all languages"
-msgstr ""
+msgid "Missing post ID or image URL."
+msgstr "Missing post ID or image URL."
 
-msgid "Compiling .mo files..."
-msgstr ""
+msgid "Failed to set featured image."
+msgstr "مەغلۇپ بولدى"
 
-msgid "Successfully compiled %d .mo files"
-msgstr ""
+msgid "AI Assistant for WordPress"
+msgstr "AI Assistant for WordPress"
 
-msgid "Failed to compile some .mo files"
-msgstr ""
+msgid "has been successfully activated!"
+msgstr "has been successfully activated!"
 
-msgid "Auto-compile .mo files when saving .po files"
-msgstr ""
+msgid "Please configure your AI provider API keys to start using the plugin."
+msgstr "مەرھەمەت"
 
-msgid "SOURCE LANGUAGE"
-msgstr "مەنبە تىل"
+msgid "Go to Settings"
+msgstr "Go to Settings"
 
-msgid "TARGET LANGUAGE"
-msgstr "نىشان تىل"
+msgid "Translate"
+msgstr "تەرجىمە قىلىش"
 
-msgid "AI MODEL"
-msgstr "سۈنئىي ئەقىل مودېلى"
+msgid "URL Translation"
+msgstr "ئۇلىنىشتىن تەرجىمە قىلىش"
+
+msgid "Content Tools"
+msgstr "مەزمۇن ھاسىل قىلىش"
+
+msgid "Featured Image"
+msgstr "Featured Image"
 
 msgid "Source Language"
 msgstr "مەنبە تىل"
@@ -401,47 +233,23 @@ msgstr "سۈنئىي ئەقىل مودېلى"
 msgid "Use Post Content"
 msgstr "ماقالە مەزمۇنىنى ئىشلىتىش"
 
-msgid "Translate Content"
-msgstr "مەزمۇننى تەرجىمە قىلىش"
-
-msgid "Source Content"
-msgstr "مەنبە مەزمۇن"
-
-msgid "Translated Content"
-msgstr "تەرجىمە قىلىنغان مەزمۇن"
-
 msgid "Enter or paste content to translate..."
 msgstr "تەرجىمە قىلىنىدىغان مەزمۇننى يېزىڭ ياكى چاپلاڭ"
 
 msgid "Translation will appear here..."
 msgstr "تەرجىمە بۇ يەردە كۆرۈنىدۇ"
 
-msgid "SOURCE CONTENT (Editable)"
-msgstr "مەنبە مەزمۇن (تەھرىرلىيەلەيدىغان)"
-
-msgid "TRANSLATED CONTENT (Editable)"
-msgstr "تەرجىمە قىلىنغان مەزمۇن (تەھرىرلىيەلەيدىغان)"
-
-msgid "Editable"
-msgstr "تەھرىرلىيەلەيدىغان"
-
 msgid "Article URL"
 msgstr "ماقالە ئۇلىنىشى"
-
-msgid "Fetch Content"
-msgstr "مەزمۇننى ئېلىش"
-
-msgid "Translate Article"
-msgstr "ماقالىنى تەرجىمە قىلىش"
 
 msgid "Original Article"
 msgstr "ئەسلى ماقالە"
 
-msgid "Translated Article"
-msgstr "تەرجىمە قىلىنغان ماقالە"
-
 msgid "Fetched content will appear here..."
 msgstr "ئۇلىنىشتىن ئوقۇپ ئالغان ماقالە مەزمۇنى بۇ يەردە كۆرۈنىدۇ"
+
+msgid "Translated Article"
+msgstr "تەرجىمە قىلىنغان ماقالە"
 
 msgid "Translated article will appear here..."
 msgstr "تەرجىمە قىلىنغان ماقالە مەزمۇنى بۇ يەردە كۆرۈنىدۇ"
@@ -479,9 +287,6 @@ msgstr "تىما، پىكىر ياكى ئىدىيەنى كىرگۈزۈڭ"
 msgid "Use Post Title"
 msgstr "ماقالە ماۋزۇسىنى ئىشلىتىش"
 
-msgid "Generate"
-msgstr "ھاسىل قىلىش"
-
 msgid "Generated Content"
 msgstr "مەزمۇن ھاسىل قىلىش"
 
@@ -492,134 +297,970 @@ msgid "Insert to Editor"
 msgstr "مەزمۇننى ئۈستىدىكى تەھرىرىلىگۈچكە قىستۇرۇش"
 
 msgid "Apply to Yoast SEO"
-msgstr ""
+msgstr "Apply to Yoast SEO"
 
 msgid "Review the generated content above, then choose an action"
 msgstr "يۇقارقى ھاسىل قىلىنغان مەزمۇننى كۆزدىن كەچۈرۈڭ، ئاندىن بىر مەشغۇلات تاللاڭ"
 
-msgid "Auto-detect"
-msgstr "ئۆزلۈكىدىن بايقاش"
+msgid "Image Description/Prompt"
+msgstr "Image Description/Prompt"
 
-msgid "English"
-msgstr "ئىنگىلىزچە"
+msgid "Describe the image you want to generate (e.g., A modern office workspace with laptop and coffee)..."
+msgstr "Describe the image you want to generate (e.g., A modern office workspace with laptop and coffee)..."
 
-msgid "Turkish"
-msgstr "تۈركچە"
+msgid "Image Style"
+msgstr "Image Style"
 
-msgid "Arabic"
-msgstr "ئەرەبچە"
+msgid "Photorealistic"
+msgstr "Photorealistic"
 
-msgid "Spanish"
-msgstr "ئىسپانچە"
+msgid "Illustration"
+msgstr "Illustration"
 
-msgid "French"
-msgstr "فرانسۇزچە"
+msgid "Digital Art"
+msgstr "Digital Art"
 
-msgid "German"
-msgstr "گىرمانچە"
+msgid "Minimalist"
+msgstr "Minimalist"
 
-msgid "Russian"
-msgstr "رۇسچە"
+msgid "Professional/Business"
+msgstr "Professional/Business"
 
-msgid "Uyghur"
-msgstr "ئۇيغۇرچە"
+msgid "Abstract"
+msgstr "Abstract"
 
-msgid "Chinese"
+msgid "Image Size"
+msgstr "Image Size"
+
+msgid "Square (1024x1024)"
+msgstr "Square (1024x1024)"
+
+msgid "Landscape (1792x1024)"
+msgstr "Landscape (1792x1024)"
+
+msgid "Portrait (1024x1792)"
+msgstr "Portrait (1024x1792)"
+
+msgid "Auto-Generate Prompt"
+msgstr "Auto-Generate Prompt"
+
+msgid "Generate Image"
+msgstr "Generate Image"
+
+msgid "Generated Image Preview"
+msgstr "Generated Image Preview"
+
+msgid "Generated image will appear here..."
+msgstr "Generated image will appear here..."
+
+msgid "Set as Featured Image"
+msgstr "Set as Featured Image"
+
+msgid "Download Image"
+msgstr "Download Image"
+
+msgid "Generate an image, then use the buttons above to set it as featured image or download"
+msgstr "Generate an image, then use the buttons above to set it as featured image or download"
+
+msgid "Use the main AI Assistant panel below for translation and content tools."
+msgstr "Use the main AI Assistant panel below for translation and content tools."
+
+msgid "Go to Main Panel"
+msgstr "Go to Main Panel"
+
+msgid "This is a compact view. The full-featured tool is in the main content area."
+msgstr "This is a compact view. The full-featured tool is in the main content area."
+
+msgid "Settings"
+msgstr "تەڭشەكلەر"
+
+msgid "Translation History"
+msgstr "تەرجىمە تارىخى"
+
+msgid "Translation Management"
+msgstr "تەرجىمە باشقۇرۇش"
+
+msgid "API configured"
+msgstr "API configured"
+
+msgid "API not configured"
+msgstr "API not configured"
+
+msgid "languages available"
+msgstr "languages available"
+
+msgid "Translations loaded"
+msgstr "Translations loaded"
+
+msgid "Save Language Settings"
+msgstr "تىل تەڭشىكىنى ساقلاش"
+
+msgid "Save API Settings"
+msgstr "API سەپلىمىلىرىنى ساقلاش"
+
+msgid "Database error: %s"
+msgstr "Database error: %s"
+
+msgid "Post #%d (deleted)"
+msgstr "Post #%d (deleted)"
+
+msgid "Post #%d"
+msgstr "Post #%d"
+
+msgid "Translation not found."
+msgstr "Translation not found."
+
+msgid "Suggestion not found."
+msgstr "Suggestion not found."
+
+msgid "Post ID: %d"
+msgstr "Post ID: %d"
+
+msgid "Editing: %s"
+msgstr "Editing: %s"
+
+msgid "Save Translations to .po File"
+msgstr "تەرجىمىنى ساقلاش"
+
+msgid "Security check failed."
+msgstr "Security check failed."
+
+msgid "Insufficient permissions."
+msgstr "Insufficient permissions."
+
+msgid "Successfully compiled %d .mo files"
+msgstr "مۇۋەپپەقىيەت"
+
+msgid "AI Assistant Dashboard"
+msgstr "سۈنئىي ئەقىل يارەدمچىسى باش بېتى"
+
+msgid "AI auto-translate has been disabled in favor of manual translation. This is a one-time translation task that works better with manual translation. Please translate the strings manually using the interface below."
+msgstr "مەرھەمەت"
+
+msgid "Translations saved successfully!"
+msgstr "Translations saved successfully!"
+
+msgid "Saving..."
+msgstr "Saving..."
+
+msgid "Saved!"
+msgstr "Saved!"
+
+msgid "Error saving settings"
+msgstr "خاتالىق"
+
+msgid "Language changed. The page will reload to apply the new language."
+msgstr "Language changed. The page will reload to apply the new language."
+
+msgid "Testing..."
+msgstr "Testing..."
+
+msgid "Success!"
+msgstr "مۇۋەپپەقىيەت"
+
+msgid "Test failed"
+msgstr "Test failed"
+
+msgid "Compiling .mo files..."
+msgstr "Compiling .mo files..."
+
+msgid "Plugin Status"
+msgstr "Plugin Status"
+
+msgid "Enabled"
+msgstr "Enabled"
+
+msgid "Disabled"
+msgstr "Disabled"
+
+msgid "API Configuration"
+msgstr "API سەپلىمىلىرى"
+
+msgid "Configured"
+msgstr "Configured"
+
+msgid "No API keys configured"
+msgstr "No API keys configured"
+
+msgid "Database"
+msgstr "Database"
+
+msgid "Tables created"
+msgstr "Tables created"
+
+msgid "Tables missing"
+msgstr "Tables missing"
+
+msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+msgstr "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+
+msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
+msgstr "مەغلۇپ بولدى"
+
+msgid "Failed to save translations. Please check file permissions."
+msgstr "مەرھەمەت"
+
+msgid "No translations found for this language."
+msgstr "No translations found for this language."
+
+msgid "English Text (msgid)"
+msgstr "ئىنگلىزچە تېكىست (msgid)"
+
+msgid "Translation (msgstr)"
+msgstr "تەرجىمىسى (msgstr)"
+
+msgid "Status"
+msgstr "ھالەت"
+
+msgid "Actions"
+msgstr "مەشغۇلاتلار"
+
+msgid "Enter translation..."
+msgstr "تەرجىمىسىنى كىرگۈزۈڭ..."
+
+msgid "Translated"
+msgstr "تەرجىمە قىلىندى"
+
+msgid "Missing"
+msgstr "كەم"
+
+msgid "AI Translate"
+msgstr "سۈنئىي ئەقىل بىلەن تەرجىمە قىلىش"
+
+msgid "Not Available"
+msgstr "Not Available"
+
+msgid "Complete"
+msgstr "Complete"
+
+msgid "In Progress"
+msgstr "In Progress"
+
+msgid "Strings:"
+msgstr "Strings:"
+
+msgid ".po Size:"
+msgstr ".po Size:"
+
+msgid ".mo Size:"
+msgstr ".mo Size:"
+
+msgid "Manage"
+msgstr "Manage"
+
+msgid "Summary"
+msgstr "Summary"
+
+msgid "%d of %d languages are active with compiled translations."
+msgstr "%d of %d languages are active with compiled translations."
+
+msgid "Complete missing translations and compile .mo files to activate more languages."
+msgstr "Complete missing translations and compile .mo files to activate more languages."
+
+msgid "Usage Statistics"
+msgstr "ئىشلىتىش سىتاتسىتىكىسى"
+
+msgid "Translations this month"
+msgstr "بۇ ئايدىكى تەرجىمىلەر"
+
+msgid "Content suggestions"
+msgstr "مەزمۇن تەۋسىيەلىرى"
+
+msgid "Active AI models"
+msgstr "ئاكتىپ سۈنئىي ئەقىل مودېلى"
+
+msgid "Quick Actions"
+msgstr "تىز مەشغۇلاتلار"
+
+msgid "Configure Settings"
+msgstr "تەڭشەكلەرنى تەڭشەش"
+
+msgid "Create New Post"
+msgstr "يېڭى يازما يېزىش"
+
+msgid "View History"
+msgstr "تارىخنى كۆرۈش"
+
+msgid "System Status"
+msgstr "سىستېما ھالىتى"
+
+msgid "Multilingual Status"
+msgstr "Multilingual Status"
+
+msgid "AI Assistant Settings"
+msgstr "سۈنئىي ئەقىل ياردەمچىسى تەڭشىكى"
+
+msgid "View Diagnostics"
+msgstr "دىئاگنوز كۆرۈش"
+
+msgid "Language Settings"
+msgstr "تىل تەڭشىكى"
+
+msgid "Admin Interface Language"
+msgstr "باشقۇرۇش بېتى تىلى"
+
+msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
+msgstr "سۈنئىي ئەقىل ياردەمچىسىنىڭ ئارا يۈز تىلىنى تاللاڭ. بۇ قىستۇرمىنىڭ تىلىنى بەلگىلەيدۇ."
+
+msgid "Test API Connection"
+msgstr "API ئۇلىنىشىنى سىناش"
+
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "API ئاچقۇچىنىڭ توغرا ئىشلەۋاتقانلىقىنى جەزىملەشتۈرۈش ئۈچۈن سىناپ بېقىڭ."
+
+msgid "Test Gemini API"
+msgstr "API ئاچقۇچىنى سىناش"
+
+msgid "Compilation Tools"
+msgstr "Compilation Tools"
+
+msgid "Manage .mo file compilation for all languages."
+msgstr "Manage .mo file compilation for all languages."
+
+msgid "Compile All .mo Files"
+msgstr "Compile All .mo Files"
+
+msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress."
+msgstr "This will compile all .po files to .mo files. Required for translations to work in WordPress."
+
+msgid "AI Assistant History"
+msgstr "AI Assistant History"
+
+msgid "Translations"
+msgstr "Translations"
+
+msgid "Suggestions"
+msgstr "Suggestions"
+
+msgid "Translation history table does not exist. Please contact your administrator."
+msgstr "مەرھەمەت"
+
+msgid "Date"
+msgstr "چېسلا"
+
+msgid "Post/URL"
+msgstr "Post/URL"
+
+msgid "From"
+msgstr "نېمىدىن"
+
+msgid "To"
+msgstr "نېمىگە"
+
+msgid "Model"
+msgstr "Model"
+
+msgid "No translations found. Try performing some translations to see them here."
+msgstr "No translations found. Try performing some translations to see them here."
+
+msgid "Translation history table not available."
+msgstr "Translation history table not available."
+
+msgid "Manual Translation"
+msgstr "Manual Translation"
+
+msgid "View"
+msgstr "كۆرۈش"
+
+msgid "Content Suggestions History"
+msgstr "Content Suggestions History"
+
+msgid "Suggestions history table does not exist. Please contact your administrator."
+msgstr "مەرھەمەت"
+
+msgid "User"
+msgstr "User"
+
+msgid "Input Text"
+msgstr "Input Text"
+
+msgid "Suggestion"
+msgstr "Suggestion"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Post"
+msgstr "يازما"
+
+msgid "No suggestions found. Start using the AI Assistant to generate content suggestions."
+msgstr "No suggestions found. Start using the AI Assistant to generate content suggestions."
+
+msgid "Suggestions history table not available."
+msgstr "Suggestions history table not available."
+
+msgid "Global"
+msgstr "Global"
+
+msgid "View Details"
+msgstr "View Details"
+
+msgid "Translation Details"
+msgstr "Translation Details"
+
+msgid "← Back to History"
+msgstr "← Back to History"
+
+msgid "Translation Information"
+msgstr "Translation Information"
+
+msgid "Translation ID"
+msgstr "Translation ID"
+
+msgid "Date & Time"
+msgstr "Date & Time"
+
+msgid "Associated Post"
+msgstr "Associated Post"
+
+msgid "Source URL"
+msgstr "Source URL"
+
+msgid "Content Comparison"
+msgstr "Content Comparison"
+
+msgid "Original Content"
+msgstr "Original Content"
+
+msgid "characters"
+msgstr "characters"
+
+msgid "Edit Associated Post"
+msgstr "Edit Associated Post"
+
+msgid "Suggestion Details"
+msgstr "Suggestion Details"
+
+msgid "← Back to Suggestions"
+msgstr "← Back to Suggestions"
+
+msgid "Suggestion Information"
+msgstr "Suggestion Information"
+
+msgid "Suggestion ID"
+msgstr "Suggestion ID"
+
+msgid "Unknown User"
+msgstr "Unknown User"
+
+msgid "Suggestion Type"
+msgstr "Suggestion Type"
+
+msgid "Context"
+msgstr "Context"
+
+msgid "Global suggestion (not associated with a specific post)"
+msgstr "Global suggestion (not associated with a specific post)"
+
+msgid "Content Details"
+msgstr "Content Details"
+
+msgid "Input/Context"
+msgstr "Input/Context"
+
+msgid "Generated Suggestion"
+msgstr "Generated Suggestion"
+
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+
+msgid "Select Language to Edit"
+msgstr "تەھرىرلىمەكچى بولغان تىلنى تاللاڭ"
+
+msgid "Translation file exists"
+msgstr "تەرجىمە ھۆججىتى مەۋجۇت"
+
+msgid "No translation file found - will create new"
+msgstr "No translation file found - will create new"
+
+msgid "total strings"
+msgstr "جەمئىي جۈملە"
+
+msgid "translated"
+msgstr "تەرجىمە قىلىنغىنى"
+
+msgid "untranslated"
+msgstr "تەرجىمە قىلىنمىغىنى"
+
+msgid "Search translations..."
+msgstr "تەرجىمىلەردىن ئىزدەش"
+
+msgid "Show untranslated only"
+msgstr "تەرجىمە قىلىنمىغانلارنى كۆرسىتىش"
+
+msgid "Untranslated"
+msgstr "تەرجىمە قىلىنمىدى"
+
+msgid "Download .po File"
+msgstr "تەرجىمە ھۆججىتىنى چۈشۈرىۋىلىش"
+
+msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for Islamic/religious content."
+msgstr "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for Islamic/religious content."
+
+msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
+msgstr "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
+
+msgid "Compiling..."
+msgstr "Compiling..."
+
+msgid "Compilation failed: "
+msgstr "Compilation failed: "
+
+msgid "Unknown error"
+msgstr "Unknown error"
+
+msgid "Compilation request failed. Please try again."
+msgstr "مەرھەمەت"
+
+msgid "Image generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
+msgstr "مەرھەمەت"
+
+msgid "Network error: "
+msgstr "Network error: "
+
+msgid "API Error (%d): %s"
+msgstr "خاتالىق"
+
+msgid "Invalid response from image generation API"
+msgstr "Invalid response from image generation API"
+
+msgid "Google Gemini image generation is not available in your region or requires special access. This feature may be limited to certain accounts or geographic areas. Please use OpenAI (DALL-E) for reliable image generation."
+msgstr "مەرھەمەت"
+
+msgid "Gemini image generation is not available in your region or requires special access. API Error (%d): %s. Please use OpenAI (DALL-E) for image generation."
+msgstr "خاتالىق"
+
+msgid "Gemini image generation not available. Please use OpenAI (DALL-E) for image generation."
+msgstr "مەرھەمەت"
+
+msgid "Gemini image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
+msgstr "مەرھەمەت"
+
+msgid "Failed to process generated image"
+msgstr "مەغلۇپ بولدى"
+
+msgid "Anthropic Claude does not support direct image generation yet. However, Claude enhanced your prompt: "
+msgstr "Anthropic Claude does not support direct image generation yet. However, Claude enhanced your prompt: "
+
+msgid "Please use OpenAI (DALL-E) or Google Gemini for actual image generation."
+msgstr "مەرھەمەت"
+
+msgid "Anthropic Claude does not support direct image generation. Please use OpenAI (DALL-E) or Google Gemini for image generation."
+msgstr "مەرھەمەت"
+
+msgid "Diagnostics"
+msgstr "دىئاگنوز"
+
+msgid "Yes"
+msgstr "ھەئە"
+
+msgid "No"
+msgstr "ياق"
+
+msgid "Found"
+msgstr "تېپىلدى"
 msgstr ""
 
-msgid "Persian"
-msgstr "پارسچە"
+msgid "Loaded"
+msgstr "Loaded"
 
-msgid "Portuguese"
-msgstr ""
+msgid "Not Loaded"
+msgstr "Not Loaded"
 
-msgid "Italian"
-msgstr ""
+msgid "Not Set"
+msgstr "Not Set"
 
-msgid "Japanese"
-msgstr ""
+msgid "Writable"
+msgstr "Writable"
 
-msgid "Korean"
-msgstr ""
+msgid "Read-only"
+msgstr "Read-only"
 
-msgid "Hindi"
-msgstr ""
+msgid "Insufficient permissions"
+msgstr "Insufficient permissions"
 
-msgid "Dutch"
-msgstr "گوللاندىيەچە"
+msgid "Language Loading Debug Test Results"
+msgstr "يۈكلەۋاتىدۇ"
 
-msgid "Swedish"
-msgstr ""
+msgid "Basic Information"
+msgstr "Basic Information"
 
-msgid "Danish"
-msgstr "دانىيەچە"
+msgid "WordPress Locale:"
+msgstr "WordPress Locale:"
 
-msgid "Norwegian"
-msgstr ""
+msgid "Custom Language Setting:"
+msgstr "Custom Language Setting:"
 
-msgid "Finnish"
-msgstr "فىنلاندىيەچە"
+msgid "NOT SET"
+msgstr "NOT SET"
 
-msgid "Error"
-msgstr "خاتا"
+msgid "Plugin Textdomain Loaded:"
+msgstr "Plugin Textdomain Loaded:"
 
-msgid "Fetching..."
-msgstr "ماقالىنى ئوقۇۋاتىدۇ"
+msgid "YES"
+msgstr "YES"
 
-msgid "Generating..."
-msgstr "ھاسىل قىلىۋاتىدۇ"
+msgid "NO"
+msgstr "NO"
 
-msgid "Content fetched successfully!"
-msgstr "ماقالە مەزمۇنى مۇۋەپپەقىيەتلىك ئېلىندى"
+msgid "Translation Tests"
+msgstr "Translation Tests"
 
-msgid "Failed to fetch content"
-msgstr "ماقالە مەزمۇنىنى ئالالمىدى"
+msgid "File Information"
+msgstr "File Information"
 
-msgid "Translation failed"
-msgstr "تەرجىمە مەغلۇپ بولدى"
+msgid "Expected .mo file:"
+msgstr "Expected .mo file:"
 
-msgid "Content generation failed"
-msgstr "مەزمۇن ھاسىل قىلىش مەغلۇپ بولدى"
+msgid ".mo file exists:"
+msgstr ".mo file exists:"
 
-msgid "A connection error occurred."
-msgstr "ئۇلىنىشتا خاتالىق كۆرۈلدى"
+msgid ".po file exists:"
+msgstr ".po file exists:"
 
-msgid "Please enter content to translate."
-msgstr "تەرجىمە قىلىدىغان مەزمۇننى كىرگۈزۈڭ"
+msgid "Available .mo files (%d):"
+msgstr "Available .mo files (%d):"
 
-msgid "Please enter a URL to fetch."
-msgstr "مەزمۇنىنى ئالىدىغان ئۇلىنىشنى كىرگۈزۈڭ"
+msgid "Manual Language Loading Test"
+msgstr "يۈكلەۋاتىدۇ"
 
-msgid "Please enter a topic or context."
-msgstr "تىما ياكى پىكىرىڭىزنى كىرگۈزۈڭ."
+msgid "Unload result:"
+msgstr "Unload result:"
 
-msgid "Gemini 2.5 Flash"
-msgstr ""
+msgid "SUCCESS"
+msgstr "SUCCESS"
 
-msgid "Gemini 2.5 Flash (Default)"
-msgstr ""
+msgid "FAILED"
+msgstr "FAILED"
 
-msgid "GPT-4"
-msgstr ""
+msgid "Custom load result:"
+msgstr "Custom load result:"
 
-msgid "Content generated successfully!"
-msgstr "مەزمۇن مۇۋەپپەقىيەتلىك ھاسىل قىلىندى"
+msgid "Test translation after manual load:"
+msgstr "Test translation after manual load:"
 
-msgid "Keywords applied to Yoast SEO successfully!"
-msgstr ""
+msgid "FAILED - .mo file not found"
+msgstr "FAILED - .mo file not found"
 
-msgid "Content inserted successfully!"
-msgstr "مەزمۇن مۇۋەپپەقىيەتلىك قىستۇرۇلدى"
+msgid "Language loading test completed"
+msgstr "Language loading test completed"
 
-msgid "Content translated successfully!"
-msgstr "مەزمۇن مۇۋەپپەقىيەتلىك تەرجىمە قىلىندى"
+msgid "API connection test completed"
+msgstr "API connection test completed"
 
-msgid "Translate"
-msgstr "تەرجىمە قىلىش"
+msgid "Language directory is writable"
+msgstr "Language directory is writable"
 
-msgid "URL Translation"
-msgstr "ئۇلىنىشتىن تەرجىمە قىلىش"
+msgid "Language directory is not writable"
+msgstr "Language directory is not writable"
 
-msgid "Content Tools"
-msgstr "مەزمۇن ھاسىل قىلىش"
+msgid "AI Assistant Diagnostics"
+msgstr "AI ياردەمچى دىئاگنوزى"
 
+msgid "🔍 Diagnostics & System Information"
+msgstr "🔍 دىئاگنوز ۋە سىستېما ئۇچۇرلىرى"
+
+msgid "This page provides comprehensive system information and debugging tools for troubleshooting AI Assistant issues."
+msgstr "بۇ بەت AI ياردەمچى مەسىلىلىرىنى ھەل قىلىش ئۈچۈن تولۇق سىستېما ئۇچۇرلىرى ۋە سازلاش قوراللىرىنى تەمىنلەيدۇ."
+
+msgid "📊 System Status Dashboard"
+msgstr "📊 System Status Dashboard"
+
+msgid "Version:"
+msgstr "Version:"
+
+msgid "Plugin Active:"
+msgstr "Plugin Active:"
+
+msgid "Directory:"
+msgstr "Directory:"
+
+msgid "Language System"
+msgstr "Language System"
+
+msgid "WP Locale:"
+msgstr "WP Locale:"
+
+msgid "Plugin Language:"
+msgstr "Plugin Language:"
+
+msgid "Textdomain:"
+msgstr "Textdomain:"
+
+msgid "AI API Status"
+msgstr "AI API Status"
+
+msgid "Translation Files"
+msgstr "Translation Files"
+
+msgid ".po Files:"
+msgstr ".po Files:"
+
+msgid ".mo Files:"
+msgstr ".mo Files:"
+
+msgid "🖥️ System Environment"
+msgstr "🖥️ System Environment"
+
+msgid "WordPress Environment"
+msgstr "WordPress Environment"
+
+msgid "WordPress Version:"
+msgstr "WordPress Version:"
+
+msgid "WordPress Language:"
+msgstr "WordPress Language:"
+
+msgid "Site URL:"
+msgstr "Site URL:"
+
+msgid "Multisite:"
+msgstr "Multisite:"
+
+msgid "Server Environment"
+msgstr "Server Environment"
+
+msgid "PHP Version:"
+msgstr "PHP Version:"
+
+msgid "MySQL Version:"
+msgstr "MySQL Version:"
+
+msgid "Memory Limit:"
+msgstr "Memory Limit:"
+
+msgid "Max Execution Time:"
+msgstr "Max Execution Time:"
+
+msgid "🔧 Diagnostic Tools"
+msgstr "🔧 Diagnostic Tools"
+
+msgid "Language System Test"
+msgstr "Language System Test"
+
+msgid "Test language loading functionality and view detailed debug information."
+msgstr "Test language loading functionality and view detailed debug information."
+
+msgid "Run Language Test"
+msgstr "Run Language Test"
+
+msgid "API Connection Test"
+msgstr "API Connection Test"
+
+msgid "Test API connections and verify configuration for all providers."
+msgstr "Test API connections and verify configuration for all providers."
+
+msgid "Test API Connections"
+msgstr "Test API Connections"
+
+msgid "System Report Generator"
+msgstr "System Report Generator"
+
+msgid "Generate a comprehensive system report for troubleshooting and support requests."
+msgstr "Generate a comprehensive system report for troubleshooting and support requests."
+
+msgid "Generate Report"
+msgstr "Generate Report"
+
+msgid "Database Health Check"
+msgstr "Database Health Check"
+
+msgid "Check database tables and data integrity for AI Assistant."
+msgstr "Check database tables and data integrity for AI Assistant."
+
+msgid "Check Database"
+msgstr "Check Database"
+
+msgid "Running language loading test..."
+msgstr "Running language loading test..."
+
+msgid "Language Test Results:"
+msgstr "Language Test Results:"
+
+msgid "Error:"
+msgstr "خاتالىق"
+
+msgid "Test failed - AJAX error"
+msgstr "Test failed - AJAX error"
+
+msgid "Testing API connections..."
+msgstr "Testing API connections..."
+
+msgid "API connection test feature coming soon..."
+msgstr "API connection test feature coming soon..."
+
+msgid "Generating system report..."
+msgstr "Generating system report..."
+
+msgid "System Report Generated:"
+msgstr "System Report Generated:"
+
+msgid "Copy the above information when reporting issues."
+msgstr "Copy the above information when reporting issues."
+
+msgid "Report generation failed - AJAX error"
+msgstr "Report generation failed - AJAX error"
+
+msgid "General Settings"
+msgstr "ئادەتتىكى تەڭشەكلەر"
+
+msgid "API Keys"
+msgstr "API ئاچقۇچلىرى"
+
+msgid "Custom Prompts"
+msgstr "خاسلاشتۇرۇلغان بۇيرۇق ئەسكەرتمىلىرى"
+
+msgid "Enable AI Assistant"
+msgstr "سۈنئىي ئەقىل ياردەمچىسىنى ئاكتىپلاشتۇرۇش"
+
+msgid "Default AI Model"
+msgstr "سۈكۈتتىكى سۈنئىي ئەقىل مودېلى"
+
+msgid "Preferred AI Provider"
+msgstr "خالىغان سۈنئىي ئەقىل مودېلى تەمىنلىگۈچىڭىز"
+
+msgid "OpenAI API Key"
+msgstr "OpenAI API ئاچقۇچى"
+
+msgid "Anthropic API Key"
+msgstr "Anthropic API ئاچقۇچى"
+
+msgid "Gemini API Key"
+msgstr "Gemini API ئاچقۇچى"
+
+msgid "Translation Prompt"
+msgstr "تەرجىمە بۇيرۇق ئەسكەرتمىلىرى"
+
+msgid "Content Suggestion Prompt"
+msgstr "مەزمۇن ھاسىل قىلىش بۇيرۇق ئەسكەرتمىلىرى"
+
+msgid "SEO Keywords Prompt"
+msgstr "ئىزدەش موتورى ئۈچۈن ئاچقۇچلۇق سۆز تەۋسىيەسى ئەسكەرتمىسى"
+
+msgid "Configure general AI Assistant settings."
+msgstr "ئادەتتىكى سۈنئىي ئەقىل ياردەمچىسى تەڭشەكلىرىنى سەپلەش"
+
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr "ئوخشىمىغان سۈنئىي ئەقىل تەمىنلىگۈچىلەر ئۈچۈن API ئاچقۇچىنى سەپلەڭ. ھازىر Gemini نى تەرجىمە ئۈچۈن ئىشلىتىۋاتىسىز ، ئەمما كەلگۈسىدىكى ئىشلىتىش ئۈچۈن كۆپ تەمىنلىگۈچىلەرنى تەڭشىيەلەيسىز."
+
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr "سۈنئىي ئەقىلگە يوللىنىدىغان بۇيرۇق ئەسكەرتمىلىرىنى خاسلاشتۇرۇڭ. مەنبە تىل ۋە نىشان تىل ئورنىغا {source_language} ۋە {target_language} لارنى ئىشلىتىڭ."
+
+msgid "Enable AI Assistant functionality"
+msgstr "سۈنئىي ئەقىل ياردەمچىسى ئىقتىدارلىرىنى ئاكتىپلاشتۇرۇش"
+
+msgid "Select the default AI model to use for requests."
+msgstr "ئىشلىتىدىغان سۈكۈتتىكى سۈنئىي ئەقىل مودېلىنى تاللاڭ"
+
+msgid "Select your preferred AI provider for requests."
+msgstr "ئىشلىتىدىغان خالىغان سۈنئىي ئەقىل مودېلى تەمىنلىگۈچىڭىزنى تاللاڭ"
+
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+
+msgid "Customize the prompt for content suggestions."
+msgstr "مەزمۇن ھاسىل قىلىش بۇيرۇق ئەسكەرتمىلىرىنى خاسلاشتۇرۇش"
+
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr "ئىزدەش موتورى ئۈچۈن ئاچقۇچلۇق سۆز تەۋسىيەسى ئەسكەرتمىسىنى خاسلاشتۇرۇش."
+
+msgid "Invalid URL provided"
+msgstr "Invalid URL provided"
+
+msgid "No content found at the URL"
+msgstr "No content found at the URL"
+
+msgid "Could not extract content from the URL"
+msgstr "Could not extract content from the URL"
+
+msgid "Could not detect language"
+msgstr "Could not detect language"
+
+
+# Metabox Guide Strings - v1.0.51
+msgid "AI Assistant Quick Guide"
+msgstr "AI Assistant Quick Guide"
+
+msgid "Show/Hide Tips"
+msgstr "Show/Hide Tips"
+
+msgid "Translate any text content. Paste your text, choose languages, and get instant translations."
+msgstr "Translate any text content. Paste your text, choose languages, and get instant translations."
+
+msgid "Translate entire articles from URLs. Enter a web address to fetch and translate content automatically."
+msgstr "Translate entire articles from URLs. Enter a web address to fetch and translate content automatically."
+
+msgid "Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic."
+msgstr "Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic."
+
+msgid "Generate custom images using AI. Describe what you want and get professional images for your posts."
+msgstr "Generate custom images using AI. Describe what you want and get professional images for your posts."
+
+msgid "Quick Workflow Tips:"
+msgstr "Quick Workflow Tips:"
+
+msgid "Next Steps:"
+msgstr "Next Steps:"
+
+msgid "Pro Tip:"
+msgstr "Pro Tip:"
+
+msgid "Image Tips:"
+msgstr "Image Tips:"
+
+
+# Additional Metabox Strings - v1.0.51
+msgid "Translate text content between languages. Use \"Use Post Content\" to quickly populate with your current post content, or paste any text to translate."
+msgstr "Translate text content between languages. Use \"Use Post Content\" to quickly populate with your current post content, or paste any text to translate."
+
+msgid "Translate entire articles from web URLs. Enter any article URL, fetch the content automatically, then translate it to your target language."
+msgstr "Translate entire articles from web URLs. Enter any article URL, fetch the content automatically, then translate it to your target language."
+
+msgid "Generate content using AI. Choose content type (articles, keywords, descriptions), enter your topic, and let AI create professional content for your posts."
+msgstr "Generate content using AI. Choose content type (articles, keywords, descriptions), enter your topic, and let AI create professional content for your posts."
+
+msgid "Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts."
+msgstr "Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts."
+
+msgid "AI Assistant Tools Available:"
+msgstr "AI Assistant Tools Available:"
+
+msgid "✓ Content Translation"
+msgstr "✓ Content Translation"
+
+msgid "✓ URL Article Translation"
+msgstr "✓ URL Article Translation"
+
+msgid "✓ Content Generation"
+msgstr "✓ Content Generation"
+
+msgid "✓ AI Image Creation"
+msgstr "✓ AI Image Creation"
+
+msgid "Open AI Assistant Panel"
+msgstr "Open AI Assistant Panel"
+
+msgid "Access the full-featured AI tools in the main content area below."
+msgstr "Access the full-featured AI tools in the main content area below."
+
+msgid "Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere."
+msgstr "Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere."
+
+msgid "For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active."
+msgstr "For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active."
+
+msgid "Be descriptive in your prompt for best results. Include style, colors, mood, and composition details."
+msgstr "Be descriptive in your prompt for best results. Include style, colors, mood, and composition details."
+
+
+msgid "💡 Use "Use Post Content" to quickly populate the translator with your existing content"
+msgstr "💡 مەۋجۇت مەزمۇنىڭىز بىلەن تەرجىمانى تېزدىن تولدۇرۇش ئۈچۈن "يازما مەزمۇنىنى ئىشلىتىش"نى ئىشلىتىڭ"
+
+msgid "🔄 Review and edit translations before inserting them into your post"
+msgstr "🔄 تەرجىمىلەرنى يازمىڭىزغا قىستۇرۇشتىن بۇرۇن كۆرۈپ چىقىپ تەھرىرلەڭ"
+
+msgid "⚙️ Configure your API keys in Settings for enhanced translation quality"
+msgstr "⚙️ تەرجىمە سۈپىتىنى ئۆستۈرۈش ئۈچۈن تەڭشەكلەردە API ئاچقۇچلىرىڭىزنى سەپلەڭ"
+
+msgid "📝 Generated content can be directly inserted into your WordPress editor"
+msgstr "📝 ھاسىل قىلىنغان مەزمۇن WordPress تەھرىرلىگۈچىڭىزگە بىۋاسىتە قىستۇرۇلىدۇ"

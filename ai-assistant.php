@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
- * Version: 1.0.50
+ * Version: 1.0.53
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -15,7 +15,7 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * * @package AIAssistant
- * @version 1.0.47
+ * @version 1.0.52
  */
 
 // Prevent direct access
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.50');
+    define('AI_ASSISTANT_VERSION', '1.0.53');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
@@ -141,11 +141,6 @@ class AIAssistant {
         // Include debug tools if needed
         if (file_exists(AI_ASSISTANT_PLUGIN_DIR . 'debug-translation-history.php')) {
             require_once AI_ASSISTANT_PLUGIN_DIR . 'debug-translation-history.php';
-        }
-        
-        // Include universal translation test
-        if (file_exists(AI_ASSISTANT_PLUGIN_DIR . 'universal-translation-test.php')) {
-            require_once AI_ASSISTANT_PLUGIN_DIR . 'universal-translation-test.php';
         }
         
         // Initialize components with error handling
@@ -539,14 +534,73 @@ class AIAssistant {
         $default_model = get_option('ai_assistant_default_model', 'gemini-2.5-flash');
         ?>
         <div class="ai-assistant-meta-box-container">
-            <div class="ai-assistant-tabs">                <div class="ai-assistant-tab-nav">
-                    <button class="ai-tab-button active" data-tab="translate"><?php _e('Translate', 'ai-assistant'); ?></button>
-                    <button class="ai-tab-button" data-tab="url"><?php _e('URL Translation', 'ai-assistant'); ?></button>
-                    <button class="ai-tab-button" data-tab="content"><?php _e('Content Tools', 'ai-assistant'); ?></button>
-                    <button class="ai-tab-button" data-tab="image"><?php _e('Featured Image', 'ai-assistant'); ?></button>
+            <div class="ai-assistant-intro">
+                <div class="ai-intro-header">
+                    <h4><?php _e('AI Assistant Quick Guide', 'ai-assistant'); ?></h4>
+                    <button type="button" class="ai-intro-toggle button-link" aria-expanded="false">
+                        <span class="dashicons dashicons-arrow-down-alt2"></span>
+                        <?php _e('Show/Hide Tips', 'ai-assistant'); ?>
+                    </button>
                 </div>
+                <div class="ai-intro-content" style="display: none;">
+                    <div class="ai-intro-grid">
+                        <div class="ai-intro-tab">
+                            <span class="ai-intro-icon">🔄</span>
+                            <strong><?php _e('Translate', 'ai-assistant'); ?></strong>
+                            <p><?php _e('Translate any text content. Paste your text, choose languages, and get instant translations.', 'ai-assistant'); ?></p>
+                        </div>
+                        <div class="ai-intro-tab">
+                            <span class="ai-intro-icon">🌐</span>
+                            <strong><?php _e('URL Translation', 'ai-assistant'); ?></strong>
+                            <p><?php _e('Translate entire articles from URLs. Enter a web address to fetch and translate content automatically.', 'ai-assistant'); ?></p>
+                        </div>
+                        <div class="ai-intro-tab">
+                            <span class="ai-intro-icon">✍️</span>
+                            <strong><?php _e('Content Tools', 'ai-assistant'); ?></strong>
+                            <p><?php _e('Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic.', 'ai-assistant'); ?></p>
+                        </div>
+                        <div class="ai-intro-tab">
+                            <span class="ai-intro-icon">🖼️</span>
+                            <strong><?php _e('Featured Image', 'ai-assistant'); ?></strong>
+                            <p><?php _e('Generate custom images using AI. Describe what you want and get professional images for your posts.', 'ai-assistant'); ?></p>
+                        </div>
+                    </div>
+                    <div class="ai-intro-workflow">
+                        <h5><?php _e('Quick Workflow Tips:', 'ai-assistant'); ?></h5>
+                        <ul>
+                            <li><?php _e('💡 Use "Use Post Content" to quickly populate the translator with your existing content', 'ai-assistant'); ?></li>
+                            <li><?php _e('🔄 Review and edit translations before inserting them into your post', 'ai-assistant'); ?></li>
+                            <li><?php _e('⚙️ Configure your API keys in Settings for enhanced translation quality', 'ai-assistant'); ?></li>
+                            <li><?php _e('📝 Generated content can be directly inserted into your WordPress editor', 'ai-assistant'); ?></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-assistant-tabs">
+                <!-- WordPress-style nav tabs -->
+                <nav class="nav-tab-wrapper wp-clearfix">
+                    <a href="javascript:void(0)" class="nav-tab nav-tab-active" data-tab="translate">
+                        <?php _e('Translate', 'ai-assistant'); ?>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-tab" data-tab="url">
+                        <?php _e('URL Translation', 'ai-assistant'); ?>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-tab" data-tab="content">
+                        <?php _e('Content Tools', 'ai-assistant'); ?>
+                    </a>
+                    <a href="javascript:void(0)" class="nav-tab" data-tab="image">
+                        <?php _e('Featured Image', 'ai-assistant'); ?>
+                    </a>
+                </nav>
 
                 <div id="ai-tab-translate" class="ai-tab-content active">
+                    <div class="ai-tab-help">
+                        <p class="ai-help-text">
+                            <span class="dashicons dashicons-info"></span>
+                            <?php _e('Translate text content between languages. Use "Use Post Content" to quickly populate with your current post content, or paste any text to translate.', 'ai-assistant'); ?>
+                        </p>
+                    </div>
                     <div class="ai-assistant-controls">                        
                         <div class="ai-control-row">
                             <div class="ai-control-group"><label for="ai-source-lang"><?php _e('Source Language', 'ai-assistant'); ?></label><select id="ai-source-lang" name="ai_source_lang"></select></div>
@@ -570,6 +624,12 @@ class AIAssistant {
                         </div>
                     </div>
                 </div>                <div id="ai-tab-url" class="ai-tab-content">
+                    <div class="ai-tab-help">
+                        <p class="ai-help-text">
+                            <span class="dashicons dashicons-info"></span>
+                            <?php _e('Translate entire articles from web URLs. Enter any article URL, fetch the content automatically, then translate it to your target language.', 'ai-assistant'); ?>
+                        </p>
+                    </div>
                     <div class="ai-assistant-controls">
                         <div class="ai-control-row">
                             <div class="ai-control-group ai-url-input"><label for="ai-article-url"><?php _e('Article URL', 'ai-assistant'); ?></label><input type="url" id="ai-article-url" placeholder="https://example.com/article"></div>
@@ -597,9 +657,19 @@ class AIAssistant {
                         </button>
                         <span class="ai-action-help"><?php _e('Review and edit the translation above, then click to insert into WordPress editor', 'ai-assistant'); ?></span>
                     </div>
+                    <div class="ai-workflow-tip">
+                        <strong><?php _e('Next Steps:', 'ai-assistant'); ?></strong> 
+                        <?php _e('Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere.', 'ai-assistant'); ?>
+                    </div>
                 </div>
 
                 <div id="ai-tab-content" class="ai-tab-content">
+                    <div class="ai-tab-help">
+                        <p class="ai-help-text">
+                            <span class="dashicons dashicons-info"></span>
+                            <?php _e('Generate content using AI. Choose content type (articles, keywords, descriptions), enter your topic, and let AI create professional content for your posts.', 'ai-assistant'); ?>
+                        </p>
+                    </div>
                     <div class="ai-assistant-controls">
                         <div class="ai-control-row">
                             <div class="ai-control-group">
@@ -644,9 +714,19 @@ class AIAssistant {
                         </button>
                         <span class="ai-action-help"><?php _e('Review the generated content above, then choose an action', 'ai-assistant'); ?></span>
                     </div>
+                    <div class="ai-workflow-tip">
+                        <strong><?php _e('Pro Tip:', 'ai-assistant'); ?></strong> 
+                        <?php _e('For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active.', 'ai-assistant'); ?>
+                    </div>
                 </div>
 
                 <div id="ai-tab-image" class="ai-tab-content">
+                    <div class="ai-tab-help">
+                        <p class="ai-help-text">
+                            <span class="dashicons dashicons-info"></span>
+                            <?php _e('Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts.', 'ai-assistant'); ?>
+                        </p>
+                    </div>
                     <div class="ai-assistant-controls">
                         <div class="ai-control-row">
                             <div class="ai-control-group">
@@ -710,6 +790,10 @@ class AIAssistant {
                         </button>
                         <span class="ai-action-help"><?php _e('Generate an image, then use the buttons above to set it as featured image or download', 'ai-assistant'); ?></span>
                     </div>
+                    <div class="ai-workflow-tip">
+                        <strong><?php _e('Image Tips:', 'ai-assistant'); ?></strong> 
+                        <?php _e('Be descriptive in your prompt for best results. Include style, colors, mood, and composition details.', 'ai-assistant'); ?>
+                    </div>
                 </div>
             </div>
             <div id="ai-assistant-message-area" style="margin-top: 15px;"></div>
@@ -724,11 +808,19 @@ class AIAssistant {
         // A simplified version for the sidebar
         ?>
         <div class="ai-assistant-compact">
-            <p><?php _e('Use the main AI Assistant panel below for translation and content tools.', 'ai-assistant'); ?></p>
-            <div class="ai-compact-buttons">
-                <button type="button" class="button button-primary" onclick="document.getElementById('ai-assistant-meta-box').scrollIntoView({ behavior: 'smooth' });"><?php _e('Go to Main Panel', 'ai-assistant'); ?></button>
+            <div class="ai-compact-info">
+                <p><strong><?php _e('AI Assistant Tools Available:', 'ai-assistant'); ?></strong></p>
+                <ul class="ai-compact-features">
+                    <li><?php _e('✓ Content Translation', 'ai-assistant'); ?></li>
+                    <li><?php _e('✓ URL Article Translation', 'ai-assistant'); ?></li>
+                    <li><?php _e('✓ Content Generation', 'ai-assistant'); ?></li>
+                    <li><?php _e('✓ AI Image Creation', 'ai-assistant'); ?></li>
+                </ul>
             </div>
-            <p class="description"><?php _e('This is a compact view. The full-featured tool is in the main content area.', 'ai-assistant'); ?></p>
+            <div class="ai-compact-buttons">
+                <button type="button" class="button button-primary" onclick="document.getElementById('ai-assistant-meta-box').scrollIntoView({ behavior: 'smooth' });"><?php _e('Open AI Assistant Panel', 'ai-assistant'); ?></button>
+            </div>
+            <p class="description"><?php _e('Access the full-featured AI tools in the main content area below.', 'ai-assistant'); ?></p>
         </div>
         <?php
     }
@@ -1681,13 +1773,6 @@ class AIAssistant {
  */
 function ai_assistant_init() {
     AIAssistant::get_instance();
-}
-
-// Include test scripts in admin after WordPress is fully loaded
-if (is_admin()) {
-    add_action('admin_init', function() {
-        include_once plugin_dir_path(__FILE__) . 'universal-translation-test.php';
-    });
 }
 
 // Start the plugin

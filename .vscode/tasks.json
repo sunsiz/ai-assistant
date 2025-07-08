@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Check Tab and Diagnostic Updates",
+			"type": "shell",
+			"command": "echo 'Checking updates:' && echo '1. Metabox tabs converted from buttons to WordPress nav-tabs' && echo '2. CSS updated to support nav-tab styling' && echo '3. JavaScript updated for nav-tab handling' && echo '4. Diagnostic tools API test functionality added' && echo '5. Database health check functionality added' && echo '' && echo 'Files modified:' && echo '- ai-assistant.php (metabox HTML structure)' && echo '- assets/css/editor.css (nav-tab styling)' && echo '- assets/js/editor.js (tab handling)' && echo '- includes/class-diagnostics.php (AJAX handlers)' && echo '' && echo 'Please test the changes in WordPress admin.'",
+			"group": "build",
+			"isBackground": false
+		}
+	]
+}

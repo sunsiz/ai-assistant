@@ -1,4 +1,4 @@
-/* AI Assistant Plugin Editor Styles - v1.0.49 - PROFESSIONAL MODERN DESIGN */
+/* AI Assistant Plugin Editor Styles - v1.0.53 - PROFESSIONAL MODERN DESIGN */
 /* Modern, Responsive, Professional WordPress Plugin Styles */
 
 .ai-assistant-meta-box {
@@ -14,43 +14,274 @@
     padding: 10px;
 }
 
-.ai-assistant-tabs {
+/* AI Assistant Intro Section */
+.ai-assistant-intro {
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
     margin-bottom: 20px;
-    border-bottom: 2px solid #f1f1f1;
+    overflow: hidden;
 }
 
-.ai-assistant-tab-buttons {
+.ai-intro-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid #e1e4e8;
+}
+
+.ai-intro-header h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3338;
+}
+
+.ai-intro-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border: none;
+    background: none;
+    color: #2271b1;
+    cursor: pointer;
+    font-size: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.ai-intro-toggle:hover {
+    color: #135e96;
+    background: rgba(34, 113, 177, 0.1);
+    border-radius: 3px;
+}
+
+.ai-intro-toggle[aria-expanded="true"] .dashicons {
+    transform: rotate(180deg);
+}
+
+.ai-intro-content {
+    padding: 16px;
+    animation: slideDown 0.3s ease;
+}
+
+.ai-intro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.ai-intro-tab {
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.ai-intro-tab:hover {
+    border-color: #2271b1;
+    box-shadow: 0 2px 4px rgba(34, 113, 177, 0.1);
+}
+
+.ai-intro-icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.ai-intro-tab strong {
+    display: block;
+    font-size: 13px;
+    color: #2c3338;
+    margin-bottom: 4px;
+}
+
+.ai-intro-tab p {
+    margin: 0;
+    font-size: 12px;
+    color: #646970;
+    line-height: 1.4;
+}
+
+.ai-intro-workflow {
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.ai-intro-workflow h5 {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: #2c3338;
+}
+
+.ai-intro-workflow ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.ai-intro-workflow li {
+    font-size: 12px;
+    color: #646970;
+    margin-bottom: 4px;
+    line-height: 1.4;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+    to {
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+/* Tab Help Text */
+.ai-tab-help {
+    background: #f0f6fc;
+    border: 1px solid #c7d2fe;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+.ai-help-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 12px;
+    font-size: 13px;
+    color: #1d4ed8;
+    line-height: 1.4;
+}
+
+.ai-help-text .dashicons {
+    color: #3b82f6;
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+}
+
+/* Compact Metabox Improvements */
+.ai-assistant-compact {
+    padding: 12px;
+}
+
+.ai-compact-info {
+    margin-bottom: 12px;
+}
+
+.ai-compact-info p {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: #2c3338;
+}
+
+.ai-compact-features {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    gap: 5px;
+}
+
+.ai-compact-features li {
+    font-size: 12px;
+    color: #646970;
+    margin-bottom: 4px;
+    padding-left: 0;
+}
+
+.ai-compact-buttons {
+    margin-bottom: 8px;
+}
+
+.ai-compact-buttons .button {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    padding: 6px 12px;
+}
+
+/* Workflow Tips */
+.ai-workflow-tip {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    color: #856404;
+    line-height: 1.4;
+}
+
+.ai-workflow-tip strong {
+    color: #533f03;
+}
+
+/* AI Assistant Meta Box Tab Navigation - WordPress Style */
+.ai-assistant-tabs {
+    margin-bottom: 20px;
+}
+
+.ai-assistant-tabs .nav-tab-wrapper {
+    border-bottom: 1px solid #c3c4c7;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+.ai-assistant-tabs .nav-tab {
+    position: relative;
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 0 4px -1px 0;
+    font-size: 13px;
+    line-height: 1.71428571;
+    color: #50575e;
+    text-decoration: none;
+    background: #f1f1f1;
+    border: 1px solid #c3c4c7;
+    border-bottom: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ai-assistant-tabs .nav-tab:hover {
+    background: #fff;
+    color: #135e96;
+}
+
+.ai-assistant-tabs .nav-tab-active,
+.ai-assistant-tabs .nav-tab-active:hover {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    color: #1d2327;
+    font-weight: 600;
+}
+
+.ai-assistant-tabs .nav-tab:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: -2px;
+}
+
+/* Remove old tab button styles */
+.ai-assistant-tab-buttons,
+.ai-assistant-tab-nav {
+    display: none;
 }
 
 .ai-assistant-tab-button {
-    padding: 12px 20px;
-    background: #f8f9fa;
-    border: 1px solid #ddd;
-    border-bottom: none;
-    cursor: pointer;
-    font-weight: 600;
-    color: #555;
-    border-radius: 6px 6px 0 0;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-
-.ai-assistant-tab-button:hover {
-    background: #e9ecef;
-    color: #333;
-}
-
-.ai-assistant-tab-button.active {
-    background: #ffffff;
-    color: #0073aa;
-    border-color: #0073aa;
-    position: relative;
-    z-index: 1;
+    display: none;
 }
 
 .ai-tab-content {
