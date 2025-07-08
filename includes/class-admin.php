@@ -12,6 +12,30 @@ if (!defined('ABSPATH')) {
 
 class AI_Assistant_Admin {
     
+    /**
+     * Get current user's preferred language for AI Assistant
+     * Falls back to global setting, then WordPress locale
+     */
+    private function get_user_language() {
+        $current_user_id = get_current_user_id();
+        
+        // Get user-specific setting first
+        $user_language = get_user_meta($current_user_id, 'ai_assistant_language', true);
+        
+        if (!empty($user_language)) {
+            return $user_language;
+        }
+        
+        // Fallback to global setting
+        $global_language = get_option('ai_assistant_admin_language');
+        if (!empty($global_language)) {
+            return $global_language;
+        }
+        
+        // Final fallback to WordPress locale
+        return get_locale();
+    }
+    
     public function __construct() {
         add_action('admin_menu', array($this, 'add_admin_pages'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
@@ -146,16 +170,23 @@ class AI_Assistant_Admin {
         if (isset($_POST['save_language_settings'])) {
             if (isset($_POST['admin_language'])) {
                 $new_language = sanitize_text_field($_POST['admin_language']);
-                $old_language = get_option('ai_assistant_admin_language', get_locale());
+                $current_user_id = get_current_user_id();
+                $old_language = $this->get_user_language();
                 
-                // Save the new language
-                update_option('ai_assistant_admin_language', $new_language);
+                // Save the new language for this specific user
+                update_user_meta($current_user_id, 'ai_assistant_language', $new_language);
                 
                 // If language changed, reload the page to apply new language
                 if ($new_language !== $old_language) {
                     // Force reload textdomain
                     unload_textdomain('ai-assistant');
-                    $this->load_plugin_textdomain_custom($new_language);
+                    if ($new_language !== 'en_US') {
+                        $this->load_plugin_textdomain_custom($new_language);
+                    }
+                    
+                    echo '<div class="notice notice-success is-dismissible"><p>' . 
+                         __('Language settings saved successfully. This is your personal language setting for AI Assistant.', 'ai-assistant') . 
+                         '</p></div>';
                     
                     // JavaScript to reload the page
                     echo '<script>setTimeout(function() { window.location.reload(); }, 500);</script>';
@@ -165,7 +196,7 @@ class AI_Assistant_Admin {
             }
         }
         
-        $current_admin_language = get_option('ai_assistant_admin_language', get_locale());
+        $current_admin_language = $this->get_user_language();
         ?>
         <div class="wrap">
             <h1><?php _e('AI Assistant Settings', 'ai-assistant'); ?></h1>
@@ -238,12 +269,15 @@ class AI_Assistant_Admin {
                                     );
                                     
                                     foreach ($supported_languages as $code => $name) {
-                                        $selected = selected($current_admin_language, $code, false);
+                                        $selected = selected($this->get_user_language(), $code, false);
                                         echo "<option value='{$code}' {$selected}>{$name}</option>";
                                     }
                                     ?>
                                 </select>
-                                <p class="description"><?php _e('Select the language for the AI Assistant admin interface. This affects the plugin interface language.', 'ai-assistant'); ?></p>
+                                <p class="description">
+                                    <?php _e('Select your personal language for the AI Assistant interface. This setting is specific to your user account and won\'t affect other users or the WordPress site language.', 'ai-assistant'); ?>
+                                    <br><em><?php _e('Note: Each user can choose their own preferred language for the AI Assistant plugin.', 'ai-assistant'); ?></em>
+                                </p>
                             </td>
                         </tr>
                     </table>
@@ -1108,7 +1142,7 @@ class AI_Assistant_Admin {
             $this->save_po_translations();
         }
         
-        $current_language = isset($_GET['edit_lang']) ? sanitize_text_field($_GET['edit_lang']) : get_option('ai_assistant_admin_language', 'en_US');
+        $current_language = isset($_GET['edit_lang']) ? sanitize_text_field($_GET['edit_lang']) : $this->get_user_language();
         $supported_languages = $this->get_supported_languages();
         
         // Load current .po file translations
@@ -1460,7 +1494,7 @@ class AI_Assistant_Admin {
         echo "<div class='notice notice-info'>";
         echo "<h3>🔍 Language Loading Debug Test Results</h3>";
         
-        $custom_lang = get_option('ai_assistant_admin_language');
+        $custom_lang = $this->get_user_language();
         $current_locale = get_locale();
         
         echo "<div style='background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;'>";
@@ -1873,7 +1907,7 @@ class AI_Assistant_Admin {
      * Load custom language for AI Assistant
      */
     public function load_custom_language() {
-        $custom_lang = get_option('ai_assistant_admin_language');
+        $custom_lang = $this->get_user_language();
         $current_locale = get_locale();
         
         // Only log once per session/request to avoid log spam
@@ -1981,13 +2015,8 @@ class AI_Assistant_Admin {
             add_filter('gettext', array($this, 'force_plugin_translations'), 999, 3);
             add_filter('gettext_with_context', array($this, 'force_plugin_translations_with_context'), 999, 4);
             
-            // Ensure our locale takes priority
-            add_filter('locale', function($current_locale) use ($locale) {
-                if (is_admin() && get_option('ai_assistant_admin_language') === $locale) {
-                    return $locale;
-                }
-                return $current_locale;
-            }, 999);
+            // DO NOT add global locale filter - this was causing site-wide language changes
+            // Plugin translations will be handled by the plugin_locale filter instead
             
             // Only log success once per session/request and only if debug logging is enabled
             static $success_logged = array();
@@ -2039,7 +2068,7 @@ class AI_Assistant_Admin {
         
         // If we still don't have a translation, try direct file loading
         if ($translation === $text) {
-            $custom_lang = get_option('ai_assistant_admin_language');
+            $custom_lang = $this->get_user_language();
             if ($custom_lang) {
                 static $direct_translations = array();
                 
@@ -2096,7 +2125,7 @@ class AI_Assistant_Admin {
      */
     public function custom_plugin_locale($locale, $domain) {
         if ($domain === 'ai-assistant') {
-            $custom_lang = get_option('ai_assistant_admin_language');
+            $custom_lang = $this->get_user_language();
             if ($custom_lang) {
                 error_log("AI Assistant Language Debug: Plugin locale filter applied - returning: " . $custom_lang);
                 return $custom_lang;
@@ -2517,7 +2546,7 @@ class AI_Assistant_Admin {
         echo "<div class='notice notice-info'>";
         echo "<h3>🔍 Language Loading Debug Test</h3>";
         
-        $custom_lang = get_option('ai_assistant_admin_language');
+        $custom_lang = $this->get_user_language();
         $current_locale = get_locale();
         
         echo "<p><strong>WordPress Locale:</strong> " . $current_locale . "</p>";

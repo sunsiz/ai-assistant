@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
- * Version: 1.0.53
+ * Version: 1.0.56
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -15,7 +15,7 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * * @package AIAssistant
- * @version 1.0.52
+ * @version 1.0.56
  */
 
 // Prevent direct access
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.53');
+    define('AI_ASSISTANT_VERSION', '1.0.56');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
@@ -214,19 +214,32 @@ class AIAssistant {
      * Auto-set language based on WordPress locale if not already set
      */
     private function auto_set_language() {
-        $current_setting = get_option('ai_assistant_admin_language');
-        $wp_locale = get_locale();
+        // Get user-specific language setting first
+        $current_user_id = get_current_user_id();
+        $user_language = get_user_meta($current_user_id, 'ai_assistant_language', true);
         
-        // If no language is set, use WordPress locale
-        if (empty($current_setting)) {
-            update_option('ai_assistant_admin_language', $wp_locale);
-            error_log("AI Assistant: Auto-set language to " . $wp_locale);
+        // If user has no specific setting, check global option as fallback
+        if (empty($user_language)) {
+            $current_setting = get_option('ai_assistant_admin_language');
+            $wp_locale = get_locale();
+            
+            // If no global language is set, use WordPress locale
+            if (empty($current_setting)) {
+                update_option('ai_assistant_admin_language', $wp_locale);
+                error_log("AI Assistant: Auto-set global language to " . $wp_locale);
+            }
+            
+            // Set user language to match global setting for first time
+            if ($current_user_id > 0) {
+                $user_language = !empty($current_setting) ? $current_setting : $wp_locale;
+                update_user_meta($current_user_id, 'ai_assistant_language', $user_language);
+                error_log("AI Assistant: Set user #{$current_user_id} language to " . $user_language);
+            }
         }
         
-        // If there's a custom language setting, try to load it
-        $custom_lang = get_option('ai_assistant_admin_language');
-        if ($custom_lang && $custom_lang !== 'en_US') {
-            $this->load_custom_textdomain($custom_lang);
+        // Load user's preferred language if set and different from default
+        if (!empty($user_language) && $user_language !== 'en_US') {
+            $this->load_custom_textdomain($user_language);
         }
     }
     
@@ -260,13 +273,8 @@ class AIAssistant {
             }
             
             if ($loaded) {
-                // Ensure our locale takes priority for admin interface
-                add_filter('locale', function($current_locale) use ($locale) {
-                    if (is_admin() && get_option('ai_assistant_admin_language') === $locale) {
-                        return $locale;
-                    }
-                    return $current_locale;
-                });
+                // DO NOT add global locale filter - this was causing site-wide language changes
+                // Plugin translations will be handled by the plugin_locale filter above
                 
                 // Only log success once per session for each language and only if debug logging is enabled
                 static $logged_languages = array();
@@ -1347,44 +1355,56 @@ class AIAssistant {
     public function ajax_save_language() {
         check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
         
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('edit_posts')) {
             wp_send_json_error('Insufficient permissions');
         }
         
         $new_language = isset($_POST['admin_language']) ? sanitize_text_field($_POST['admin_language']) : '';
-        $old_language = get_option('ai_assistant_admin_language', get_locale());
+        $current_user_id = get_current_user_id();
+        
+        // Get current user's language setting
+        $old_language = get_user_meta($current_user_id, 'ai_assistant_language', true);
+        if (empty($old_language)) {
+            // Fallback to global setting for comparison
+            $old_language = get_option('ai_assistant_admin_language', get_locale());
+        }
         
         // Debug logging
-        error_log("AI Assistant AJAX Language Debug: New language = " . $new_language);
-        error_log("AI Assistant AJAX Language Debug: Old language = " . $old_language);
+        error_log("AI Assistant Language Change: User #{$current_user_id}: {$old_language} → {$new_language}");
         
         if (empty($new_language)) {
             wp_send_json_error('No language specified');
         }
         
-        // Save the new language
-        $update_result = update_option('ai_assistant_admin_language', $new_language);
-        error_log("AI Assistant AJAX Language Debug: Option update result = " . ($update_result ? 'SUCCESS' : 'FAILED'));
+        // Save the new language for this specific user
+        $update_result = update_user_meta($current_user_id, 'ai_assistant_language', $new_language);
+        error_log("AI Assistant: User meta update result = " . ($update_result ? 'SUCCESS' : 'FAILED'));
         
         $language_changed = ($new_language !== $old_language);
-        error_log("AI Assistant AJAX Language Debug: Language changed = " . ($language_changed ? 'YES' : 'NO'));
+        error_log("AI Assistant: Language changed = " . ($language_changed ? 'YES' : 'NO'));
         
         // Force reload textdomain if language changed
         if ($language_changed) {
             $unloaded = unload_textdomain('ai-assistant');
-            error_log("AI Assistant AJAX Language Debug: Textdomain unloaded = " . ($unloaded ? 'SUCCESS' : 'FAILED'));
+            error_log("AI Assistant: Textdomain unloaded = " . ($unloaded ? 'SUCCESS' : 'FAILED'));
             
-            // Load new language
-            $admin = new AI_Assistant_Admin();
-            $loaded = $admin->load_plugin_textdomain_custom($new_language);
-            error_log("AI Assistant AJAX Language Debug: New textdomain loaded = " . ($loaded ? 'SUCCESS' : 'FAILED'));
+            // Load new language for this user
+            if ($new_language !== 'en_US') {
+                $this->load_custom_textdomain($new_language);
+            } else {
+                // Load default English
+                load_plugin_textdomain('ai-assistant', false, dirname(plugin_basename(__FILE__)) . '/languages');
+            }
+            error_log("AI Assistant: New textdomain loaded for user");
         }
         
         wp_send_json_success(array(
             'message' => __('Language settings saved successfully.', 'ai-assistant'),
             'language_changed' => $language_changed,
             'new_language' => $new_language,
+            'user_specific' => true,
             'debug_info' => array(
+                'user_id' => $current_user_id,
                 'old_language' => $old_language,
                 'update_result' => $update_result,
                 'textdomain_loaded' => is_textdomain_loaded('ai-assistant')

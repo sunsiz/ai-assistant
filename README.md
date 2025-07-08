@@ -1,4 +1,29 @@
-# AI Assistant for WordPress
+# AI Assistant for WordPress v1.0.56
+
+🚀 **Professional AI-powered translation and content generation plugin for WordPress**
+
+[![Version](https://img.shields.io/badge/version-1.0.56-blue.svg)](https://github.com/sunsiz/ai-assistant)
+[![License](https://img.shields.io/badge/license-GPL%20v2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue.svg)](https://wordpress.org)
+
+## 🌟 What's New in v1.0.56
+
+### 🔧 **Fixed Issues**
+- **✅ Diagnostics API Testing**: Fixed HTTP 503 errors and long timeouts in diagnostics page
+- **✅ User-Specific Languages**: Added missing Turkish translations for new user-specific language features
+- **✅ API Connection Testing**: Optimized connection tests with lightweight endpoints and better error handling
+
+### 🌍 **Translation Updates**
+- **Turkish (Türkçe)**: 418 strings (100% complete) 🇹🇷
+- **Chinese (中文)**: 419 strings (100% complete) 🇨🇳  
+- **Uyghur (ئۇيغۇرچە)**: 418 strings (100% complete)
+- **Total**: 14 languages with 5,846+ translated strings
+
+### 🏗️ **Technical Improvements**
+- Enhanced API connection diagnostics with faster, more reliable testing
+- Better error handling and user feedback
+- Optimized .mo file compilation system
+- Clean project structure and organized codebase
 
 A comprehensive AI-powered translation and content writing assistant plugin for multilingual WordPress websites.
 

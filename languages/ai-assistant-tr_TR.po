@@ -1263,3 +1263,9 @@ msgstr "Resim İpuçları:"
 msgid "Be descriptive in your prompt for best results. Include style, colors, mood, and composition details."
 msgstr "En iyi sonuçlar için isteminizde açıklayıcı olun. Stil, renkler, ruh hali ve kompozisyon ayrıntılarını dahil edin."
 
+msgid "Language settings saved successfully. This is your personal language setting for AI Assistant."
+msgstr "Dil ayarları başarıyla kaydedildi. Bu, AI Asistan için kişisel dil ayarınızdır."
+
+msgid "Select your personal language for the AI Assistant interface. This setting is specific to your user account and won't affect other users or the WordPress site language."
+msgstr "AI Asistan arayüzü için kişisel dilinizi seçin. Bu ayar kullanıcı hesabınıza özeldir ve diğer kullanıcıları veya WordPress site dilini etkilemez."
+

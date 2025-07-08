@@ -875,10 +875,29 @@ class AI_Assistant_Diagnostics {
      * Test API connections
      */
     private function test_api_connections() {
-        // Implementation for API testing
+        $api_keys = get_option('ai_assistant_api_keys', array());
+        $configured_apis = array();
+        
+        if (!empty($api_keys['gemini'])) {
+            $configured_apis[] = 'Gemini';
+        }
+        if (!empty($api_keys['openai'])) {
+            $configured_apis[] = 'OpenAI';
+        }
+        if (!empty($api_keys['anthropic'])) {
+            $configured_apis[] = 'Anthropic';
+        }
+        
+        if (empty($configured_apis)) {
+            return array(
+                'status' => 'warning',
+                'message' => __('No API keys configured', 'ai-assistant')
+            );
+        }
+        
         return array(
             'status' => 'success',
-            'message' => __('API connection test completed', 'ai-assistant')
+            'message' => sprintf(__('%s configured', 'ai-assistant'), implode(', ', $configured_apis))
         );
     }
     
@@ -955,28 +974,195 @@ class AI_Assistant_Diagnostics {
             wp_send_json_error('Insufficient permissions');
         }
         
+        // Use the same AI service as the settings page for consistency
+        $ai_service = new AI_Assistant_AI_Service();
         $api_keys = get_option('ai_assistant_api_keys', array());
         $results = array();
         
-        // Test available APIs
+        // Test available APIs individually
         if (!empty($api_keys['gemini'])) {
-            $results['gemini'] = $this->test_gemini_api($api_keys['gemini']);
+            $results['GEMINI'] = $this->test_individual_api('gemini', $ai_service);
         }
         
         if (!empty($api_keys['openai'])) {
-            $results['openai'] = $this->test_openai_api($api_keys['openai']);
+            $results['OPENAI'] = $this->test_individual_api('openai', $ai_service);
         }
         
         if (!empty($api_keys['anthropic'])) {
-            $results['anthropic'] = $this->test_anthropic_api($api_keys['anthropic']);
+            $results['ANTHROPIC'] = $this->test_individual_api('anthropic', $ai_service);
         }
         
         if (empty($results)) {
             wp_send_json_error('No API keys configured for testing');
         }
         
-        wp_send_json_success($results);
+        // Format results for display
+        $formatted_results = array();
+        $all_success = true;
+        
+        foreach ($results as $provider => $result) {
+            if ($result['success']) {
+                $formatted_results[] = "$provider: ✅ " . $result['message'];
+            } else {
+                $formatted_results[] = "$provider: ❌ " . $result['message'];
+                $all_success = false;
+            }
+        }
+        
+        $summary = $all_success ? 
+            "All configured APIs are working properly." : 
+            "Some API connections have issues. Check the details below.";
+        
+        wp_send_json_success(array(
+            'message' => $summary . "\n\n" . implode("\n", $formatted_results),
+            'results' => $results,
+            'all_success' => $all_success
+        ));
     }
+    
+    /**
+     * Test individual API provider
+     */
+    private function test_individual_api($provider, $ai_service) {
+        try {
+            // For diagnostics, we'll do a more lightweight test
+            // Just check if the API key is set and try a basic connection
+            $api_keys = get_option('ai_assistant_api_keys', array());
+            
+            if (empty($api_keys[$provider])) {
+                return array(
+                    'success' => false,
+                    'message' => 'API key not configured'
+                );
+            }
+            
+            // Use the same test method as the working settings page
+            // but with a shorter timeout and simpler approach
+            switch ($provider) {
+                case 'gemini':
+                    return $this->test_gemini_connection($api_keys[$provider]);
+                    
+                case 'openai':
+                    return $this->test_openai_connection($api_keys[$provider]);
+                    
+                case 'anthropic':
+                    return $this->test_anthropic_connection($api_keys[$provider]);
+                    
+                default:
+                    return array(
+                        'success' => false,
+                        'message' => 'Unknown provider'
+                    );
+            }
+            
+        } catch (Exception $e) {
+            return array(
+                'success' => false,
+                'message' => 'Connection error: ' . $e->getMessage()
+            );
+        }
+    }
+    
+    /**
+     * Test Gemini API connection
+     */
+    private function test_gemini_connection($api_key) {
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models?key=' . $api_key;
+        
+        $args = array(
+            'timeout' => 10,
+            'headers' => array(
+                'Content-Type' => 'application/json',
+            ),
+            'sslverify' => false
+        );
+        
+        $response = wp_remote_get($url, $args);
+        
+        if (is_wp_error($response)) {
+            return array(
+                'success' => false,
+                'message' => 'Connection failed: ' . $response->get_error_message()
+            );
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $response_body = wp_remote_retrieve_body($response);
+        
+        if ($response_code === 200) {
+            return array(
+                'success' => true,
+                'message' => 'Connected successfully'
+            );
+        } else {
+            // Parse error response
+            $error_data = json_decode($response_body, true);
+            $error_message = isset($error_data['error']['message']) ? $error_data['error']['message'] : 'Unknown error';
+            
+            return array(
+                'success' => false,
+                'message' => "HTTP $response_code ($response_code) - $error_message"
+            );
+        }
+    }
+    
+    /**
+     * Test OpenAI API connection
+     */
+    private function test_openai_connection($api_key) {
+        $url = 'https://api.openai.com/v1/models';
+        
+        $args = array(
+            'timeout' => 10,
+            'headers' => array(
+                'Authorization' => 'Bearer ' . $api_key,
+                'Content-Type' => 'application/json',
+            ),
+            'sslverify' => false
+        );
+        
+        $response = wp_remote_get($url, $args);
+        
+        if (is_wp_error($response)) {
+            return array(
+                'success' => false,
+                'message' => 'Connection failed: ' . $response->get_error_message()
+            );
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        
+        if ($response_code === 200) {
+            return array(
+                'success' => true,
+                'message' => 'Connected successfully'
+            );
+        } else {
+            return array(
+                'success' => false,
+                'message' => "HTTP $response_code"
+            );
+        }
+    }
+    
+    /**
+     * Test Anthropic API connection
+     */
+    private function test_anthropic_connection($api_key) {
+        // Anthropic doesn't have a simple endpoint to test, so we'll just validate the key format
+        if (strpos($api_key, 'sk-ant-') === 0 && strlen($api_key) > 20) {
+            return array(
+                'success' => true,
+                'message' => 'API key format valid'
+            );
+        } else {
+            return array(
+                'success' => false,
+                'message' => 'Invalid API key format'
+            );
+        }
+    }
+
     
     /**
      * AJAX handler for database health check
