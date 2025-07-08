@@ -1251,7 +1251,7 @@ class AI_Assistant_Admin {
                             <?php _e('Download .po File', 'ai-assistant'); ?>
                         </button>
                         <p class="description">
-                            <?php _e('Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for Islamic/religious content.', 'ai-assistant'); ?>
+                            <?php _e('Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for content.', 'ai-assistant'); ?>
                         </p>
                     </div>
                 </form>

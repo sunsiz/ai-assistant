@@ -795,8 +795,8 @@ msgstr "未翻译"
 msgid "Download .po File"
 msgstr "下载 .po 文件"
 
-msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for Islamic/religious content."
-msgstr "手动翻译方法：填写上面的空翻译字段，然后保存到 .po 文件。这确保了伊斯兰/宗教内容的准确性。"
+msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for content."
+msgstr "手动翻译方法：填写上面的空翻译字段，然后保存到 .po 文件。这确保了内容的准确性。"
 
 msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
 msgstr "这将把所有 .po 文件编译为 .mo 文件。这是WordPress中翻译工作所必需的。继续？"

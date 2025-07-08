@@ -1,5 +1,5 @@
 /**
- * AI Assistant Editor JS - v1.0.53
+ * AI Assistant Editor JS - v1.0.57
  * Handles meta box UI, tabs, and AJAX calls for translation, content generation, and image generation.
  */
 (function($) {

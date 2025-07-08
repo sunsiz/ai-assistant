@@ -795,7 +795,7 @@ msgstr "Çevrilmemiş"
 msgid "Download .po File"
 msgstr ".po Dosyasını İndir"
 
-msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for Islamic/religious content."
+msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for content."
 msgstr "Manuel çeviri yaklaşımı: Yukarıdaki boş çeviri alanlarını doldurun, ardından .po dosyasına kaydedin. Bu, İslami/dini içerik için doğruluğu sağlar."
 
 msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"

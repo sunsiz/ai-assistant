@@ -1,6 +1,6 @@
 /**
  * AI Assistant Admin JavaScript
- * Version: 1.0.40
+ * Version: 1.0.57
  */
 
 (function($) {
