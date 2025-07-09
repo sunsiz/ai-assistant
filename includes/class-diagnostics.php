@@ -350,6 +350,9 @@ class AI_Assistant_Diagnostics {
                 var $button = $(this);
                 var $results = $('#api-test-results');
                 
+                // Clear previous results and classes
+                $results.removeClass('show success error warning').html('');
+                
                 $button.prop('disabled', true).text('<?php _e('Testing...', 'ai-assistant'); ?>');
                 $results.addClass('show').html('<div class="notice notice-info"><p><?php _e('Testing API connections...', 'ai-assistant'); ?></p></div>');
                 
@@ -357,27 +360,37 @@ class AI_Assistant_Diagnostics {
                     action: 'ai_assistant_test_api_connection',
                     nonce: '<?php echo wp_create_nonce('ai_assistant_admin_nonce'); ?>'
                 }, function(response) {
-                    if (response.success) {
+                    console.log('API Test Response:', response); // Debug log
+                    
+                    if (response.success && response.data) {
                         var html = '<div class="notice notice-success"><p><strong><?php _e('API Connection Test Results:', 'ai-assistant'); ?></strong></p>';
                         html += '<div style="font-family: monospace; background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;">';
                         
+                        var hasResults = false;
                         $.each(response.data, function(api, result) {
+                            hasResults = true;
                             var statusClass = result.status === 'success' ? 'success' : 'error';
                             var statusIcon = result.status === 'success' ? '✅' : '❌';
-                            html += '<div style="margin-bottom: 8px;"><strong>' + api.toUpperCase() + ':</strong> ' + statusIcon + ' ' + result.message;
+                            html += '<div style="margin-bottom: 8px;"><strong>' + api.toUpperCase() + ':</strong> ' + statusIcon + ' ' + (result.message || 'No message');
                             if (result.code) {
                                 html += ' (' + result.code + ')';
                             }
                             html += '</div>';
                         });
                         
+                        if (!hasResults) {
+                            html += '<div>No API keys configured for testing.</div>';
+                        }
+                        
                         html += '</div></div>';
                         $results.addClass('show success').html(html);
                     } else {
-                        $results.addClass('show error').html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + response.data + '</p></div>');
+                        var errorMsg = response.data || response.message || 'Unknown error';
+                        $results.addClass('show error').html('<div class="notice notice-error"><p><strong><?php _e('Error:', 'ai-assistant'); ?></strong> ' + errorMsg + '</p></div>');
                     }
-                }).fail(function() {
-                    $results.addClass('show error').html('<div class="notice notice-error"><p><?php _e('API test failed - AJAX error', 'ai-assistant'); ?></p></div>');
+                }).fail(function(xhr, status, error) {
+                    console.error('AJAX request failed:', status, error, xhr.responseText);
+                    $results.addClass('show error').html('<div class="notice notice-error"><p><?php _e('API test failed - AJAX error. Check console for details.', 'ai-assistant'); ?></p></div>');
                 }).always(function() {
                     $button.prop('disabled', false).text('<?php _e('Test API Connections', 'ai-assistant'); ?>');
                 });
@@ -968,56 +981,63 @@ class AI_Assistant_Diagnostics {
      * AJAX handler for API connection test
      */
     public function ajax_test_api_connection() {
-        check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
-        
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error('Insufficient permissions');
-        }
-        
-        // Use the same AI service as the settings page for consistency
-        $ai_service = new AI_Assistant_AI_Service();
-        $api_keys = get_option('ai_assistant_api_keys', array());
-        $results = array();
-        
-        // Test available APIs individually
-        if (!empty($api_keys['gemini'])) {
-            $results['GEMINI'] = $this->test_individual_api('gemini', $ai_service);
-        }
-        
-        if (!empty($api_keys['openai'])) {
-            $results['OPENAI'] = $this->test_individual_api('openai', $ai_service);
-        }
-        
-        if (!empty($api_keys['anthropic'])) {
-            $results['ANTHROPIC'] = $this->test_individual_api('anthropic', $ai_service);
-        }
-        
-        if (empty($results)) {
-            wp_send_json_error('No API keys configured for testing');
-        }
-        
-        // Format results for display
-        $formatted_results = array();
-        $all_success = true;
-        
-        foreach ($results as $provider => $result) {
-            if ($result['success']) {
-                $formatted_results[] = "$provider: ✅ " . $result['message'];
-            } else {
-                $formatted_results[] = "$provider: ❌ " . $result['message'];
-                $all_success = false;
+        try {
+            check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
+            
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error('Insufficient permissions');
             }
+            
+            // Check if AI service class exists
+            if (!class_exists('AI_Assistant_AI_Service')) {
+                wp_send_json_error('AI Service class not available');
+                return;
+            }
+            
+            // Use the same AI service as the settings page for consistency
+            $ai_service = new AI_Assistant_AI_Service();
+            $api_keys = get_option('ai_assistant_api_keys', array());
+            $results = array();
+            
+            // Test available APIs individually
+            if (!empty($api_keys['gemini'])) {
+                $results['GEMINI'] = $this->test_individual_api('gemini', $ai_service);
+            }
+            
+            if (!empty($api_keys['openai'])) {
+                $results['OPENAI'] = $this->test_individual_api('openai', $ai_service);
+            }
+            
+            if (!empty($api_keys['anthropic'])) {
+                $results['ANTHROPIC'] = $this->test_individual_api('anthropic', $ai_service);
+            }
+            
+            if (empty($results)) {
+                wp_send_json_error('No API keys configured for testing');
+                return;
+            }
+            
+            // Format results for display compatible with JavaScript frontend
+            $formatted_results = array();
+            $all_success = true;
+            
+            foreach ($results as $provider => $result) {
+                $formatted_results[$provider] = array(
+                    'status' => $result['success'] ? 'success' : 'error',
+                    'message' => $result['message'],
+                    'code' => isset($result['code']) ? $result['code'] : null
+                );
+                
+                if (!$result['success']) {
+                    $all_success = false;
+                }
+            }
+            
+            wp_send_json_success($formatted_results);
+            
+        } catch (Exception $e) {
+            wp_send_json_error('API test failed: ' . $e->getMessage());
         }
-        
-        $summary = $all_success ? 
-            "All configured APIs are working properly." : 
-            "Some API connections have issues. Check the details below.";
-        
-        wp_send_json_success(array(
-            'message' => $summary . "\n\n" . implode("\n", $formatted_results),
-            'results' => $results,
-            'all_success' => $all_success
-        ));
     }
     
     /**
@@ -1092,7 +1112,8 @@ class AI_Assistant_Diagnostics {
         if ($response_code === 200) {
             return array(
                 'success' => true,
-                'message' => 'Connected successfully'
+                'message' => 'Connected successfully',
+                'code' => $response_code
             );
         } else {
             // Parse error response
@@ -1101,7 +1122,8 @@ class AI_Assistant_Diagnostics {
             
             return array(
                 'success' => false,
-                'message' => "HTTP $response_code ($response_code) - $error_message"
+                'message' => $error_message,
+                'code' => $response_code
             );
         }
     }
@@ -1135,12 +1157,14 @@ class AI_Assistant_Diagnostics {
         if ($response_code === 200) {
             return array(
                 'success' => true,
-                'message' => 'Connected successfully'
+                'message' => 'Connected successfully',
+                'code' => $response_code
             );
         } else {
             return array(
                 'success' => false,
-                'message' => "HTTP $response_code"
+                'message' => 'Connection failed',
+                'code' => $response_code
             );
         }
     }
