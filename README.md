@@ -1,24 +1,26 @@
-# AI Assistant for WordPress v1.0.58
+# AI Assistant for WordPress v1.0.64
 
 🚀 **Professional AI-powered translation and content generation plugin for WordPress**
 
-[![Version](https://img.shields.io/badge/version-1.0.58-blue.svg)](https://github.com/sunsiz/ai-assistant)
+[![Version](https://img.shields.io/badge/version-1.0.64-blue.svg)](https://github.com/sunsiz/ai-assistant)
 [![License](https://img.shields.io/badge/license-GPL%20v2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 [![WordPress](https://img.shields.io/badge/WordPress-5.8%2B-blue.svg)](https://wordpress.org)
 
-## 🌟 What's New in v1.0.58
+## 🌟 What's New in v1.0.64
 
 ### 🔧 **Enhanced Features**
-- **✅ Auto-Translation System**: Complete auto-translation functionality for interface strings in .po files
-- **✅ Universal Language Detection**: Dynamic language code extraction for any locale format
-- **✅ Individual Translation Buttons**: AI-powered translation for specific untranslated strings
-- **✅ Centralized Logging**: Improved debugging with conditional log output
+- **✅ Gemini 2.0 Image Generation**: Native image generation using Gemini 2.0 Flash (free tier)
+- **✅ Enhanced Translation System**: Intelligent content chunking and improved completion handling
+- **✅ Advanced Model Support**: Updated to latest Gemini 2.5 models with automatic deprecation handling
+- **✅ Smart Image Prompts**: Enhanced prompt generation using both title and content analysis
+- **✅ Comprehensive Debug Logging**: Detailed logging for troubleshooting and optimization
 
-### 🌍 **Translation Management**
-- **Bulk Auto-Translation**: Translate all empty interface strings with one click
-- **Individual String Translation**: Target specific strings for AI translation
-- **Visual Translation Editor**: Enhanced .po file editor with search and filtering
-- **Real-time Status Updates**: Live translation progress and success indicators
+### 🌍 **AI Model Updates**
+- **Gemini 2.5 Pro**: Most Advanced - Thinking Model with enhanced reasoning
+- **Gemini 2.5 Flash**: Latest & Fast - Best Price-Performance ratio
+- **Gemini 2.5 Flash-Lite**: Most Cost-Efficient option
+- **Gemini 2.0 Flash**: Native Image Generation - Free tier support
+- **Enhanced Provider Support**: Improved OpenAI and Anthropic integration
 
 ### 🏗️ **Technical Improvements**
 - **Production-Ready Codebase**: Zero syntax errors, optimized performance
