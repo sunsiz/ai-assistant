@@ -12,9 +12,9 @@ if (!defined('ABSPATH')) {
 class AI_Assistant_AI_Service {
     
     /**
-     * API endpoint for Gemini
+     * API endpoint for Gemini (using latest 2.5 Flash model)
      */
-    private $api_endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+    private $api_endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
     
     /**
      * API key for Gemini
@@ -99,6 +99,9 @@ class AI_Assistant_AI_Service {
      */
     public function translate($text, $source_lang = 'auto', $target_lang = 'en', $model = '') {
         if (!$this->is_configured()) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('AI Service not configured - API key missing', true);
+            }
             return array(
                 'success' => false,
                 'error' => 'Gemini API key not configured. Please configure it in Settings.'
@@ -120,6 +123,12 @@ class AI_Assistant_AI_Service {
         // Create the prompt for AI
         $prompt = $this->create_translation_prompt($text, $source_name, $target_name);
         
+        // Debug logging for translation prompt
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('Translation prompt: ' . substr($prompt, 0, 300) . '...', true);
+            AIAssistant::log('Source: ' . $source_name . ', Target: ' . $target_name . ', Model: ' . $model, true);
+        }
+        
         // Check cache
         $cache_key = $this->get_cache_key($prompt, 'translate');
         $cached_result = $this->get_cached_result($cache_key);
@@ -128,7 +137,14 @@ class AI_Assistant_AI_Service {
         }
           // Make API request with model parameter
         $response = $this->make_api_request($prompt, $model);
-          if ($response['success']) {
+        
+        // Debug logging for API response
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('AI Service API response: success=' . ($response['success'] ? 'true' : 'false') . 
+                           ', content_length=' . (isset($response['content']) ? strlen($response['content']) : 0), true);
+        }
+        
+        if ($response['success']) {
             $result = array(
                 'success' => true,
                 'translated_text' => $response['content'],
@@ -156,17 +172,20 @@ class AI_Assistant_AI_Service {
      * @return string
      */
     private function create_translation_prompt($text, $source_name, $target_name) {
-        $prompt = "Please translate the following text";
+        $prompt = "IMPORTANT: Translate the COMPLETE text below";
         
         if ($source_name !== 'auto') {
             $prompt .= " from {$source_name}";
         }
         
         $prompt .= " to {$target_name}. ";
-        $prompt .= "Provide only the translated text without any additional explanations, prefixes, or formatting. ";
+        $prompt .= "You must translate the ENTIRE text - do not truncate or summarize. ";
+        $prompt .= "Provide only the complete translated text without any additional explanations, prefixes, or formatting. ";
+        $prompt .= "Do not add comments, notes, or explanatory text. ";
         $prompt .= "If the original text contains HTML tags, preserve them exactly. ";
         $prompt .= "If the original text is plain text, maintain the original structure and formatting as much as possible. ";
-        $prompt .= "For WordPress content, ensure the output is compatible with WordPress editor.\n\n";
+        $prompt .= "For WordPress content, ensure the output is compatible with WordPress editor. ";
+        $prompt .= "CRITICAL: Translate every single word and sentence - the output must be complete.\n\n";
         $prompt .= "Text to translate:\n{$text}";
         
         return $prompt;
@@ -193,6 +212,39 @@ class AI_Assistant_AI_Service {
     }
     
     /**
+     * Map frontend model names to actual API model names
+     * 
+     * Updated January 2025 based on https://ai.google.dev/gemini-api/docs/models
+     * - Gemini 1.5 models are deprecated
+     * - Current recommended models: 2.5 Pro, 2.5 Flash, 2.5 Flash-Lite, 2.0 Flash
+     *
+     * @param string $model Frontend model name
+     * @return string Actual API model name
+     */
+    private function map_model_name($model) {
+        $model_mapping = array(
+            // Current recommended models (2025)
+            'gemini-2.5-pro' => 'gemini-2.5-pro',
+            'gemini-2.5-flash' => 'gemini-2.5-flash',
+            'gemini-2.5-flash-lite' => 'gemini-2.5-flash-lite',
+            'gemini-2.0-flash' => 'gemini-2.0-flash',
+            
+            // Legacy mappings for backward compatibility (deprecated models)
+            'gemini-1.5-flash' => 'gemini-2.5-flash', // Redirect to current equivalent
+            'gemini-1.5-pro' => 'gemini-2.5-pro',     // Redirect to current equivalent
+            'gemini-1.5-flash-latest' => 'gemini-2.5-flash',
+            'gemini-1.5-pro-latest' => 'gemini-2.5-pro',
+            
+            // Other legacy mappings
+            'gemini-2.0-flash-exp' => 'gemini-2.0-flash',
+            'gemini-pro' => 'gemini-2.5-pro',
+            'gemini-flash' => 'gemini-2.5-flash'
+        );
+        
+        return isset($model_mapping[$model]) ? $model_mapping[$model] : 'gemini-2.5-flash';
+    }
+    
+    /**
      * Make API request to Gemini
      *
      * @param string $prompt The prompt to send
@@ -205,10 +257,25 @@ class AI_Assistant_AI_Service {
         
         // Ensure we have a valid Gemini model
         if (!str_contains($selected_model, 'gemini')) {
-            $selected_model = 'gemini-2.5-flash';
+            $selected_model = 'gemini-2.5-flash'; // Use latest default
         }
         
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$selected_model}:generateContent?key=" . $this->api_key;
+        // Map the model name to the actual API model name
+        $api_model_name = $this->map_model_name($selected_model);
+        
+        // Debug logging for model mapping
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            $log_message = "[AI Assistant] Model mapping: {$selected_model} -> {$api_model_name}";
+            
+            // Add deprecation notice for 1.5 models
+            if (in_array($selected_model, array('gemini-1.5-flash', 'gemini-1.5-pro'))) {
+                $log_message .= " (DEPRECATED: Gemini 1.5 models are deprecated, redirected to Gemini 2.5)";
+            }
+            
+            error_log($log_message);
+        }
+        
+        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$api_model_name}:generateContent?key=" . $this->api_key;
         
         $body = array(
             'contents' => array(
@@ -224,7 +291,7 @@ class AI_Assistant_AI_Service {
                 'temperature' => 0.3,
                 'topK' => 40,
                 'topP' => 0.95,
-                'maxOutputTokens' => 8192,
+                'maxOutputTokens' => 16384, // Increased for longer translations
             ),
             'safetySettings' => array(
                 array(
@@ -257,6 +324,9 @@ class AI_Assistant_AI_Service {
         $response = $this->make_http_request_with_retry($url, $args);
         
         if (is_wp_error($response)) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Gemini API request error: ' . $response->get_error_message(), true);
+            }
             return array(
                 'success' => false,
                 'error' => 'API request failed: ' . $response->get_error_message()
@@ -274,6 +344,10 @@ class AI_Assistant_AI_Service {
                 $error_message .= ': ' . $error_data['error']['message'];
             }
             
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Gemini API error (code ' . $response_code . '): ' . $response_body, true);
+            }
+            
             return array(
                 'success' => false,
                 'error' => $error_message
@@ -281,6 +355,20 @@ class AI_Assistant_AI_Service {
         }
         
         $data = json_decode($response_body, true);
+        
+        // Debug logging for API response
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('Gemini API response code: ' . $response_code, true);
+            AIAssistant::log('Gemini API full response: ' . $response_body, true);
+            AIAssistant::log('Gemini API response data structure: ' . print_r(array_keys($data), true), true);
+            if (isset($data['candidates'][0]['content']['parts'][0]['text'])) {
+                $response_text = $data['candidates'][0]['content']['parts'][0]['text'];
+                AIAssistant::log('Gemini API response text length: ' . strlen($response_text), true);
+                AIAssistant::log('Gemini API response preview: ' . substr($response_text, 0, 200), true);
+            } else {
+                AIAssistant::log('Gemini API response missing expected text field', true);
+            }
+        }
         
         if (!isset($data['candidates'][0]['content']['parts'][0]['text'])) {
             return array(
@@ -346,7 +434,7 @@ class AI_Assistant_AI_Service {
         $url = 'https://api.openai.com/v1/chat/completions';
         
         // Use provided model or default
-        $selected_model = !empty($model) ? $model : 'gpt-3.5-turbo';
+        $selected_model = !empty($model) ? $model : 'gpt-4.1';
         
         $body = array(
             'model' => $selected_model,
@@ -420,7 +508,7 @@ class AI_Assistant_AI_Service {
         $url = 'https://api.anthropic.com/v1/messages';
         
         // Use provided model or default
-        $selected_model = !empty($model) ? $model : 'claude-3-haiku-20240307';
+        $selected_model = !empty($model) ? $model : 'claude-opus-4-20250514';
         
         $body = array(
             'model' => $selected_model,
@@ -506,7 +594,7 @@ class AI_Assistant_AI_Service {
             );
         }
         
-        // Create the prompt based on content type
+        // Create the prompt based on content type with language detection
         $prompt = $this->create_content_prompt($type, $context, $existing_content);
         
         // Check cache
@@ -560,27 +648,46 @@ class AI_Assistant_AI_Service {
      * @return string
      */
     private function create_content_prompt($type, $context, $existing_content = '') {
+        // Detect language from context and existing content
+        $detected_language = $this->detect_content_language($context, $existing_content);
+        
+        // Get user's preferred language
+        $user_language = $this->get_user_language();
+        
+        // Determine response language
+        $response_language = $this->determine_response_language($detected_language, $user_language);
+        
         $base_context = !empty($existing_content) ? 
             "Based on this existing content: \"{$existing_content}\" and the topic: \"{$context}\"" : 
             "Based on the topic: \"{$context}\"";
-              switch ($type) {
+            
+        // Add language instruction
+        $language_instruction = "";
+        if ($response_language !== 'en') {
+            $language_instruction = " IMPORTANT: Respond ENTIRELY in {$response_language} language, including ALL text, explanations, descriptions, and any introductory or explanatory content. Every single word in your response must be in {$response_language}.";
+        } else {
+            // Even for English, be explicit about language consistency
+            $language_instruction = " IMPORTANT: Ensure all content and explanations are in clear, consistent English.";
+        }
+              
+        switch ($type) {
             case 'suggestions':
-                return "{$base_context}, provide 5-7 specific content suggestions or ideas for blog posts, articles, or content pieces. Each suggestion should be practical and actionable. Format as an HTML ordered list (&lt;ol&gt;&lt;li&gt;) with brief explanations. Use proper HTML formatting for WordPress.";
+                return "{$base_context}, provide 5-7 specific content suggestions or ideas for blog posts, articles, or content pieces. Each suggestion should be practical and actionable. Format as an HTML ordered list (&lt;ol&gt;&lt;li&gt;) with brief explanations. Use proper HTML formatting for WordPress.{$language_instruction}";
                 
             case 'full-article':
-                return "{$base_context}, write a complete, comprehensive article suitable for WordPress. The article should be well-structured with an engaging introduction, detailed body sections with subheadings, practical examples or insights, and a strong conclusion. Aim for 800-1500 words. Use clear, engaging language and include actionable advice where appropriate. Format with proper HTML headings (&lt;h2&gt; for main headings, &lt;h3&gt; for subheadings), paragraphs (&lt;p&gt;), and lists (&lt;ul&gt;&lt;li&gt; or &lt;ol&gt;&lt;li&gt;) as needed. Maintain a professional yet accessible tone. Output clean HTML that works well in WordPress editor.";
+                return "{$base_context}, write a complete, comprehensive article suitable for WordPress. The article should be well-structured with an engaging introduction, detailed body sections with subheadings, practical examples or insights, and a strong conclusion. Aim for 800-1500 words. Use clear, engaging language and include actionable advice where appropriate. Format with proper HTML headings (&lt;h2&gt; for main headings, &lt;h3&gt; for subheadings), paragraphs (&lt;p&gt;), and lists (&lt;ul&gt;&lt;li&gt; or &lt;ol&gt;&lt;li&gt;) as needed. Maintain a professional yet accessible tone. Output clean HTML that works well in WordPress editor.{$language_instruction}";
                 
             case 'keywords':
-                return "{$base_context}, generate 10-15 relevant SEO keywords and phrases. Include both short-tail (1-2 words) and long-tail (3-5 words) keywords. Focus on search intent and relevance. Format as an HTML unordered list (&lt;ul&gt;&lt;li&gt;) ordered by relevance, with each keyword as a separate list item.";
+                return "{$base_context}, generate 10-15 relevant SEO keywords and phrases. Include both short-tail (1-2 words) and long-tail (3-5 words) keywords. Focus on search intent and relevance. Format as an HTML unordered list (&lt;ul&gt;&lt;li&gt;) ordered by relevance, with each keyword as a separate list item.{$language_instruction}";
                 
             case 'meta-description':
-                return "{$base_context}, write 2-3 compelling meta descriptions (each 150-160 characters) that would encourage clicks from search results. Focus on benefits, urgency, and clear value proposition. Format as an HTML ordered list (&lt;ol&gt;&lt;li&gt;) with each option as a separate list item.";
+                return "{$base_context}, write 2-3 compelling meta descriptions (each 150-160 characters) that would encourage clicks from search results. Focus on benefits, urgency, and clear value proposition. Format as an HTML ordered list (&lt;ol&gt;&lt;li&gt;) with each option as a separate list item.{$language_instruction}";
                 
             case 'title-ideas':
-                return "{$base_context}, generate 8-10 engaging title ideas that would work well for blog posts, articles, or web pages. Include a mix of question-based, list-based, how-to, and benefit-driven titles. Make them compelling and SEO-friendly. Format as an HTML unordered list (&lt;ul&gt;&lt;li&gt;) with each title as a separate list item.";
+                return "{$base_context}, generate 8-10 engaging title ideas that would work well for blog posts, articles, or web pages. Include a mix of question-based, list-based, how-to, and benefit-driven titles. Make them compelling and SEO-friendly. Format as an HTML unordered list (&lt;ul&gt;&lt;li&gt;) with each title as a separate list item.{$language_instruction}";
                 
             default:
-                return "{$base_context}, provide helpful content suggestions related to this topic. Format using proper HTML for WordPress.";
+                return "{$base_context}, provide helpful content suggestions related to this topic. Format using proper HTML for WordPress.{$language_instruction}";
         }
     }
     
@@ -604,7 +711,7 @@ class AI_Assistant_AI_Service {
     private function get_cached_result($cache_key) {
         $cached = get_transient($cache_key);
         if ($cached !== false) {
-            error_log('AI Assistant: Using cached result for key: ' . $cache_key);
+            AIAssistant::log('Using cached result for key: ' . $cache_key, true);
             return $cached;
         }
         return false;
@@ -622,7 +729,7 @@ class AI_Assistant_AI_Service {
     }
 
     /**
-     * Get language names mapping
+     * Get language names mapping (universal)
      *
      * @return array
      */
@@ -637,7 +744,17 @@ class AI_Assistant_AI_Service {
             'de' => 'German',
             'ru' => 'Russian',
             'zh' => 'Chinese',
-            'fa' => 'Persian'
+            'fa' => 'Persian',
+            'pt' => 'Portuguese',
+            'nl' => 'Dutch',
+            'da' => 'Danish',
+            'fi' => 'Finnish',
+            'az' => 'Azerbaijani',
+            'uz' => 'Uzbek',
+            'ky' => 'Kyrgyz',
+            'ug' => 'Uyghur',
+            'ur' => 'Urdu',
+            'tk' => 'Turkmen',
         );
     }
     
@@ -676,24 +793,6 @@ class AI_Assistant_AI_Service {
     }
     
     /**
-     * Debug method to check API key configuration
-     * Remove this method in production
-     *
-     * @return array Debug information
-     */
-    public function debug_api_key() {
-        $api_keys = get_option('ai_assistant_api_keys', array());
-        $options = get_option('ai_assistant_settings', array());
-        
-        return array(
-            'api_keys_option' => $api_keys,
-            'settings_option' => $options,
-            'retrieved_key' => $this->get_api_key(),
-            'is_configured' => $this->is_configured()
-        );
-    }
-    
-    /**
      * Get all configured API keys
      *
      * @return array Array of configured providers and their keys
@@ -705,21 +804,26 @@ class AI_Assistant_AI_Service {
         if (!empty($api_keys['openai'])) {
             $configured['openai'] = array(
                 'name' => 'OpenAI',
-                'models' => array('gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo')
+                'models' => array('gpt-4', 'gpt-4.1', 'gpt-4o-mini')
             );
         }
         
         if (!empty($api_keys['anthropic'])) {
             $configured['anthropic'] = array(
                 'name' => 'Anthropic',
-                'models' => array('claude-3-sonnet', 'claude-3-haiku')
+                'models' => array('claude-4-sonnet', 'claude-4-opus')
             );
         }
         
         if (!empty($api_keys['gemini']) || !empty($api_keys['google'])) {
             $configured['gemini'] = array(
                 'name' => 'Google Gemini',
-                'models' => array('gemini-pro', 'gemini-1.5-flash-latest')
+                'models' => array(
+                    'gemini-2.5-pro', 
+                    'gemini-2.5-flash', 
+                    'gemini-2.5-flash-lite',
+                    'gemini-2.0-flash'
+                )
             );
         }
         
@@ -787,12 +891,12 @@ class AI_Assistant_AI_Service {
         // Otherwise, use provider defaults
         switch ($provider) {
             case 'openai':
-                return 'gpt-4o-mini';
+                return 'gpt-4.1';
             case 'anthropic':
-                return 'claude-3-5-haiku-20241022';
+                return 'claude-opus-4-20250514';
             case 'gemini':
             default:
-                return 'gemini-2.5-flash';
+                return 'gemini-2.5-flash'; // Latest recommended default
         }
     }
     
@@ -806,7 +910,7 @@ class AI_Assistant_AI_Service {
     public function make_api_request_public($prompt, $options = array()) {
         $default_options = array(
             'temperature' => 0.1,
-            'max_tokens' => 200
+            'max_tokens' => 1024
         );
         
         $options = array_merge($default_options, $options);
@@ -843,6 +947,177 @@ class AI_Assistant_AI_Service {
             );
         }
     }
+    
+    /**
+     * Detect content language from input text
+     *
+     * @param string $context Topic or context text
+     * @param string $existing_content Optional existing content
+     * @return string Language code or 'auto' if undetermined
+     */
+    private function detect_content_language($context, $existing_content = '') {
+        $combined_text = trim($context . ' ' . $existing_content);
+        
+        if (empty($combined_text)) {
+            return 'auto';
+        }
+        
+        // Simple language detection patterns
+        $language_patterns = array(
+            // Uyghur - distinctive Unicode ranges and common words
+            'ug' => array(
+                '/[\x{0626}-\x{06FF}]/u', // Arabic-based script used by Uyghur
+                '/[\x{FE70}-\x{FEFF}]/u', // Arabic presentation forms
+                '/(بىر|ئىككى|ئۈچ|تۆت|بەش|ئالتە|يەتتە|سەككىز|توققۇز|ئون)/u', // Uyghur numbers
+                '/(بولۇش|قىلىش|ئېيتىش|كۆرۈش|بىلىش)/u' // Common Uyghur verbs
+            ),
+            // Arabic
+            'ar' => array(
+                '/[\x{0600}-\x{06FF}]/u',
+                '/(هذا|هذه|ذلك|تلك|في|من|إلى|على|أن)/u'
+            ),
+            // Chinese
+            'zh' => array(
+                '/[\x{4E00}-\x{9FFF}]/u',
+                '/(的|是|在|有|一|个|我|你|他|她)/u'
+            ),
+            // Russian
+            'ru' => array(
+                '/[\x{0400}-\x{04FF}]/u',
+                '/(это|что|как|где|когда|почему|который)/u'
+            ),
+            // Turkish
+            'tr' => array(
+                '/[ıİğĞüÜşŞöÖçÇ]/u',
+                '/(bir|iki|üç|dört|beş|altı|yedi|sekiz|dokuz|on)/u'
+            ),
+            // Spanish
+            'es' => array(
+                '/[ñáéíóúü]/ui',
+                '/(que|con|por|para|una|del|las|los|como)/u'
+            ),
+            // French
+            'fr' => array(
+                '/[àâäéèêëïîôöùûüÿç]/ui',
+                '/(que|avec|pour|dans|par|sur|comme|mais)/u'
+            ),
+            // German
+            'de' => array(
+                '/[äöüßÄÖÜ]/u',
+                '/(und|oder|aber|mit|für|von|zu|bei|nach)/u'
+            )
+        );
+        
+        // Check each language pattern
+        foreach ($language_patterns as $lang_code => $patterns) {
+            $matches = 0;
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $combined_text)) {
+                    $matches++;
+                }
+            }
+            // If we have multiple pattern matches, consider it detected
+            if ($matches >= 2) {
+                return $lang_code;
+            }
+        }
+        
+        return 'auto';
+    }
+    
+    /**
+     * Get user's preferred language
+     *
+     * @return string Language code
+     */
+    private function get_user_language() {
+        $current_user_id = get_current_user_id();
+        
+        if ($current_user_id > 0) {
+            $user_language = get_user_meta($current_user_id, 'ai_assistant_language', true);
+            if (!empty($user_language)) {
+                return $this->convert_locale_to_language_name($user_language);
+            }
+        }
+        
+        // Fallback to site language
+        $site_locale = get_locale();
+        return $this->convert_locale_to_language_name($site_locale);
+    }
+    
+    /**
+     * Determine response language based on detection and user preference
+     *
+     * @param string $detected_language
+     * @param string $user_language
+     * @return string
+     */
+    private function determine_response_language($detected_language, $user_language) {
+        // If we detected a specific language in the input, use that
+        if ($detected_language !== 'auto') {
+            return $this->convert_code_to_language_name($detected_language);
+        }
+        
+        // Otherwise use user's preferred language
+        return $user_language;
+    }
+    
+    /**
+     * Convert locale code to language name
+     *
+     * @param string $locale
+     * @return string
+     */
+    private function convert_locale_to_language_name($locale) {
+        $language_map = array(
+            'ug' => 'Uyghur',
+            'ug_CN' => 'Uyghur',
+            'ar' => 'Arabic',
+            'ar_SA' => 'Arabic', 
+            'zh_CN' => 'Chinese',
+            'zh_TW' => 'Chinese',
+            'ru_RU' => 'Russian',
+            'tr_TR' => 'Turkish',
+            'es_ES' => 'Spanish',
+            'fr_FR' => 'French',
+            'de_DE' => 'German',
+            'en_US' => 'en',
+            'en_GB' => 'en'
+        );
+        
+        if (isset($language_map[$locale])) {
+            return $language_map[$locale];
+        }
+        
+        // Extract base language code
+        $base_code = substr($locale, 0, 2);
+        if (isset($language_map[$base_code])) {
+            return $language_map[$base_code];
+        }
+        
+        return 'en';
+    }
+    
+    /**
+     * Convert language code to language name
+     *
+     * @param string $code
+     * @return string
+     */
+    private function convert_code_to_language_name($code) {
+        $code_map = array(
+            'ug' => 'Uyghur',
+            'ar' => 'Arabic',
+            'zh' => 'Chinese',
+            'ru' => 'Russian',
+            'tr' => 'Turkish',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'de' => 'German'
+        );
+        
+        return isset($code_map[$code]) ? $code_map[$code] : 'en';
+    }
 
     /**
      * Clear AI Assistant cache
@@ -871,7 +1146,7 @@ class AI_Assistant_AI_Service {
             );
         }
         
-        error_log('AI Assistant: Cleared ' . $count . ' cache entries of type: ' . $type);
+        AIAssistant::log('Cleared ' . $count . ' cache entries of type: ' . $type, true);
         return $count;
     }
 
@@ -883,30 +1158,27 @@ class AI_Assistant_AI_Service {
     public function get_available_models() {
         $models = array();
         
-        $configured_providers = $this->get_configured_providers();
+        $configured_providers = array_keys($this->get_configured_providers());
         
         foreach ($configured_providers as $provider) {
             switch ($provider) {
                 case 'gemini':
-                    $models['gemini-2.5-flash'] = 'Gemini 2.5 Flash (Latest & Fast)';
-                    $models['gemini-2.5-pro'] = 'Gemini 2.5 Pro (Most Advanced)';
-                    $models['gemini-1.5-flash'] = 'Gemini 1.5 Flash (Stable)';
-                    $models['gemini-1.5-pro'] = 'Gemini 1.5 Pro (Advanced)';
+                    $models['gemini-2.5-pro'] = 'Gemini 2.5 Pro (Most Advanced - Thinking Model)';
+                    $models['gemini-2.5-flash'] = 'Gemini 2.5 Flash (Latest & Fast - Best Price-Performance)';
+                    $models['gemini-2.5-flash-lite'] = 'Gemini 2.5 Flash-Lite (Most Cost-Efficient)';
+                    $models['gemini-2.0-flash'] = 'Gemini 2.0 Flash (Next Generation Features)';
                     break;
                     
                 case 'openai':
                     $models['gpt-4o'] = 'GPT-4o (Latest)';
                     $models['gpt-4o-mini'] = 'GPT-4o Mini (Fast & Efficient)';
-                    $models['gpt-4-turbo'] = 'GPT-4 Turbo (Advanced)';
+                    $models['gpt-4.1'] = 'GPT-4.1 (Advanced)';
                     $models['gpt-3.5-turbo'] = 'GPT-3.5 Turbo (Economical)';
                     break;
                     
                 case 'anthropic':
-                    $models['claude-3-5-sonnet-20241022'] = 'Claude 3.5 Sonnet (Latest)';
-                    $models['claude-3-5-haiku-20241022'] = 'Claude 3.5 Haiku (Fast)';
-                    $models['claude-3-opus-20240229'] = 'Claude 3 Opus (Most Capable)';
-                    $models['claude-3-sonnet-20240229'] = 'Claude 3 Sonnet (Balanced)';
-                    $models['claude-3-haiku-20240307'] = 'Claude 3 Haiku (Economical)';
+                    $models['claude-sonnet-4-20250514'] = 'Claude Sonnet 4 (Smart, efficient model for everyday use)';
+                    $models['claude-opus-4-20250514'] = 'Claude Opus 4 (Most Capable)';
                     break;
             }
         }
@@ -914,6 +1186,48 @@ class AI_Assistant_AI_Service {
         // If no providers configured, return latest default
         if (empty($models)) {
             $models['gemini-2.5-flash'] = 'Gemini 2.5 Flash (Default)';
+        }
+        
+        return $models;
+    }
+    
+    /**
+     * Get available models for image generation only
+     *
+     * @return array
+     */
+    public function get_available_image_models() {
+        $models = array();
+        
+        $configured_providers = array_keys($this->get_configured_providers());
+        
+        foreach ($configured_providers as $provider) {
+            switch ($provider) {
+                case 'openai':
+                    // OpenAI supports DALL-E for image generation
+                    $models['gpt-4o'] = 'DALL-E via GPT-4o (Latest)';
+                    $models['gpt-4o-mini'] = 'DALL-E via GPT-4o Mini (Fast)';
+                    $models['gpt-4.1'] = 'DALL-E via GPT-4.1 (Advanced)';
+                    break;
+                    
+                case 'gemini':
+                    // Gemini 2.0 has native image generation (free tier)
+                    $models['gemini-2.0-flash'] = 'Gemini 2.0 Flash (Native Image Generation - Free)';
+                    $models['gemini-2.5-flash'] = 'Gemini 2.5 Flash (Text + Fallback Image)';
+                    $models['gemini-2.5-pro'] = 'Gemini 2.5 Pro (Text + Fallback Image)';
+                    break;
+                    
+                case 'anthropic':
+                    // Anthropic Claude with image generation capabilities
+                    $models['claude-sonnet-4-20250514'] = 'Claude Sonnet 4 (Image Generation)';
+                    $models['claude-opus-4-20250514'] = 'Claude Opus 4 (Advanced Image Generation)';
+                    break;
+            }
+        }
+        
+        // If no providers configured, return empty array with message
+        if (empty($models)) {
+            return array();
         }
         
         return $models;
@@ -1010,24 +1324,63 @@ class AI_Assistant_AI_Service {
     public function generate_image($prompt, $size = '1024x1024', $model = '') {
         $api_keys = get_option('ai_assistant_api_keys', array());
         
-        // Determine which provider to use based on model or availability
+        // If specific model is provided, use the corresponding provider
         if (!empty($model)) {
-            if (strpos($model, 'gpt') !== false || strpos($model, 'dall-e') !== false) {
+            // OpenAI models
+            if (in_array($model, array('gpt-4o', 'gpt-4o-mini', 'gpt-4.1', 'dall-e-3', 'dall-e-2'))) {
                 if (!empty($api_keys['openai'])) {
                     return $this->generate_image_openai($prompt, $size, $api_keys['openai']);
+                } else {
+                    return array(
+                        'success' => false,
+                        'error' => __('OpenAI API key not configured for the selected model.', 'ai-assistant')
+                    );
                 }
-            } elseif (strpos($model, 'claude') !== false) {
+            }
+            // Anthropic models
+            elseif (in_array($model, array('claude-sonnet-4-20250514', 'claude-opus-4-20250514'))) {
                 if (!empty($api_keys['anthropic'])) {
                     return $this->generate_image_anthropic($prompt, $size, $api_keys['anthropic']);
+                } else {
+                    return array(
+                        'success' => false,
+                        'error' => __('Anthropic API key not configured for the selected model.', 'ai-assistant')
+                    );
                 }
-            } elseif (strpos($model, 'gemini') !== false) {
+            }
+            // Gemini models (current and legacy) - Note: Imagen is now paid-only
+            elseif (in_array($model, array('gemini-2.5-flash', 'gemini-2.5-pro', 'gemini-2.5-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro'))) {
                 if (!empty($api_keys['gemini'])) {
-                    return $this->generate_image_gemini($prompt, $size, $api_keys['gemini']);
+                    $gemini_result = $this->generate_image_gemini($prompt, $size, $api_keys['gemini']);
+                    
+                    // If Gemini fails and OpenAI is available, fallback to OpenAI with a notice
+                    if (!$gemini_result['success'] && !empty($api_keys['openai'])) {
+                        $openai_result = $this->generate_image_openai($prompt, $size, $api_keys['openai']);
+                        if ($openai_result['success']) {
+                            // Add a notice about the fallback
+                            $openai_result['fallback_notice'] = __('Gemini image generation is not available. Used OpenAI DALL-E instead.', 'ai-assistant');
+                        }
+                        return $openai_result;
+                    }
+                    
+                    return $gemini_result;
+                } else {
+                    return array(
+                        'success' => false,
+                        'error' => __('Google Gemini API key not configured for the selected model.', 'ai-assistant')
+                    );
                 }
+            }
+            // Unknown model
+            else {
+                return array(
+                    'success' => false,
+                    'error' => sprintf(__('Unknown model "%s" specified for image generation.', 'ai-assistant'), $model)
+                );
             }
         }
         
-        // Try providers in order of preference: OpenAI (DALL-E), then Gemini, then Anthropic
+        // No model specified - try providers in order of preference: OpenAI (DALL-E), then Gemini, then Anthropic
         if (!empty($api_keys['openai'])) {
             return $this->generate_image_openai($prompt, $size, $api_keys['openai']);
         }
@@ -1133,40 +1486,128 @@ class AI_Assistant_AI_Service {
      * @return array Result with success status and image_url or error
      */
     private function generate_image_gemini($prompt, $size, $api_key) {
-        $cache_key = 'ai_image_gemini_' . md5($prompt . $size);
-        $cached_result = get_transient($cache_key);
+        // Use Gemini 2.0 Flash Preview Image Generation (free tier)
+        $model = 'gemini-2.0-flash-preview-image-generation';
+        $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$api_key}";
         
-        if ($cached_result !== false) {
-            return $cached_result;
-        }
-        
-        // Try Imagen models first (specialized for image generation)
-        $imagen_result = $this->generate_image_with_imagen($prompt, $size, $api_key);
-        if ($imagen_result['success']) {
-            return $imagen_result;
-        }
-        
-        // Log that Imagen failed
-        error_log('AI Assistant: Imagen failed, trying Gemini 2.0 Flash: ' . $imagen_result['error']);
-        
-        // Fallback to Gemini 2.0 Flash with image generation
-        $flash_result = $this->generate_image_with_gemini_flash($prompt, $size, $api_key);
-        if ($flash_result['success']) {
-            return $flash_result;
-        }
-        
-        // Log that both failed
-        error_log('AI Assistant: Both Imagen and Gemini Flash failed');
-        
-        // If both Gemini methods fail, return helpful error message
-        return array(
-            'success' => false,
-            'error' => __('Google Gemini image generation is not available in your region or requires special access. This feature may be limited to certain accounts or geographic areas. Please use OpenAI (DALL-E) for reliable image generation.', 'ai-assistant'),
-            'provider' => 'gemini',
-            'details' => array(
-                'imagen_error' => $imagen_result['error'],
-                'flash_error' => $flash_result['error']
+        $body = array(
+            'contents' => array(
+                array(
+                    'parts' => array(
+                        array(
+                            'text' => $prompt
+                        )
+                    )
+                )
+            ),
+            'generationConfig' => array(
+                'responseModalities' => array('TEXT', 'IMAGE'),
+                'temperature' => 0.4,
+                'topK' => 32,
+                'topP' => 0.95,
+                'maxOutputTokens' => 8192
             )
+        );
+        
+        $args = array(
+            'body' => wp_json_encode($body),
+            'headers' => array(
+                'Content-Type' => 'application/json',
+            ),
+            'timeout' => 60,
+            'sslverify' => true
+        );
+        
+        $response = wp_remote_post($endpoint, $args);
+        
+        if (is_wp_error($response)) {
+            AIAssistant::log('Gemini 2.0 image generation error: ' . $response->get_error_message(), true);
+            return array(
+                'success' => false,
+                'error' => 'Network error: ' . $response->get_error_message(),
+                'provider' => 'gemini'
+            );
+        }
+        
+        $response_code = wp_remote_retrieve_response_code($response);
+        $response_body = wp_remote_retrieve_body($response);
+        
+        // Enhanced debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('Gemini 2.0 image generation response code: ' . $response_code, true);
+            AIAssistant::log('Gemini 2.0 image generation response preview: ' . substr($response_body, 0, 500), true);
+        }
+        
+        if ($response_code !== 200) {
+            $error_data = json_decode($response_body, true);
+            $error_message = isset($error_data['error']['message']) ? $error_data['error']['message'] : 'Unknown API error';
+            
+            AIAssistant::log('Gemini 2.0 image generation API error: ' . $error_message, true);
+            
+            return array(
+                'success' => false,
+                'error' => sprintf('Gemini 2.0 API error (%d): %s', $response_code, $error_message),
+                'provider' => 'gemini'
+            );
+        }
+        
+        $data = json_decode($response_body, true);
+        
+        // Check for candidates in response
+        if (!isset($data['candidates'][0]['content']['parts'])) {
+            AIAssistant::log('Gemini 2.0 image generation: No content parts in response', true);
+            return array(
+                'success' => false,
+                'error' => 'Gemini 2.0 returned an unexpected response format. Check API key permissions for image generation.',
+                'provider' => 'gemini'
+            );
+        }
+        
+        // Look for inline image data in response parts
+        $image_data = null;
+        $text_content = '';
+        
+        foreach ($data['candidates'][0]['content']['parts'] as $part) {
+            if (isset($part['inlineData']['data'])) {
+                $image_data = $part['inlineData']['data'];
+                AIAssistant::log('Gemini 2.0: Found image data in response', true);
+            }
+            if (isset($part['text'])) {
+                $text_content .= $part['text'] . ' ';
+            }
+        }
+        
+        if (!$image_data) {
+            AIAssistant::log('Gemini 2.0: No image data found in response. Text content: ' . substr($text_content, 0, 200), true);
+            return array(
+                'success' => false,
+                'error' => 'Gemini 2.0 did not generate an image. The model responded with text only: ' . substr(trim($text_content), 0, 200) . '... Try asking more explicitly for image generation.',
+                'provider' => 'gemini',
+                'text_response' => trim($text_content)
+            );
+        }
+        
+        // Convert base64 image data to downloadable URL
+        $image_url = $this->convert_base64_to_url($image_data, 'gemini-2.0');
+        
+        if (!$image_url) {
+            return array(
+                'success' => false,
+                'error' => 'Failed to process generated image from Gemini 2.0',
+                'provider' => 'gemini'
+            );
+        }
+        
+        // Cache the result
+        $cache_key = 'ai_image_gemini_' . md5($prompt . $size);
+        set_transient($cache_key, $image_url, 3600); // Cache for 1 hour
+        
+        return array(
+            'success' => true,
+            'image_url' => $image_url,
+            'provider' => 'gemini',
+            'model' => 'gemini-2.0-flash-preview-image-generation',
+            'text_response' => trim($text_content)
         );
     }
     
@@ -1182,7 +1623,7 @@ class AI_Assistant_AI_Service {
         // Convert WordPress size format to Imagen aspect ratio
         $aspect_ratio = $this->convert_size_to_aspect_ratio($size);
         
-        $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:generateImages';
+        $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-preview-06-06-generate-001:generateImages';
         
         $body = array(
             'prompt' => $prompt,
@@ -1203,10 +1644,10 @@ class AI_Assistant_AI_Service {
         ));
         
         if (is_wp_error($response)) {
-            error_log('AI Assistant Imagen Error: ' . $response->get_error_message());
+            AIAssistant::log('Imagen Error: ' . $response->get_error_message(), true);
             return array(
                 'success' => false,
-                'error' => 'Imagen network error - will try Gemini 2.0 Flash',
+                'error' => 'Imagen network error - will try Gemini 2.5 Flash',
                 'provider' => 'imagen'
             );
         }
@@ -1215,8 +1656,8 @@ class AI_Assistant_AI_Service {
         $response_body = wp_remote_retrieve_body($response);
         
         // Log the response for debugging
-        error_log('AI Assistant Imagen Response Code: ' . $response_code);
-        error_log('AI Assistant Imagen Response Body: ' . substr($response_body, 0, 500));
+        AIAssistant::log('Imagen Response Code: ' . $response_code, true);
+        AIAssistant::log('Imagen Response Body: ' . substr($response_body, 0, 500), true);
         
         if ($response_code !== 200) {
             $error_data = json_decode($response_body, true);
@@ -1224,10 +1665,10 @@ class AI_Assistant_AI_Service {
             
             if (isset($error_data['error']['message'])) {
                 $error_message = $error_data['error']['message'];
-                error_log('AI Assistant Imagen API Error: ' . $error_message);
+                AIAssistant::log('Imagen API Error: ' . $error_message, true);
             }
             
-            // Return failure to trigger fallback to Gemini 2.0 Flash
+            // Return failure to trigger fallback to Gemini 2.5 Flash
             return array(
                 'success' => false,
                 'error' => 'Imagen unavailable: ' . $error_message,
@@ -1238,10 +1679,10 @@ class AI_Assistant_AI_Service {
         $data = json_decode($response_body, true);
         
         if (!isset($data['generatedImages'][0]['imageData'])) {
-            error_log('AI Assistant Imagen: Invalid response structure');
+            AIAssistant::log('Imagen: Invalid response structure', true);
             return array(
                 'success' => false,
-                'error' => 'Imagen response invalid - trying Gemini 2.0 Flash',
+                'error' => 'Imagen response invalid - trying Gemini 2.5 Flash',
                 'provider' => 'imagen'
             );
         }
@@ -1253,7 +1694,7 @@ class AI_Assistant_AI_Service {
         if (!$image_url) {
             return array(
                 'success' => false,
-                'error' => 'Failed to save Imagen image - trying Gemini 2.0 Flash',
+                'error' => 'Failed to save Imagen image - trying Gemini 2.5 Flash',
                 'provider' => 'imagen'
             );
         }
@@ -1262,7 +1703,7 @@ class AI_Assistant_AI_Service {
             'success' => true,
             'image_url' => $image_url,
             'provider' => 'imagen',
-            'model' => 'imagen-3.0'
+            'model' => 'imagen-4.0-generate-preview-06-06'
         );
         
         // Cache for 1 hour
@@ -1273,7 +1714,7 @@ class AI_Assistant_AI_Service {
     }
     
     /**
-     * Generate image using Gemini 2.0 Flash with image generation capabilities
+     * Generate image using Gemini 2.5 Flash with image generation capabilities
      *
      * @param string $prompt Image description prompt
      * @param string $size Image size
@@ -1281,7 +1722,7 @@ class AI_Assistant_AI_Service {
      * @return array Result with success status and image_url or error
      */
     private function generate_image_with_gemini_flash($prompt, $size, $api_key) {
-        $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
+        $endpoint = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
         
         $body = array(
             'contents' => array(
@@ -1312,7 +1753,7 @@ class AI_Assistant_AI_Service {
         ));
         
         if (is_wp_error($response)) {
-            error_log('AI Assistant Gemini Flash Error: ' . $response->get_error_message());
+            AIAssistant::log('Gemini Flash Error: ' . $response->get_error_message(), true);
             return array(
                 'success' => false,
                 'error' => __('Network error: ', 'ai-assistant') . $response->get_error_message(),
@@ -1324,14 +1765,14 @@ class AI_Assistant_AI_Service {
         $response_body = wp_remote_retrieve_body($response);
         
         // Log the response for debugging
-        error_log('AI Assistant Gemini Flash Response Code: ' . $response_code);
-        error_log('AI Assistant Gemini Flash Response Body: ' . substr($response_body, 0, 500));
+        AIAssistant::log('Gemini Flash Response Code: ' . $response_code, true);
+        AIAssistant::log('Gemini Flash Response Body: ' . substr($response_body, 0, 500), true);
         
         if ($response_code !== 200) {
             $error_data = json_decode($response_body, true);
             $error_message = isset($error_data['error']['message']) ? $error_data['error']['message'] : 'Unknown API error';
             
-            error_log('AI Assistant Gemini Flash API Error: ' . $error_message);
+            AIAssistant::log('Gemini Flash API Error: ' . $error_message, true);
             
             // If this is also failing, return a helpful error message
             return array(
@@ -1345,7 +1786,7 @@ class AI_Assistant_AI_Service {
         
         // Look for image data in the response
         if (!isset($data['candidates'][0]['content']['parts'])) {
-            error_log('AI Assistant Gemini Flash: No content parts in response');
+            AIAssistant::log('Gemini Flash: No content parts in response', true);
             return array(
                 'success' => false,
                 'error' => __('Gemini image generation not available. Please use OpenAI (DALL-E) for image generation.', 'ai-assistant'),
@@ -1362,7 +1803,7 @@ class AI_Assistant_AI_Service {
         }
         
         if (!$image_data) {
-            error_log('AI Assistant Gemini Flash: No image data found in response');
+            AIAssistant::log('Gemini Flash: No image data found in response', true);
             return array(
                 'success' => false,
                 'error' => __('Gemini image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation.', 'ai-assistant'),
@@ -1385,7 +1826,7 @@ class AI_Assistant_AI_Service {
             'success' => true,
             'image_url' => $image_url,
             'provider' => 'gemini-flash',
-            'model' => 'gemini-2.0-flash-exp'
+            'model' => 'gemini-2.5-flash'
         );
         
         // Cache for 1 hour
@@ -1476,8 +1917,8 @@ class AI_Assistant_AI_Service {
         $url = 'https://api.anthropic.com/v1/messages';
         
         $body = array(
-            'model' => 'claude-3-5-sonnet-20241022',
-            'max_tokens' => 1000,
+            'model' => 'claude-sonnet-4-20250514',
+            'max_tokens' => 1024,
             'messages' => array(
                 array(
                     'role' => 'user',

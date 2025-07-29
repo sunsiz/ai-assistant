@@ -1,6 +1,6 @@
 /**
  * AI Assistant Admin JavaScript
- * Version: 1.0.57
+ * Version: 1.0.58
  */
 
 (function($) {
@@ -19,9 +19,23 @@
             this.initLanguageSettings();
             this.initApiTesting();
             this.initTranslationManagement();
+            this.initTranslationEditor();
             this.initDashboard();
             this.initCompilationTools();
             console.log('AI Assistant Admin: Initialized');
+        },
+
+        // Utility: Debounce function for search input
+        debounce: function(func, wait) {
+            let timeout;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
         },
 
         // Language settings functionality
@@ -162,10 +176,22 @@
                 self.filterTranslations();
             });
             
-            // Auto-translate functionality
+            // Auto-translate functionality for .po file management
             $('#auto-translate').on('click', function(e) {
                 e.preventDefault();
                 self.handleAutoTranslate($(this));
+            });
+            
+            // Auto-translate all empty strings - bulk functionality
+            $('#auto-translate-all').on('click', function(e) {
+                e.preventDefault();
+                self.handleAutoTranslate($(this));
+            });
+            
+            // Individual auto-translate buttons for single strings
+            $(document).on('click', '.auto-translate-single', function(e) {
+                e.preventDefault();
+                self.handleSingleAutoTranslate($(this));
             });
             
             // Export .po file
@@ -304,12 +330,12 @@
             });
         },
 
-        // Handle auto-translation
+        // Handle auto-translation for .po file management
         handleAutoTranslate: function($button) {
             const self = this;
             const untranslatedStrings = [];
             
-            // Collect untranslated strings
+            // Collect untranslated strings from .po file interface
             $('.translation-row:not(.hidden)').each(function() {
                 const $row = $(this);
                 const $input = $row.find('.translation-input');
@@ -320,6 +346,8 @@
                 }
             });
             
+            console.log('Untranslated strings found:', untranslatedStrings);
+            
             if (untranslatedStrings.length === 0) {
                 alert('No untranslated strings found.');
                 return;
@@ -327,7 +355,7 @@
             
             const confirmMessage = 'This will attempt to auto-translate ' + 
                                  untranslatedStrings.length + 
-                                 ' empty strings using AI. Continue?';
+                                 ' empty interface strings using AI. Continue?';
             
             if (!confirm(confirmMessage)) {
                 return;
@@ -343,7 +371,11 @@
             const currentLanguage = $('#language-selector').val() || 
                                   $('input[name="edit_language"]').val();
             
-            // Make AJAX request
+            console.log('Sending translation request for language:', currentLanguage);
+            console.log('AJAX URL:', ai_assistant_admin.ajax_url);
+            console.log('Nonce:', ai_assistant_admin.nonce);
+            
+            // Make AJAX request for .po file translation
             $.ajax({
                 url: ai_assistant_admin.ajax_url,
                 type: 'POST',
@@ -354,10 +386,11 @@
                     nonce: ai_assistant_admin.nonce
                 },
                 success: function(response) {
+                    console.log('AJAX success response:', response);
                     if (response.success) {
                         let translatedCount = 0;
                         
-                        // Apply translations to form
+                        // Apply translations to .po file form
                         $('.translation-row').each(function() {
                             const $row = $(this);
                             const $input = $row.find('.translation-input');
@@ -378,13 +411,16 @@
                         
                         // Update count and show success
                         self.updateTranslationCount();
-                        self.showNotice('Successfully translated ' + translatedCount + ' strings!', 'success');
+                        self.showNotice('Successfully translated ' + translatedCount + ' interface strings!', 'success');
                         
                     } else {
+                        console.log('AJAX error response:', response);
                         self.showNotice('Translation failed: ' + (response.data || 'Unknown error'), 'error');
                     }
                 },
-                error: function() {
+                error: function(xhr, status, error) {
+                    console.log('AJAX request error:', xhr, status, error);
+                    console.log('Response text:', xhr.responseText);
                     self.showNotice('Translation request failed. Please try again.', 'error');
                 },
                 complete: function() {
@@ -441,6 +477,258 @@
                     $notice.find('.notice-dismiss').click();
                 }, 5000);
             }
+        },
+
+        // Translation editor functionality for .po file management
+        initTranslationEditor: function() {
+            // Language selector change
+            $('#language-selector').on('change', function() {
+                const selectedLang = $(this).val();
+                const url = new URL(window.location.href);
+                url.searchParams.set('edit_lang', selectedLang);
+                window.location.href = url.toString();
+            });
+            
+            // Search and filter functionality
+            $('#translation-search').on('input', this.debounce(this.filterTranslations, 300));
+            $('#show-untranslated-only').on('change', this.filterTranslations);
+            
+            // Export .po file
+            $('#export-po').on('click', function() {
+                if (typeof ai_assistant_admin !== 'undefined' && ai_assistant_admin.current_language) {
+                    const lang = ai_assistant_admin.current_language;
+                    const url = ai_assistant_admin.ajax_url + '?action=ai_assistant_export_po&lang=' + lang + '&nonce=' + ai_assistant_admin.export_nonce;
+                    window.open(url, '_blank');
+                }
+            });
+            
+            // Auto-resize textareas
+            $(document).on('input', '.translation-input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+            });
+            
+            // Auto-translate all empty strings
+            $('#auto-translate-all').on('click', this.handleAutoTranslateAll.bind(this));
+            
+            // Individual auto-translate buttons
+            $(document).on('click', '.auto-translate-single', this.handleAutoTranslateSingle.bind(this));
+            
+            // Compile all .mo files
+            $('#compile-all-mo').on('click', this.handleCompileMoFiles.bind(this));
+        },
+
+        // Filter translations based on search and status
+        filterTranslations: function() {
+            const searchTerm = $('#translation-search').val().toLowerCase();
+            const showUntranslatedOnly = $('#show-untranslated-only').is(':checked');
+            
+            $('.translation-row').each(function() {
+                const $row = $(this);
+                const msgid = $row.find('.msgid-text').text().toLowerCase();
+                const isTranslated = $row.find('.status-translated').length > 0;
+                
+                let showRow = true;
+                
+                // Apply search filter
+                if (searchTerm && msgid.indexOf(searchTerm) === -1) {
+                    showRow = false;
+                }
+                
+                // Apply untranslated filter
+                if (showUntranslatedOnly && isTranslated) {
+                    showRow = false;
+                }
+                
+                $row.toggleClass('hidden', !showRow);
+            });
+        },
+
+        // Handle auto-translate all functionality
+        handleAutoTranslateAll: function() {
+            const $button = $('#auto-translate-all');
+            const untranslatedStrings = [];
+            
+            // Collect untranslated strings
+            $('.translation-row').each(function() {
+                const $row = $(this);
+                const $input = $row.find('.translation-input');
+                const msgid = $input.closest('tr').find('input[name*="[msgid]"]').val();
+                
+                if (!$input.val().trim() && msgid) {
+                    untranslatedStrings.push(msgid);
+                }
+            });
+            
+            if (untranslatedStrings.length === 0) {
+                alert(ai_assistant_admin.strings.no_untranslated_found || 'No untranslated strings found.');
+                return;
+            }
+            
+            const confirmMessage = (ai_assistant_admin.strings.auto_translate_confirm_start || 'This will attempt to auto-translate ') + 
+                                 untranslatedStrings.length + 
+                                 (ai_assistant_admin.strings.auto_translate_confirm_end || ' empty interface strings using AI. Continue?');
+            
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            
+            // Show loading state
+            const originalText = $button.text();
+            $button.prop('disabled', true)
+                   .text(ai_assistant_admin.strings.translating || 'Translating...')
+                   .addClass('ai-assistant-loading');
+            
+            // Make AJAX request
+            $.ajax({
+                url: ai_assistant_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'ai_assistant_auto_translate',
+                    language: ai_assistant_admin.current_language,
+                    strings: untranslatedStrings,
+                    nonce: ai_assistant_admin.nonce
+                },
+                success: function(response) {
+                    if (response.success) {
+                        let translatedCount = 0;
+                        
+                        // Apply translations
+                        $('.translation-row').each(function() {
+                            const $row = $(this);
+                            const $input = $row.find('.translation-input');
+                            const msgid = $input.closest('tr').find('input[name*="[msgid]"]').val();
+                            
+                            if (response.data[msgid]) {
+                                $input.val(response.data[msgid]);
+                                $row.find('.status-badge')
+                                    .removeClass('status-untranslated')
+                                    .addClass('status-translated')
+                                    .text(ai_assistant_admin.strings.translated || 'Translated');
+                                translatedCount++;
+                                
+                                // Trigger auto-resize
+                                $input.trigger('input');
+                            }
+                        });
+                        
+                        alert((ai_assistant_admin.strings.success_translated_start || 'Successfully translated ') + 
+                              translatedCount + 
+                              (ai_assistant_admin.strings.success_translated_end || ' interface strings!'));
+                        
+                    } else {
+                        alert((ai_assistant_admin.strings.translation_failed || 'Translation failed: ') + 
+                              (response.data || ai_assistant_admin.strings.unknown_error || 'Unknown error'));
+                    }
+                },
+                error: function() {
+                    alert(ai_assistant_admin.strings.translation_request_failed || 'Translation request failed. Please try again.');
+                },
+                complete: function() {
+                    $button.prop('disabled', false)
+                           .text(originalText)
+                           .removeClass('ai-assistant-loading');
+                }
+            });
+        },
+
+        // Handle individual string auto-translate
+        handleAutoTranslateSingle: function(e) {
+            const $button = $(e.currentTarget);
+            const msgid = $button.data('msgid');
+            const $row = $button.closest('.translation-row');
+            const $input = $row.find('.translation-input');
+            
+            if (!msgid) {
+                alert(ai_assistant_admin.strings.no_text_to_translate || 'No text to translate.');
+                return;
+            }
+            
+            // Show loading state
+            const originalText = $button.text();
+            $button.prop('disabled', true)
+                   .text(ai_assistant_admin.strings.translating_short || '...');
+            
+            // Make AJAX request for single string
+            $.ajax({
+                url: ai_assistant_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'ai_assistant_auto_translate',
+                    language: ai_assistant_admin.current_language,
+                    strings: [msgid],
+                    nonce: ai_assistant_admin.nonce
+                },
+                success: function(response) {
+                    if (response.success && response.data[msgid]) {
+                        $input.val(response.data[msgid]);
+                        $row.find('.status-badge')
+                            .removeClass('status-untranslated')
+                            .addClass('status-translated')
+                            .text(ai_assistant_admin.strings.translated || 'Translated');
+                        
+                        // Hide the button since it's now translated
+                        $button.fadeOut();
+                        
+                        // Trigger auto-resize
+                        $input.trigger('input');
+                        
+                    } else {
+                        alert(ai_assistant_admin.strings.translation_failed_single || 'Translation failed for this string.');
+                    }
+                },
+                error: function() {
+                    alert(ai_assistant_admin.strings.translation_request_failed || 'Translation request failed.');
+                },
+                complete: function() {
+                    $button.prop('disabled', false)
+                           .text(originalText);
+                }
+            });
+        },
+
+        // Handle .mo file compilation
+        handleCompileMoFiles: function() {
+            const $button = $('#compile-all-mo');
+            
+            const confirmMessage = ai_assistant_admin.strings.compile_confirm || 
+                                 'This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?';
+            
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            
+            const originalText = $button.text();
+            $button.prop('disabled', true)
+                   .text(ai_assistant_admin.strings.compiling || 'Compiling...');
+            
+            $.ajax({
+                url: ai_assistant_admin.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'ai_assistant_handle_compile_mo_files',
+                    nonce: ai_assistant_admin.nonce
+                },
+                success: function(response) {
+                    const $status = $('#compile-status');
+                    if (response.success) {
+                        $status.text(response.data.message).css('color', 'green');
+                    } else {
+                        const errorMsg = (ai_assistant_admin.strings.compilation_failed || 'Compilation failed: ') + 
+                                       (response.data || ai_assistant_admin.strings.unknown_error || 'Unknown error');
+                        $status.text(errorMsg).css('color', 'red');
+                    }
+                },
+                error: function() {
+                    const errorMsg = ai_assistant_admin.strings.compilation_request_failed || 
+                                   'Compilation request failed. Please try again.';
+                    $('#compile-status').text(errorMsg).css('color', 'red');
+                },
+                complete: function() {
+                    const buttonText = ai_assistant_admin.strings.compile_button || 'Compile All .mo Files';
+                    $button.prop('disabled', false).text(buttonText);
+                }
+            });
         },
 
         // Utility: Show loading overlay
@@ -504,5 +792,5 @@
 
 // Console debug info
 if (window.console && window.console.log) {
-    console.log('AI Assistant Admin JS loaded - Version 1.0.33');
+    console.log('AI Assistant Admin JS loaded - Version 1.0.58');
 }

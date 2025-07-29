@@ -1,5 +1,5 @@
 /**
- * AI Assistant Editor JS - v1.0.57
+ * AI Assistant Editor JS - v1.0.58
  * Handles meta box UI, tabs, and AJAX calls for translation, content generation, and image generation.
  */
 (function($) {
@@ -793,7 +793,97 @@
                 }
             });
             
+            // Handle image generation models separately
+            this.populateImageModelDropdown();
+            
             console.log('AI Assistant: Model dropdowns populated successfully');
+        },
+        
+        populateImageModelDropdown: function() {
+            console.log('AI Assistant: Populating image model dropdown');
+            
+            // Make AJAX call to get image-specific models
+            $.ajax({
+                url: aiAssistant.ajaxUrl,
+                type: 'POST',
+                data: {
+                    action: 'wp_ai_get_image_models',
+                    nonce: aiAssistant.nonce
+                },
+                success: function(response) {
+                    if (response.success && response.data && response.data.models) {
+                        const $imageModelSelect = $('#ai-image-model-select');
+                        if ($imageModelSelect.length) {
+                            $imageModelSelect.empty();
+                            
+                            // Add default option
+                            $imageModelSelect.append('<option value="">Select an image model...</option>');
+                            
+                            // Group models by provider for better organization
+                            const providerGroups = {};
+                            Object.entries(response.data.models).forEach(([modelId, modelInfo]) => {
+                                const provider = modelInfo.provider || 'Other';
+                                if (!providerGroups[provider]) {
+                                    providerGroups[provider] = [];
+                                }
+                                providerGroups[provider].push({
+                                    id: modelId,
+                                    name: modelInfo.name || modelId,
+                                    description: modelInfo.description || ''
+                                });
+                            });
+                            
+                            // Add models grouped by provider
+                            Object.entries(providerGroups).forEach(([provider, models]) => {
+                                if (models.length > 0) {
+                                    const $optgroup = $('<optgroup></optgroup>').attr('label', provider);
+                                    models.forEach(model => {
+                                        const $option = $('<option></option>')
+                                            .attr('value', model.id)
+                                            .text(model.name);
+                                        if (model.description) {
+                                            $option.attr('title', model.description);
+                                        }
+                                        $optgroup.append($option);
+                                    });
+                                    $imageModelSelect.append($optgroup);
+                                }
+                            });
+                            
+                            console.log(`AI Assistant: Populated image model dropdown with ${Object.keys(response.data.models).length} models`);
+                        }
+                    } else {
+                        console.warn('AI Assistant: No image models available or error occurred');
+                        // Fallback to regular models if image-specific call fails
+                        const availableModels = aiAssistant.availableModels || {};
+                        const $imageModelSelect = $('#ai-image-model-select');
+                        if ($imageModelSelect.length && Object.keys(availableModels).length > 0) {
+                            $imageModelSelect.empty();
+                            Object.keys(availableModels).forEach(modelId => {
+                                const $option = $('<option></option>')
+                                    .attr('value', modelId)
+                                    .text(availableModels[modelId]);
+                                $imageModelSelect.append($option);
+                            });
+                        }
+                    }
+                },
+                error: function() {
+                    console.error('AI Assistant: Failed to fetch image models');
+                    // Fallback to regular models
+                    const availableModels = aiAssistant.availableModels || {};
+                    const $imageModelSelect = $('#ai-image-model-select');
+                    if ($imageModelSelect.length && Object.keys(availableModels).length > 0) {
+                        $imageModelSelect.empty();
+                        Object.keys(availableModels).forEach(modelId => {
+                            const $option = $('<option></option>')
+                                .attr('value', modelId)
+                                .text(availableModels[modelId]);
+                            $imageModelSelect.append($option);
+                        });
+                    }
+                }
+            });
         },
 
         getEditorContent: function() {
@@ -1009,6 +1099,7 @@
             
             var postId = $('#post_ID').val() || 0;
             var context = $('#ai-content-context').val() || '';
+            var style = $('#ai-image-style').val() || 'photorealistic';
             
             $.ajax({
                 url: aiAssistant.ajaxUrl,
@@ -1017,7 +1108,8 @@
                     action: 'ai_assistant_generate_image_prompt',
                     nonce: aiAssistant.nonce,
                     post_id: postId,
-                    context: context
+                    context: context,
+                    style: style
                 },
                 success: function(response) {
                     if (response.success) {

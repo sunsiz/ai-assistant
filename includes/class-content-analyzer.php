@@ -373,13 +373,11 @@ class AI_Assistant_Content_Analyzer {
     public function fetch_and_extract($url) {
         // Validate URL
         if (!filter_var($url, FILTER_VALIDATE_URL)) {
-            error_log("AI Assistant ERROR: Invalid URL provided: " . $url);
             return new WP_Error('invalid_url', 'Invalid URL provided.');
         }
         
         // Check if DOMDocument is available
         if (!class_exists('DOMDocument')) {
-            error_log("AI Assistant ERROR: DOMDocument class not available");
             return new WP_Error('missing_dom', 'DOMDocument extension is required but not available.');
         }
           // Use WordPress HTTP API with longer timeout
@@ -397,7 +395,7 @@ class AI_Assistant_Content_Analyzer {
         ));
         
         if (is_wp_error($response)) {
-            error_log("AI Assistant: wp_remote_get error: " . $response->get_error_message());
+            AIAssistant::log("wp_remote_get error: " . $response->get_error_message(), true);
             return new WP_Error('fetch_error', 'Failed to fetch URL: ' . $response->get_error_message());
         }
         
@@ -405,12 +403,10 @@ class AI_Assistant_Content_Analyzer {
         $status_code = wp_remote_retrieve_response_code($response);
         
         if ($status_code !== 200) {
-            error_log("AI Assistant ERROR: HTTP Error: " . $status_code);
             return new WP_Error('http_error', 'HTTP Error: ' . $status_code);
         }
         
         if (empty($body)) {
-            error_log("AI Assistant ERROR: No content found at URL: " . $url);
             return new WP_Error('empty_content', 'No content found at the URL.');
         }
         
@@ -418,7 +414,6 @@ class AI_Assistant_Content_Analyzer {
         $content = $this->extract_content_from_html($body);
         
         if (empty($content)) {
-            error_log("AI Assistant ERROR: Could not extract content from: " . $url);
             return new WP_Error('extraction_error', 'Could not extract meaningful content from the page.');
         }
         
@@ -572,25 +567,33 @@ class AI_Assistant_Content_Analyzer {
         // Fallback to WordPress locale
         $locale = get_locale();
         
-        // Convert locale to language code
-        $language_map = array(
-            'tr_TR' => 'tr',
-            'en_US' => 'en',
-            'en_GB' => 'en',
-            'fr_FR' => 'fr',
-            'de_DE' => 'de',
-            'es_ES' => 'es',
-            'it_IT' => 'it',
-            'pt_BR' => 'pt',
-            'ru_RU' => 'ru',
-            'ja' => 'ja',
-            'ko_KR' => 'ko',
-            'zh_CN' => 'zh',
-            'ar' => 'ar',
-            'ug' => 'ug'
-        );
+        // Universal language code extraction using the same method as main plugin
+        return $this->extract_language_code($locale);
+    }
+    
+    /**
+     * Universal language code extraction method
+     * Handles any locale format dynamically
+     */
+    private function extract_language_code($locale) {
+        if (empty($locale)) {
+            return 'en';
+        }
         
-        return isset($language_map[$locale]) ? $language_map[$locale] : 'en';
+        // Handle common locale formats: en_US, pt_BR, zh_CN, etc.
+        if (strpos($locale, '_') !== false) {
+            $parts = explode('_', $locale);
+            return strtolower($parts[0]);
+        }
+        
+        // Handle dash format: en-US, pt-BR, etc.
+        if (strpos($locale, '-') !== false) {
+            $parts = explode('-', $locale);
+            return strtolower($parts[0]);
+        }
+        
+        // Handle plain language codes: en, fr, de, etc.
+        return strtolower(substr($locale, 0, 2));
     }
     
     /**
@@ -600,9 +603,21 @@ class AI_Assistant_Content_Analyzer {
      * @return string Language name
      */
     private function get_language_name($language_code) {
-        $language_names = array(
-            'tr' => 'Turkish',
+        // Universal language names
+        $language_names = $this->get_language_names();
+        
+        return isset($language_names[$language_code]) ? $language_names[$language_code] : 'English';
+    }
+    
+    /**
+     * Get universal language names
+     *
+     * @return array Language code to name mapping
+     */
+    private function get_language_names() {
+        return array(
             'en' => 'English',
+            'tr' => 'Turkish',
             'fr' => 'French',
             'de' => 'German',
             'es' => 'Spanish',
@@ -613,9 +628,16 @@ class AI_Assistant_Content_Analyzer {
             'ko' => 'Korean',
             'zh' => 'Chinese',
             'ar' => 'Arabic',
-            'ug' => 'Uyghur'
+            'ug' => 'Uyghur',
+            'fa' => 'Persian',
+            'nl' => 'Dutch',
+            'da' => 'Danish',
+            'fi' => 'Finnish',
+            'az' => 'Azerbaijani',
+            'uz' => 'Uzbek',
+            'ky' => 'Kyrgyz',
+            'ur' => 'Urdu',
+            'tk' => 'Turkmen'
         );
-        
-        return isset($language_names[$language_code]) ? $language_names[$language_code] : 'English';
     }
 }

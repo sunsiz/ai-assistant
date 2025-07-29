@@ -51,7 +51,7 @@ class AI_Assistant_Admin {
         // AJAX handler for debugging language loading
         add_action('wp_ajax_ai_assistant_debug_language_loading', array($this, 'ajax_debug_language_loading'));
         
-        // AJAX handler for auto-translating empty strings (delegated from main plugin)
+        // AJAX handler for auto-translating empty .po strings in translation management
         add_action('wp_ajax_ai_assistant_auto_translate', array($this, 'ajax_auto_translate'));
     }
     
@@ -204,11 +204,11 @@ class AI_Assistant_Admin {
             <?php settings_errors(); ?>
             
             <!-- Quick System Status -->
-            <div class="notice notice-info" style="padding: 15px; margin: 20px 0;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="notice notice-info ai-system-status-notice">
+                <div class="ai-system-status-flex">
                     <div>
-                        <h4 style="margin: 0 0 10px 0;">⚙️ <?php _e('System Status', 'ai-assistant'); ?></h4>
-                        <p style="margin: 0; color: #666;">
+                        <h4 class="ai-system-status-title">⚙️ <?php _e('System Status', 'ai-assistant'); ?></h4>
+                        <p class="ai-system-status-description">
                             <?php 
                             $api_keys = get_option('ai_assistant_api_keys', array());
                             $has_api = !empty($api_keys['openai']) || !empty($api_keys['anthropic']) || !empty($api_keys['gemini']);
@@ -246,27 +246,28 @@ class AI_Assistant_Admin {
                             <td>
                                 <select name="admin_language" class="regular-text">
                                     <?php
-                                    $supported_languages = array(
-                                        'en_US' => 'English (United States)',
-                                        'tr_TR' => 'Türkçe (Turkish)',
-                                        'fa_IR' => 'فارسی (Persian/Farsi)',
-                                        'nl_NL' => 'Nederlands (Dutch)',
-                                        'da_DK' => 'Dansk (Danish)',
-                                        'fr_FR' => 'Français (French)',
-                                        'az_AZ' => 'Azərbaycan dili (Azerbaijani)',
-                                        'uz_UZ' => 'O\'zbek tili (Uzbek)',
-                                        'ar' => 'العربية (Arabic)',
-                                        'ky_KG' => 'Кыргыз тили (Kyrgyz)',
-                                        'ru_RU' => 'Русский (Russian)',
-                                        'pt_PT' => 'Português (Portuguese)',
-                                        'es_ES' => 'Español (Spanish)',
-                                        'de_DE' => 'Deutsch (German)',
-                                        'zh_CN' => '简体中文 (Chinese Simplified)',
-                                        'ug_CN' => 'ئۇيغۇرچە (Uyghur)',
-                                        'ur' => 'اردو (Urdu)',
-                                        'fi' => 'Suomi (Finnish)',
-                                        'tk' => 'Türkmen dili (Turkmen)'
-                                    );
+                                    // Get available languages dynamically from WordPress
+                                    $available_languages = get_available_languages();
+                                    $current_locale = get_locale();
+                                    
+                                    // Build supported languages array with current locale first
+                                    $supported_languages = array();
+                                    $supported_languages[$current_locale] = $this->get_language_display_name($current_locale);
+                                    
+                                    // Add commonly used languages
+                                    $common_languages = array('en_US', 'tr_TR', 'fa_IR', 'nl_NL', 'da_DK', 'fr_FR', 'az_AZ', 'uz_UZ', 'ar', 'ky_KG', 'ru_RU', 'pt_PT', 'es_ES', 'de_DE', 'zh_CN', 'ug_CN', 'ur', 'fi', 'tk');
+                                    foreach ($common_languages as $lang_code) {
+                                        if (!isset($supported_languages[$lang_code])) {
+                                            $supported_languages[$lang_code] = $this->get_language_display_name($lang_code);
+                                        }
+                                    }
+                                    
+                                    // Add any additional available languages from WordPress
+                                    foreach ($available_languages as $lang_code) {
+                                        if (!isset($supported_languages[$lang_code])) {
+                                            $supported_languages[$lang_code] = $this->get_language_display_name($lang_code);
+                                        }
+                                    }
                                     
                                     foreach ($supported_languages as $code => $name) {
                                         $selected = selected($this->get_user_language(), $code, false);
@@ -371,9 +372,9 @@ class AI_Assistant_Admin {
             
             // Log table creation attempt
             if ($suggestions_table_exists) {
-                error_log('AI Assistant: Successfully created suggestions table');
+                AIAssistant::log('Successfully created suggestions table', true);
             } else {
-                error_log('AI Assistant: Failed to create suggestions table');
+                AIAssistant::log('Failed to create suggestions table', true);
             }
         }
         
@@ -393,7 +394,7 @@ class AI_Assistant_Admin {
                 </a>
             </nav>
             
-            <div class="tab-content" style="margin-top: 20px;">
+            <div class="tab-content ai-tab-content-margin">
                 <?php if ($current_tab === 'translations'): ?>
                     <?php $this->render_translations_history($translations_table, $translations_table_exists); ?>
                 <?php elseif ($current_tab === 'suggestions'): ?>
@@ -402,38 +403,6 @@ class AI_Assistant_Admin {
             </div>
         </div>
         
-        <style>
-        .tab-content {
-            background: #fff;
-            border: 1px solid #c3c4c7;
-            border-top: none;
-            padding: 20px;
-        }
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .status-completed { background: #d4edda; color: #155724; }
-        .status-failed { background: #f8d7da; color: #721c24; }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .suggestion-preview {
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .input-text-preview {
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-style: italic;
-            color: #666;
-        }
-        </style>
         <?php
     }
     
@@ -619,7 +588,7 @@ class AI_Assistant_Admin {
                                 <?php elseif (!empty($suggestion->post_id)): ?>
                                     <?php echo sprintf(__('Post #%d', 'ai-assistant'), $suggestion->post_id); ?>
                                 <?php else: ?>
-                                    <span style="color: #999;"><?php _e('Global', 'ai-assistant'); ?></span>
+                                    <span class="ai-global-status"><?php _e('Global', 'ai-assistant'); ?></span>
                                 <?php endif; ?>
                             </td>
                             <td>
@@ -771,103 +740,6 @@ class AI_Assistant_Admin {
                 </div>
             </div>
             
-            <style>
-            .ai-assistant-translation-details {
-                max-width: 1200px;
-            }
-            
-            .translation-meta-box, .translation-content-box {
-                background: #fff;
-                border: 1px solid #ccd0d4;
-                box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-                margin: 20px 0;
-                padding: 20px;
-            }
-            
-            .translation-comparison {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-                margin-top: 15px;
-            }
-            
-            .original-content h3, .translated-content h3 {
-                margin: 0 0 10px 0;
-                padding: 10px;
-                background: #f1f1f1;
-                border-left: 4px solid #0073aa;
-            }
-            
-            .translated-content h3 {
-                border-left-color: #00a32a;
-            }
-            
-            .content-box {
-                border: 1px solid #ddd;
-                padding: 15px;
-                background: #fafafa;
-                min-height: 200px;
-                max-height: 500px;
-                overflow-y: auto;
-                line-height: 1.6;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            }
-            
-            .content-stats {
-                font-size: 12px;
-                color: #666;
-                font-weight: normal;
-            }
-            
-            .language-badge {
-                background: #0073aa;
-                color: white;
-                padding: 3px 8px;
-                border-radius: 3px;
-                font-size: 11px;
-                font-weight: bold;
-            }
-            
-            .status-badge {
-                padding: 3px 8px;
-                border-radius: 3px;
-                font-size: 11px;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
-            
-            .status-completed {
-                background: #00a32a;
-                color: white;
-            }
-            
-            .status-failed {
-                background: #d63638;
-                color: white;
-            }
-            
-            .status-pending {
-                background: #dba617;
-                color: white;
-            }
-            
-            .translation-actions {
-                margin: 20px 0;
-                padding: 15px;
-                background: #f9f9f9;
-                border-left: 4px solid #0073aa;
-            }
-            
-            .translation-actions .button {
-                margin-right: 10px;
-            }
-            
-            @media (max-width: 768px) {
-                .translation-comparison {
-                    grid-template-columns: 1fr;
-                }
-            }
-            </style>
         </div>
         <?php
     }
@@ -922,7 +794,7 @@ class AI_Assistant_Admin {
                                     <strong><?php echo esc_html($suggestion->user_name); ?></strong>
                                     <br><small><?php echo esc_html($suggestion->user_email); ?></small>
                                 <?php else: ?>
-                                    <span style="color: #999;"><?php _e('Unknown User', 'ai-assistant'); ?></span>
+                                    <span class="ai-unknown-user"><?php _e('Unknown User', 'ai-assistant'); ?></span>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -959,7 +831,7 @@ class AI_Assistant_Admin {
                         <?php else: ?>
                         <tr>
                             <th scope="row"><?php _e('Context', 'ai-assistant'); ?></th>
-                            <td><span style="color: #666;"><?php _e('Global suggestion (not associated with a specific post)', 'ai-assistant'); ?></span></td>
+                            <td><span class="ai-global-suggestion"><?php _e('Global suggestion (not associated with a specific post)', 'ai-assistant'); ?></span></td>
                         </tr>
                         <?php endif; ?>
                     </table>
@@ -1007,101 +879,6 @@ class AI_Assistant_Admin {
                 </div>
             </div>
             
-            <style>
-            .ai-assistant-suggestion-details {
-                max-width: 1200px;
-            }
-            
-            .suggestion-meta-box, .suggestion-content-box {
-                background: #fff;
-                border: 1px solid #ccd0d4;
-                box-shadow: 0 1px 1px rgba(0,0,0,0.04);
-                margin: 20px 0;
-                padding: 20px;
-            }
-            
-            .suggestion-comparison {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-                margin-top: 15px;
-            }
-            
-            .input-content h3, .generated-content h3 {
-                margin: 0 0 10px 0;
-                padding: 10px;
-                background: #f1f1f1;
-                border-left: 4px solid #0073aa;
-            }
-            
-            .generated-content h3 {
-                border-left-color: #00a32a;
-            }
-            
-            .content-box {
-                border: 1px solid #ddd;
-                padding: 15px;
-                background: #fafafa;
-                min-height: 150px;
-                max-height: 400px;
-                overflow-y: auto;
-                line-height: 1.6;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            }
-            
-            .content-stats {
-                font-size: 12px;
-                color: #666;
-                font-weight: normal;
-            }
-            
-            .suggestion-type-badge {
-                background: #0073aa;
-                color: white;
-                padding: 3px 8px;
-                border-radius: 3px;
-                font-size: 11px;
-                font-weight: bold;
-                text-transform: capitalize;
-            }
-            
-            .suggestion-type-autocomplete {
-                background: #0073aa;
-            }
-            
-            .suggestion-type-content-generation,
-            .suggestion-type-suggestions,
-            .suggestion-type-blog-post,
-            .suggestion-type-seo-content {
-                background: #00a32a;
-            }
-            
-            .suggestion-type-image-prompt,
-            .suggestion-type-image-generation {
-                background: #d63638;
-            }
-            
-            .suggestion-type-featured-image-set {
-                background: #dba617;
-            }
-            
-            .suggestion-actions {
-                margin: 20px 0;
-                padding: 15px;
-                background: #f9f9f9;
-                border-left: 4px solid #0073aa;
-            }
-            
-            .suggestion-actions .button {
-                margin-right: 10px;
-            }
-            
-            @media (max-width: 768px) {
-                .suggestion-comparison {
-                    grid-template-columns: 1fr;
-                }
-            }
-            </style>
         </div>
         <?php
     }
@@ -1117,16 +894,18 @@ class AI_Assistant_Admin {
             'zh' => '中文',
             'fr' => 'Français',
             'de' => 'Deutsch',
+            'nl' => 'Nederlands',
             'es' => 'Español',
-            'it' => 'Italiano',
             'pt' => 'Português',
+            'da' => 'Dansk',
+            'fi' => 'Suomi',
             'ru' => 'Русский',
-            'ja' => '日本語',
-            'ko' => '한국어',
-            'hi' => 'हिन्दी',
-            'ur' => 'اردو',
             'fa' => 'فارسی',
             'ug' => 'ئۇيغۇرچە',
+            'az' => 'Azərbaycan dili',
+            'uz' => 'O\'zbek tili',
+            'ky' => 'Кыргыз тили',
+            'ur' => 'اردو',
             'auto' => 'Auto-detect'
         );
         
@@ -1212,6 +991,7 @@ class AI_Assistant_Admin {
                                 <th class="col-msgid"><?php _e('English Text (msgid)', 'ai-assistant'); ?></th>
                                 <th class="col-msgstr"><?php _e('Translation (msgstr)', 'ai-assistant'); ?></th>
                                 <th class="col-status"><?php _e('Status', 'ai-assistant'); ?></th>
+                                <th class="col-actions"><?php _e('Actions', 'ai-assistant'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1240,6 +1020,13 @@ class AI_Assistant_Admin {
                                             <span class="status-badge status-untranslated"><?php _e('Untranslated', 'ai-assistant'); ?></span>
                                         <?php endif; ?>
                                     </td>
+                                    <td class="actions-cell">
+                                        <?php if (empty($translation['msgstr'])): ?>
+                                            <button type="button" class="button button-small auto-translate-single" data-index="<?php echo $index; ?>" data-msgid="<?php echo esc_attr($translation['msgid']); ?>">
+                                                🤖 <?php _e('AI Translate', 'ai-assistant'); ?>
+                                            </button>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -1247,213 +1034,19 @@ class AI_Assistant_Admin {
                     
                     <div class="translation-actions">
                         <?php submit_button(__('Save Translations to .po File', 'ai-assistant'), 'primary', 'save_translations'); ?>
+                        <button type="button" class="button button-secondary" id="auto-translate-all">
+                            🤖 <?php _e('Auto Translate All Empty Strings', 'ai-assistant'); ?>
+                        </button>
                         <button type="button" class="button" id="export-po">
                             <?php _e('Download .po File', 'ai-assistant'); ?>
                         </button>
                         <p class="description">
-                            <?php _e('Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for content.', 'ai-assistant'); ?>
+                            <?php _e('Use AI to translate empty interface strings automatically, or fill them manually for better accuracy.', 'ai-assistant'); ?>
                         </p>
                     </div>
                 </form>
             </div>
         </div>
-        
-        <style>
-        .ai-assistant-translation-management {
-            max-width: 1200px;
-        }
-        
-        .language-selector-section {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-        
-        .language-status {
-            margin-left: 15px;
-            font-weight: 500;
-        }
-        
-        .translation-stats {
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-item {
-            margin-right: 20px;
-        }
-        
-        .translation-search {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .translation-table {
-            margin-bottom: 20px;
-        }
-        
-        .translation-table th, 
-        .translation-table td {
-            padding: 12px;
-            vertical-align: top;
-        }
-        
-        .translation-input {
-            width: 100%;
-            min-height: 40px;
-            resize: vertical;
-        }
-        
-        .msgid-text {
-            font-size: 13px;
-            line-height: 1.4;
-        }
-        
-        .context-text {
-            color: #666;
-            font-style: italic;
-        }
-        
-        .status-badge {
-            padding: 4px 8px;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-        
-        .status-translated { 
-            background: #46b450; 
-            color: white; 
-        }
-        
-        .status-untranslated { 
-            background: #ffb900; 
-            color: white; 
-        }
-        
-        .translation-actions {
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .status-indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
-        }
-        
-        .status-ok { background: #46b450; }
-        .status-warning { background: #ffb900; }
-        .status-error { background: #dc3232; }
-        
-        .translation-row.hidden {
-            display: none;
-        }
-        </style>
-        
-        <script>
-        jQuery(document).ready(function($) {
-            // Language selector change
-            $('#language-selector').on('change', function() {
-                const selectedLang = $(this).val();
-                const url = new URL(window.location.href);
-                url.searchParams.set('edit_lang', selectedLang);
-                window.location.href = url.toString();
-            });
-            
-            // Search functionality
-            $('#translation-search').on('input', function() {
-                const searchTerm = $(this).val().toLowerCase();
-                filterTranslations();
-            });
-            
-            $('#show-untranslated-only').on('change', function() {
-                filterTranslations();
-            });
-            
-            function filterTranslations() {
-                const searchTerm = $('#translation-search').val().toLowerCase();
-                const showUntranslatedOnly = $('#show-untranslated-only').is(':checked');
-                
-                $('.translation-row').each(function() {
-                    const $row = $(this);
-                    const msgid = $row.data('msgid');
-                    const isTranslated = $row.find('.status-translated').length > 0;
-                    
-                    let showRow = true;
-                    
-                    // Apply search filter
-                    if (searchTerm && msgid.indexOf(searchTerm) === -1) {
-                        showRow = false;
-                    }
-                    
-                    // Apply untranslated filter
-                    if (showUntranslatedOnly && isTranslated) {
-                        showRow = false;
-                    }
-                    
-                    $row.toggleClass('hidden', !showRow);
-                });
-            }
-            
-            // Export .po file
-            $('#export-po').on('click', function() {
-                const lang = '<?php echo esc_js($current_language); ?>';
-                const url = ajaxurl + '?action=ai_assistant_export_po&lang=' + lang + '&nonce=<?php echo wp_create_nonce('export_po'); ?>';
-                window.open(url, '_blank');
-            });
-            
-            // Auto-resize textareas
-            $('.translation-input').on('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-            
-            // Compile all .mo files
-            $('#compile-all-mo').on('click', function() {
-                const $button = $(this);
-                
-                if (!confirm('<?php _e('This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?', 'ai-assistant'); ?>')) {
-                    return;
-                }
-                
-                $button.prop('disabled', true).text('<?php _e('Compiling...', 'ai-assistant'); ?>');
-                
-                $.ajax({
-                    url: ajaxurl,
-                    type: 'POST',
-                    data: {
-                        action: 'ai_assistant_handle_compile_mo_files',
-                        nonce: '<?php echo wp_create_nonce('ai_assistant_admin_nonce'); ?>'
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#compile-status').text(response.data.message).css('color', 'green');
-                        } else {
-                            $('#compile-status').text('<?php _e('Compilation failed: ', 'ai-assistant'); ?>' + (response.data || '<?php _e('Unknown error', 'ai-assistant'); ?>')).css('color', 'red');
-                        }
-                    },
-                    error: function() {
-                        $('#compile-status').text('<?php _e('Compilation request failed. Please try again.', 'ai-assistant'); ?>').css('color', 'red');
-                    },
-                    complete: function() {
-                        $button.prop('disabled', false).text('<?php _e('Compile All .mo Files', 'ai-assistant'); ?>');
-                    }
-                });
-            });
-        });
-        </script>
         <?php
     }
     
@@ -1497,9 +1090,9 @@ class AI_Assistant_Admin {
         $custom_lang = $this->get_user_language();
         $current_locale = get_locale();
         
-        echo "<div style='background: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 4px;'>";
+        echo "<div class='ai-debug-panel'>";
         echo "<h4>Basic Information</h4>";
-        echo "<ul style='margin-left: 20px;'>";
+        echo "<ul class='ai-debug-list'>";
         echo "<li><strong>WordPress Locale:</strong> " . $current_locale . "</li>";
         echo "<li><strong>Custom Language Setting:</strong> " . ($custom_lang ?: 'NOT SET') . "</li>";
         echo "<li><strong>Plugin Textdomain Loaded:</strong> " . (is_textdomain_loaded('ai-assistant') ? 'YES' : 'NO') . "</li>";
@@ -1507,9 +1100,9 @@ class AI_Assistant_Admin {
         echo "</div>";
         
         // Test translations
-        echo "<div style='background: #f0f8ff; padding: 15px; margin: 10px 0; border-radius: 4px;'>";
+        echo "<div class='ai-debug-panel-info'>";
         echo "<h4>Translation Tests</h4>";
-        echo "<ul style='margin-left: 20px;'>";
+        echo "<ul class='ai-debug-list'>";
         echo "<li><strong>'AI Assistant':</strong> " . __('AI Assistant', 'ai-assistant') . "</li>";
         echo "<li><strong>'Settings':</strong> " . __('Settings', 'ai-assistant') . "</li>";
         echo "<li><strong>'Translate':</strong> " . __('Translate', 'ai-assistant') . "</li>";
@@ -1519,7 +1112,7 @@ class AI_Assistant_Admin {
         
         // File information
         $languages_dir = plugin_dir_path(dirname(__FILE__)) . 'languages/';
-        echo "<div style='background: #fff8dc; padding: 15px; margin: 10px 0; border-radius: 4px;'>";
+        echo "<div class='ai-debug-panel-warning'>";
         echo "<h4>File Information</h4>";
         
         if ($custom_lang) {
@@ -1536,7 +1129,7 @@ class AI_Assistant_Admin {
         // Available files
         $mo_files = glob($languages_dir . 'ai-assistant-*.mo');
         echo "<h5>Available .mo files (" . count($mo_files) . "):</h5>";
-        echo "<ul style='margin-left: 20px; max-height: 150px; overflow-y: auto;'>";
+        echo "<ul class='ai-debug-list-scroll'>";
         foreach ($mo_files as $mo_file) {
             $size = $this->format_file_size(filesize($mo_file));
             echo "<li>" . basename($mo_file) . " ({$size})</li>";
@@ -1546,7 +1139,7 @@ class AI_Assistant_Admin {
         
         // Manual test
         if ($custom_lang && $custom_lang !== $current_locale) {
-            echo "<div style='background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 4px;'>";
+            echo "<div class='ai-debug-panel-success'>";
             echo "<h4>Manual Language Loading Test</h4>";
             
             // Unload current textdomain
@@ -1570,73 +1163,155 @@ class AI_Assistant_Admin {
     }
     
     /**
-     * AJAX handler for auto-translating empty strings (delegated from main plugin)
+     * AJAX handler for auto-translating empty strings in .po files
+     * This is specifically for translation management, not content translation
      */
     public function ajax_auto_translate() {
-        check_ajax_referer('auto_translate', 'nonce');
+        check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
         
         if (!current_user_can('manage_options')) {
             wp_send_json_error(__('Unauthorized access.', 'ai-assistant'));
         }
         
-        // Manual translation approach - AI auto-translate disabled
-        wp_send_json_error([
-            'message' => __('AI auto-translate has been disabled in favor of manual translation. This is a one-time translation task that works better with manual translation. Please translate the strings manually using the interface below.', 'ai-assistant'),
-            'type' => 'manual_translation_required'
-        ]);
+        $language = isset($_POST['language']) ? sanitize_text_field($_POST['language']) : '';
+        $strings = isset($_POST['strings']) ? array_map('sanitize_text_field', $_POST['strings']) : array();
+        
+        // Debug logging
+        AIAssistant::log('Auto-translate AJAX called. Language: ' . $language . ', Strings count: ' . count($strings), true);
+        
+        if (empty($language) || empty($strings)) {
+            AIAssistant::log('Missing language or strings. Language: ' . $language . ', Strings: ' . print_r($strings, true), true);
+            wp_send_json_error(__('Missing language or strings to translate.', 'ai-assistant'));
+        }
+        
+        // Initialize AI service
+        if (!class_exists('AI_Assistant_AI_Service')) {
+            AIAssistant::log('AI_Assistant_AI_Service class not found', true);
+            wp_send_json_error(__('AI service not available.', 'ai-assistant'));
+        }
+        
+        $ai_service = new AI_Assistant_AI_Service();
+        $translated_strings = array();
+        $failed_count = 0;
+        
+        // Check if AI service is properly configured
+        $api_keys = get_option('ai_assistant_api_keys', array());
+        $has_api_key = !empty($api_keys['openai']) || !empty($api_keys['anthropic']) || !empty($api_keys['gemini']);
+        
+        if (!$has_api_key) {
+            AIAssistant::log('No API keys configured for translation', true);
+            wp_send_json_error(__('No AI service API keys configured. Please check your settings.', 'ai-assistant'));
+        }
+        
+        AIAssistant::log('Starting translation for ' . count($strings) . ' strings to ' . $language, true);
+        
+        // Get target language name for better context
+        $target_language_name = $this->get_language_display_name($language);
+        
+        foreach ($strings as $string) {
+            if (empty(trim($string))) continue;
+            
+            AIAssistant::log('Translating string: "' . $string . '" to ' . $language, true);
+            
+            // Create a direct prompt for interface translation
+            $prompt = sprintf(
+                "Translate only this text to %s (%s). Return only the translated text, no explanations:\n\n%s",
+                $target_language_name,
+                $language,
+                $string
+            );
+            
+            $result = $ai_service->make_api_request_public($prompt);
+            
+            AIAssistant::log('AI service result for "' . $string . '": ' . print_r($result, true), true);
+            
+            if ($result['success'] && !empty($result['content'])) {
+                // Aggressively clean up the translation to extract only the translated text
+                $translation = trim($result['content']);
+                
+                // Remove quotes, asterisks, and other formatting
+                $translation = trim($translation, '"\'*');
+                
+                // If response contains multiple lines, take only the first meaningful line
+                $lines = explode("\n", $translation);
+                $translation = trim($lines[0]);
+                
+                // Remove any explanatory text patterns
+                $translation = preg_replace('/^(The translation is|Translation:|Translated:)\s*/i', '', $translation);
+                $translation = preg_replace('/\s*\([^)]*\)\s*$/', '', $translation); // Remove parenthetical explanations
+                
+                // Final cleanup
+                $translation = strip_tags($translation);
+                $translation = trim($translation, '"\'*');
+                
+                if (!empty($translation)) {
+                    $translated_strings[$string] = $translation;
+                } else {
+                    $failed_count++;
+                }
+            } else {
+                $failed_count++;
+            }
+            
+            // Small delay to avoid API rate limits
+            usleep(100000); // 0.1 seconds
+        }
+        
+        if (!empty($translated_strings)) {
+            AIAssistant::log('Translation completed successfully. Translated ' . count($translated_strings) . ' strings, failed ' . $failed_count, true);
+            wp_send_json_success($translated_strings);
+        } else {
+            AIAssistant::log('Translation failed completely. Failed count: ' . $failed_count, true);
+            wp_send_json_error(__('No strings could be translated. Please check your API configuration.', 'ai-assistant'));
+        }
     }
     
     /**
      * Get supported languages array
      */
     private function get_supported_languages() {
-        // Foundation languages for translation management (English excluded as source language)
-        return array(
-            'tr_TR' => 'Türkçe (Turkish) ✅',
-            'fa_IR' => 'فارسی (Persian/Farsi) ✅',
-            'nl_NL' => 'Nederlands (Dutch) ✅',
-            'da_DK' => 'Dansk (Danish) ✅',
-            'fr_FR' => 'Français (French) ✅',
-            'az_AZ' => 'Azərbaycan dili (Azerbaijani) ✅',
-            'uz_UZ' => 'O\'zbek tili (Uzbek) ✅',
-            'ar' => 'العربية (Arabic) ✅',
-            'ky_KG' => 'Кыргыз тили (Kyrgyz) ✅',
-            'ru_RU' => 'Русский (Russian) ✅',
-            'pt_PT' => 'Português (Portuguese) ✅',
-            'es_ES' => 'Español (Spanish) ✅',
-            'de_DE' => 'Deutsch (German) ✅',
-            'zh_CN' => '简体中文 (Chinese Simplified) ✅',
-            'ug_CN' => 'ئۇيغۇرچە (Uyghur) ✅',
-            'ur' => 'اردو (Urdu) ✅',
-            'fi' => 'Suomi (Finnish) ✅',
-            'tk' => 'Türkmen dili (Turkmen) ✅'
-        );
+        // Get available languages dynamically
+        $available_languages = get_available_languages();
+        $current_locale = get_locale();
+        
+        // Build array with current locale and common languages (English excluded as source language)
+        $languages = array();
+        if ($current_locale !== 'en_US') {
+            $languages[$current_locale] = $this->get_language_display_name($current_locale) . ' ✅';
+        }
+        
+        $common_languages = array('tr_TR', 'fa_IR', 'nl_NL', 'da_DK', 'fr_FR', 'az_AZ', 'uz_UZ', 'ar', 'ky_KG', 'ru_RU', 'pt_PT', 'es_ES', 'de_DE', 'zh_CN', 'ug_CN', 'ur', 'fi', 'tk');
+        foreach ($common_languages as $lang_code) {
+            if (!isset($languages[$lang_code])) {
+                $languages[$lang_code] = $this->get_language_display_name($lang_code) . ' ✅';
+            }
+        }
+        
+        return $languages;
     }
     
     /**
-     * Get languages with actual translation files (Suleymaniye Foundation websites only)
+     * Get languages with actual translation files (universally compatible)
      */
     private function get_available_translation_languages() {
-        return array(
-            'tr_TR' => 'Türkçe (Turkish)',
-            'fa_IR' => 'فارسی (Persian/Farsi)',
-            'nl_NL' => 'Nederlands (Dutch)',
-            'da_DK' => 'Dansk (Danish)',
-            'fr_FR' => 'Français (French)',
-            'az_AZ' => 'Azərbaycan dili (Azerbaijani)',
-            'uz_UZ' => 'O\'zbek tili (Uzbek)',
-            'ar' => 'العربية (Arabic)',
-            'ky_KG' => 'Кыргыз тили (Kyrgyz)',
-            'ru_RU' => 'Русский (Russian)',
-            'pt_PT' => 'Português (Portuguese)',
-            'es_ES' => 'Español (Spanish)',
-            'de_DE' => 'Deutsch (German)',
-            'zh_CN' => '简体中文 (Chinese Simplified)',
-            'ug_CN' => 'ئۇيغۇرچە (Uyghur)',
-            'ur' => 'اردو (Urdu)',
-            'fi' => 'Suomi (Finnish)',
-            'tk' => 'Türkmen dili (Turkmen)'
-        );
+        // Get available languages dynamically
+        $available_languages = get_available_languages();
+        $current_locale = get_locale();
+        
+        // Build array with current locale and common languages
+        $languages = array();
+        if ($current_locale !== 'en_US') {
+            $languages[$current_locale] = $this->get_language_display_name($current_locale);
+        }
+        
+        $common_languages = array('tr_TR', 'fa_IR', 'nl_NL', 'da_DK', 'fr_FR', 'az_AZ', 'uz_UZ', 'ar', 'ky_KG', 'ru_RU', 'pt_PT', 'es_ES', 'de_DE', 'zh_CN', 'ug_CN', 'ur', 'fi', 'tk');
+        foreach ($common_languages as $lang_code) {
+            if (!isset($languages[$lang_code])) {
+                $languages[$lang_code] = $this->get_language_display_name($lang_code);
+            }
+        }
+        
+        return $languages;
     }
     
     /**
@@ -1703,6 +1378,8 @@ class AI_Assistant_Admin {
         wp_localize_script('ai-assistant-admin', 'ai_assistant_admin', array(
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('ai_assistant_admin_nonce'),
+            'export_nonce' => wp_create_nonce('ai_assistant_export_nonce'),
+            'current_language' => isset($_GET['edit_lang']) ? sanitize_text_field($_GET['edit_lang']) : '',
             'strings' => array(
                 'saving' => __('Saving...', 'ai-assistant'),
                 'saved' => __('Saved!', 'ai-assistant'),
@@ -1711,7 +1388,24 @@ class AI_Assistant_Admin {
                 'testing' => __('Testing...', 'ai-assistant'),
                 'success' => __('Success!', 'ai-assistant'),
                 'failed' => __('Test failed', 'ai-assistant'),
-                'compiling' => __('Compiling .mo files...', 'ai-assistant')
+                'compiling' => __('Compiling .mo files...', 'ai-assistant'),
+                'no_untranslated_found' => __('No untranslated strings found.', 'ai-assistant'),
+                'auto_translate_confirm_start' => __('This will attempt to auto-translate ', 'ai-assistant'),
+                'auto_translate_confirm_end' => __(' empty interface strings using AI. Continue?', 'ai-assistant'),
+                'translating' => __('Translating...', 'ai-assistant'),
+                'translating_short' => __('...', 'ai-assistant'),
+                'translated' => __('Translated', 'ai-assistant'),
+                'translation_failed' => __('Translation failed: ', 'ai-assistant'),
+                'translation_failed_single' => __('Translation failed for this string.', 'ai-assistant'),
+                'translation_request_failed' => __('Translation request failed. Please try again.', 'ai-assistant'),
+                'unknown_error' => __('Unknown error', 'ai-assistant'),
+                'success_translated_start' => __('Successfully translated ', 'ai-assistant'),
+                'success_translated_end' => __(' interface strings!', 'ai-assistant'),
+                'no_text_to_translate' => __('No text to translate.', 'ai-assistant'),
+                'compile_confirm' => __('This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?', 'ai-assistant'),
+                'compilation_failed' => __('Compilation failed: ', 'ai-assistant'),
+                'compilation_request_failed' => __('Compilation request failed. Please try again.', 'ai-assistant'),
+                'compile_button' => __('Compile All .mo Files', 'ai-assistant')
             )
         ));
     }
@@ -1836,11 +1530,11 @@ class AI_Assistant_Admin {
         $result = dbDelta($sql);
         
         // Log table creation result
-        error_log('AI Assistant: Suggestions table creation result: ' . print_r($result, true));
+        AIAssistant::log('Suggestions table creation result: ' . print_r($result, true), true);
         
         // Verify table exists after creation
         $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
-        error_log('AI Assistant: Suggestions table exists after creation: ' . ($table_exists ? 'YES' : 'NO'));
+        AIAssistant::log('Suggestions table exists after creation: ' . ($table_exists ? 'YES' : 'NO'), true);
     }
     
     /**
@@ -1913,8 +1607,8 @@ class AI_Assistant_Admin {
         // Only log once per session/request to avoid log spam
         static $logged_this_request = false;
         if (!$logged_this_request && WP_DEBUG_LOG) {
-            error_log("AI Assistant Language Debug: Custom lang = " . ($custom_lang ?: 'NOT SET'));
-            error_log("AI Assistant Language Debug: Current locale = " . $current_locale);
+            AIAssistant::log("Language Debug: Custom lang = " . ($custom_lang ?: 'NOT SET'), true);
+            AIAssistant::log("Language Debug: Current locale = " . $current_locale, true);
             $logged_this_request = true;
         }
         
@@ -1956,7 +1650,7 @@ class AI_Assistant_Admin {
             if ($loaded && WP_DEBUG_LOG) {
                 static $force_logged = false;
                 if (!$force_logged) {
-                    error_log("AI Assistant: Force immediate reload successful for " . $locale);
+                    AIAssistant::log("Force immediate reload successful for " . $locale, true);
                     $force_logged = true;
                 }
             }
@@ -1974,7 +1668,7 @@ class AI_Assistant_Admin {
             // Only log missing files once and only if debug logging is enabled
             static $missing_logged = array();
             if (!isset($missing_logged[$locale]) && WP_DEBUG_LOG) {
-                error_log("AI Assistant: Language file missing for " . $locale);
+                AIAssistant::log("Language file missing for " . $locale, true);
                 $missing_logged[$locale] = true;
             }
             return false;
@@ -2021,14 +1715,14 @@ class AI_Assistant_Admin {
             // Only log success once per session/request and only if debug logging is enabled
             static $success_logged = array();
             if (!isset($success_logged[$locale]) && WP_DEBUG_LOG) {
-                error_log("AI Assistant: Successfully loaded custom language: " . $locale);
+                AIAssistant::log("Successfully loaded custom language: " . $locale, true);
                 $success_logged[$locale] = true;
             }
         } else {
             // Only log failures once per session/request and only if debug logging is enabled
             static $failed_logged = array();
             if (!isset($failed_logged[$locale]) && WP_DEBUG_LOG) {
-                error_log("AI Assistant: All loading methods failed for: " . $locale);
+                AIAssistant::log("All loading methods failed for: " . $locale, true);
                 $failed_logged[$locale] = true;
             }
         }
@@ -2127,7 +1821,7 @@ class AI_Assistant_Admin {
         if ($domain === 'ai-assistant') {
             $custom_lang = $this->get_user_language();
             if ($custom_lang) {
-                error_log("AI Assistant Language Debug: Plugin locale filter applied - returning: " . $custom_lang);
+                AIAssistant::log("Language Debug: Plugin locale filter applied - returning: " . $custom_lang, true);
                 return $custom_lang;
             }
         }
@@ -2144,8 +1838,8 @@ class AI_Assistant_Admin {
         // Only log once per request to avoid spam
         static $logged_files = array();
         if (!isset($logged_files[$locale])) {
-            error_log("AI Assistant Language Debug: Looking for .mo file: " . $lang_file);
-            error_log("AI Assistant Language Debug: .mo file exists = " . (file_exists($lang_file) ? 'YES' : 'NO'));
+            AIAssistant::log("Language Debug: Looking for .mo file: " . $lang_file, true);
+            AIAssistant::log("Language Debug: .mo file exists = " . (file_exists($lang_file) ? 'YES' : 'NO'), true);
             $logged_files[$locale] = true;
         }
         
@@ -2153,7 +1847,7 @@ class AI_Assistant_Admin {
         if (file_exists($lang_file)) {
             $loaded = load_textdomain('ai-assistant', $lang_file);
             if (!isset($logged_files[$locale . '_result'])) {
-                error_log("AI Assistant Language Debug: Direct .mo load result = " . ($loaded ? 'SUCCESS' : 'FAILED'));
+                AIAssistant::log("Language Debug: Direct .mo load result = " . ($loaded ? 'SUCCESS' : 'FAILED'), true);
                 $logged_files[$locale . '_result'] = true;
             }
             if ($loaded) {
@@ -2389,7 +2083,7 @@ class AI_Assistant_Admin {
      */
     private function compile_mo_file($po_file, $mo_file) {
         if (!file_exists($po_file)) {
-            error_log("AI Assistant: Cannot compile .mo file - .po file does not exist: {$po_file}");
+            AIAssistant::log("Cannot compile .mo file - .po file does not exist: {$po_file}", true);
             return false;
         }
         
@@ -2400,19 +2094,19 @@ class AI_Assistant_Admin {
             exec("msgfmt -o " . escapeshellarg($mo_file) . " " . escapeshellarg($po_file) . " 2>&1", $output, $return_var);
             
             if ($return_var === 0 && file_exists($mo_file)) {
-                error_log("AI Assistant: Successfully compiled .mo file using msgfmt: {$mo_file}");
+                AIAssistant::log("Successfully compiled .mo file using msgfmt: {$mo_file}", true);
                 return true;
             } else {
-                error_log("AI Assistant: msgfmt compilation failed for {$po_file}. Output: " . implode("\n", $output));
+                AIAssistant::log("msgfmt compilation failed for {$po_file}. Output: " . implode("\n", $output), true);
             }
         }
         
         // Fallback: basic .mo file generation (simplified)
         $result = $this->simple_mo_compile($po_file, $mo_file);
         if ($result) {
-            error_log("AI Assistant: Successfully compiled .mo file using fallback method: {$mo_file}");
+            AIAssistant::log("Successfully compiled .mo file using fallback method: {$mo_file}", true);
         } else {
-            error_log("AI Assistant: Failed to compile .mo file using fallback method: {$mo_file}");
+            AIAssistant::log("Failed to compile .mo file using fallback method: {$mo_file}", true);
         }
         return $result;
     }
@@ -2693,7 +2387,7 @@ class AI_Assistant_Admin {
             $status_class = 'status-none';
             $status_text = __('Not Available', 'ai-assistant');
             
-            if ($mo_exists && $translation_count > 0) {
+            if ($mo_exists && $translation_count > 300) {
                 $status_class = 'status-complete';
                 $status_text = __('Complete', 'ai-assistant');
             } elseif ($po_exists) {
@@ -2825,5 +2519,47 @@ class AI_Assistant_Admin {
         } else {
             return round($bytes / 1048576, 1) . ' MB';
         }
+    }
+
+    /**
+     * Get display name for a language code
+     *
+     * @param string $locale Language locale code
+     * @return string Display name
+     */
+    private function get_language_display_name($locale) {
+        // Use WordPress built-in language names when available
+        $wp_locale_obj = new WP_Locale();
+        if (method_exists($wp_locale_obj, 'get_language_names')) {
+            $wp_languages = $wp_locale_obj->get_language_names();
+            if (isset($wp_languages[$locale])) {
+                return $wp_languages[$locale];
+            }
+        }
+
+        // Fallback to common language mappings
+        $language_names = array(
+            'en_US' => 'English (United States)',
+            'tr_TR' => 'Türkçe (Turkish)',
+            'fa_IR' => 'فارسی (Persian/Farsi)',
+            'nl_NL' => 'Nederlands (Dutch)',
+            'da_DK' => 'Dansk (Danish)',
+            'fr_FR' => 'Français (French)',
+            'az_AZ' => 'Azərbaycan dili (Azerbaijani)',
+            'uz_UZ' => 'O\'zbek tili (Uzbek)',
+            'ar' => 'العربية (Arabic)',
+            'ky_KG' => 'Кыргыз тили (Kyrgyz)',
+            'ru_RU' => 'Русский (Russian)',
+            'pt_PT' => 'Português (Portuguese)',
+            'es_ES' => 'Español (Spanish)',
+            'de_DE' => 'Deutsch (German)',
+            'zh_CN' => '简体中文 (Chinese Simplified)',
+            'ug_CN' => 'ئۇيغۇرچە (Uyghur)',
+            'ur' => 'اردو (Urdu)',
+            'fi' => 'Suomi (Finnish)',
+            'tk' => 'Türkmen dili (Turkmen)'
+        );
+
+        return isset($language_names[$locale]) ? $language_names[$locale] : $locale;
     }
 }

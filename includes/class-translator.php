@@ -43,14 +43,53 @@ class AI_Assistant_Translator {
         $content = $content_data['content'];
         $title = isset($content_data['title']) ? $content_data['title'] : '';
         
-        // Translate the content
-        $translation_result = $this->ai_service->translate($content, $source_lang, $target_lang, $model);
-        
-        if (!$translation_result['success']) {
-            return $translation_result;
+        // Debug logging to see what content we're trying to translate
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('Content to translate (length: ' . strlen($content) . '): ' . substr($content, 0, 200) . '...', true);
+            AIAssistant::log('Translation parameters: source=' . $source_lang . ', target=' . $target_lang . ', model=' . $model, true);
         }
         
-        $translated_content = isset($translation_result['translated_text']) ? $translation_result['translated_text'] : '';
+        // Check if content is very long and needs chunking (increased threshold since API limits are higher)
+        $max_chunk_size = 10000; // Much higher limit since API can handle it
+        if (strlen($content) > $max_chunk_size) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Content is long (' . strlen($content) . ' chars), splitting into chunks (max: ' . $max_chunk_size . ')', true);
+            }
+            
+            // Split content into chunks and translate each
+            $translated_content = $this->translate_long_content($content, $source_lang, $target_lang, $model, $max_chunk_size);
+            
+            if (!$translated_content) {
+                return array(
+                    'success' => false,
+                    'error' => 'Failed to translate long content'
+                );
+            }
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Successfully translated long content. Final length: ' . strlen($translated_content), true);
+            }
+        } else {
+            // Translate normally for shorter content
+            $translation_result = $this->ai_service->translate($content, $source_lang, $target_lang, $model);
+            
+            // Debug logging to track AI service response
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('AI Service translation result: ' . print_r($translation_result, true), true);
+            }
+            
+            if (!$translation_result['success']) {
+                return $translation_result;
+            }
+            
+            $translated_content = isset($translation_result['translated_text']) ? $translation_result['translated_text'] : '';
+            
+            // Check if translation is empty and log warning
+            if (empty($translated_content) && defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('WARNING: Translation result is empty! Original content length: ' . strlen($content), true);
+                AIAssistant::log('Translation result keys: ' . implode(', ', array_keys($translation_result)), true);
+            }
+        }
         
         // Save to translation history
         $this->save_translation_history(array(
@@ -77,6 +116,206 @@ class AI_Assistant_Translator {
     }
     
     /**
+     * Translate long content by splitting into chunks
+     *
+     * @param string $content Long content to translate
+     * @param string $source_lang Source language
+     * @param string $target_lang Target language
+     * @param string $model AI model to use
+     * @param int $max_chunk_size Maximum size per chunk
+     * @return string|false Translated content or false on failure
+     */
+    private function translate_long_content($content, $source_lang, $target_lang, $model, $max_chunk_size) {
+        $chunks = $this->split_content_intelligently($content, $max_chunk_size);
+        $translated_chunks = array();
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('Split content into ' . count($chunks) . ' chunks', true);
+        }
+        
+        foreach ($chunks as $i => $chunk) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Translating chunk ' . ($i + 1) . '/' . count($chunks) . ' (length: ' . strlen($chunk) . ')', true);
+            }
+            
+            $translation_result = $this->ai_service->translate($chunk, $source_lang, $target_lang, $model);
+            
+            if (!$translation_result['success']) {
+                AIAssistant::log('Failed to translate chunk ' . ($i + 1) . ': ' . $translation_result['error'], true);
+                return false;
+            }
+            
+            $translated_chunk = isset($translation_result['translated_text']) ? $translation_result['translated_text'] : '';
+            
+            if (empty($translated_chunk)) {
+                AIAssistant::log('Empty translation for chunk ' . ($i + 1), true);
+                return false;
+            }
+            
+            $translated_chunks[] = $translated_chunk;
+            
+            // Add a small delay between chunks to avoid rate limiting
+            if ($i < count($chunks) - 1) {
+                sleep(1);
+            }
+        }
+        
+        // Combine all translated chunks
+        $final_translation = implode("\n\n", $translated_chunks);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log('Combined translation length: ' . strlen($final_translation), true);
+        }
+        
+        return $final_translation;
+    }
+    
+    /**
+     * Split content intelligently at paragraph boundaries
+     *
+     * @param string $content Content to split
+     * @param int $max_chunk_size Maximum size per chunk
+     * @return array Array of content chunks
+     */
+    private function split_content_intelligently($content, $max_chunk_size) {
+        $chunks = array();
+        $current_chunk = '';
+        
+        // Split by paragraphs first
+        $paragraphs = preg_split('/\n\s*\n/', $content);
+        
+        foreach ($paragraphs as $paragraph) {
+            $paragraph = trim($paragraph);
+            
+            if (empty($paragraph)) {
+                continue;
+            }
+            
+            // If adding this paragraph would exceed the limit
+            if (strlen($current_chunk . "\n\n" . $paragraph) > $max_chunk_size) {
+                // If current chunk is not empty, save it
+                if (!empty($current_chunk)) {
+                    $chunks[] = trim($current_chunk);
+                    $current_chunk = '';
+                }
+                
+                // If this single paragraph is still too long, split it by sentences
+                if (strlen($paragraph) > $max_chunk_size) {
+                    $sentence_chunks = $this->split_paragraph_by_sentences($paragraph, $max_chunk_size);
+                    $chunks = array_merge($chunks, $sentence_chunks);
+                } else {
+                    $current_chunk = $paragraph;
+                }
+            } else {
+                // Add paragraph to current chunk
+                if (!empty($current_chunk)) {
+                    $current_chunk .= "\n\n" . $paragraph;
+                } else {
+                    $current_chunk = $paragraph;
+                }
+            }
+        }
+        
+        // Add the last chunk if not empty
+        if (!empty($current_chunk)) {
+            $chunks[] = trim($current_chunk);
+        }
+        
+        return $chunks;
+    }
+    
+    /**
+     * Split a long paragraph by sentences
+     *
+     * @param string $paragraph Long paragraph to split
+     * @param int $max_chunk_size Maximum size per chunk
+     * @return array Array of sentence chunks
+     */
+    private function split_paragraph_by_sentences($paragraph, $max_chunk_size) {
+        $chunks = array();
+        $current_chunk = '';
+        
+        // Split by sentences (period, exclamation, question mark followed by space or end)
+        $sentences = preg_split('/(?<=[.!?])\s+/', $paragraph, -1, PREG_SPLIT_NO_EMPTY);
+        
+        foreach ($sentences as $sentence) {
+            $sentence = trim($sentence);
+            
+            if (empty($sentence)) {
+                continue;
+            }
+            
+            // If adding this sentence would exceed the limit
+            if (strlen($current_chunk . ' ' . $sentence) > $max_chunk_size) {
+                // Save current chunk if not empty
+                if (!empty($current_chunk)) {
+                    $chunks[] = trim($current_chunk);
+                    $current_chunk = '';
+                }
+                
+                // If single sentence is still too long, force split it
+                if (strlen($sentence) > $max_chunk_size) {
+                    $word_chunks = $this->force_split_by_words($sentence, $max_chunk_size);
+                    $chunks = array_merge($chunks, $word_chunks);
+                } else {
+                    $current_chunk = $sentence;
+                }
+            } else {
+                // Add sentence to current chunk
+                if (!empty($current_chunk)) {
+                    $current_chunk .= ' ' . $sentence;
+                } else {
+                    $current_chunk = $sentence;
+                }
+            }
+        }
+        
+        // Add the last chunk if not empty
+        if (!empty($current_chunk)) {
+            $chunks[] = trim($current_chunk);
+        }
+        
+        return $chunks;
+    }
+    
+    /**
+     * Force split text by words when even sentences are too long
+     *
+     * @param string $text Text to split
+     * @param int $max_chunk_size Maximum size per chunk
+     * @return array Array of word chunks
+     */
+    private function force_split_by_words($text, $max_chunk_size) {
+        $chunks = array();
+        $words = explode(' ', $text);
+        $current_chunk = '';
+        
+        foreach ($words as $word) {
+            if (strlen($current_chunk . ' ' . $word) > $max_chunk_size) {
+                if (!empty($current_chunk)) {
+                    $chunks[] = trim($current_chunk);
+                    $current_chunk = $word;
+                } else {
+                    // Even single word is too long, just add it
+                    $chunks[] = $word;
+                }
+            } else {
+                if (!empty($current_chunk)) {
+                    $current_chunk .= ' ' . $word;
+                } else {
+                    $current_chunk = $word;
+                }
+            }
+        }
+        
+        if (!empty($current_chunk)) {
+            $chunks[] = trim($current_chunk);
+        }
+        
+        return $chunks;
+    }
+    
+    /**
      * Save translation to history
      */
     public function save_translation_history($data) {
@@ -89,7 +328,6 @@ class AI_Assistant_Translator {
         
         // Validate required fields
         if (empty($data['source_language']) || empty($data['target_language']) || empty($data['translated_content'])) {
-            error_log('AI Assistant ERROR: Missing required fields for translation history');
             return false;
         }
         
@@ -115,7 +353,10 @@ class AI_Assistant_Translator {
         );
         
         if ($result === false) {
-            error_log('AI Assistant ERROR: Failed to save translation history: ' . $wpdb->last_error);
+            // Only log database errors if debugging is enabled
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Failed to save translation history: ' . $wpdb->last_error, true);
+            }
             
             // Check if it's a column error and try to fix table
             if (strpos($wpdb->last_error, 'Unknown column') !== false) {
@@ -129,7 +370,9 @@ class AI_Assistant_Translator {
                 );
                 
                 if ($result === false) {
-                    error_log('AI Assistant ERROR: Still failed after table fix: ' . $wpdb->last_error);
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        AIAssistant::log('Still failed after table fix: ' . $wpdb->last_error, true);
+                    }
                 }
             }
             
@@ -161,7 +404,9 @@ class AI_Assistant_Translator {
             $missing_columns = array_diff($required_columns, $columns);
             
             if (!empty($missing_columns)) {
-                error_log("AI Assistant ERROR: Missing columns detected: " . implode(', ', $missing_columns));
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    AIAssistant::log("Missing columns detected: " . implode(', ', $missing_columns), true);
+                }
                 
                 // Try to update table structure
                 $this->update_translations_table();
@@ -171,7 +416,7 @@ class AI_Assistant_Translator {
                 $still_missing = array_diff($required_columns, $columns_after_update);
                 
                 if (!empty($still_missing)) {
-                    error_log("AI Assistant ERROR: Table update failed, recreating table. Still missing: " . implode(', ', $still_missing));
+                    AIAssistant::log("ERROR: Table update failed, recreating table. Still missing: " . implode(', ', $still_missing), true);
                     $this->recreate_translations_table();
                 }
             }
@@ -563,17 +808,8 @@ class AI_Assistant_Translator {
      * @return string Mock translated content
      */
     private function generate_mock_translation($content, $source_lang, $target_lang) {
-        $language_names = array(
-            'en' => 'English',
-            'tr' => 'Turkish',
-            'ar' => 'Arabic',
-            'es' => 'Spanish',
-            'fr' => 'French',
-            'de' => 'German',
-            'ru' => 'Russian',
-            'zh' => 'Chinese',
-            'fa' => 'Persian'
-        );
+        // Get dynamic language names
+        $language_names = $this->get_language_names();
         
         $source_name = isset($language_names[$source_lang]) ? $language_names[$source_lang] : $source_lang;
         $target_name = isset($language_names[$target_lang]) ? $language_names[$target_lang] : $target_lang;
@@ -588,11 +824,40 @@ class AI_Assistant_Translator {
         }
         
         return sprintf(
-            "[MOCK TRANSLATION - v1.0.11]\n\nSource: %s → Target: %s\nModel: %s\n\n%s\n\n[Note: This is a demonstration. Configure API keys in WordPress Admin → AI Assistant → Settings to enable real translations.]",
+            "[MOCK TRANSLATION]\n\nSource: %s → Target: %s\nModel: %s\n\n%s\n\n[Note: This is a demonstration. Configure API keys in WordPress Admin → AI Assistant → Settings to enable real translations.]",
             $source_name,
             $target_name,
             'gemini-2.5-flash',
             $mock_content
+        );
+    }
+    
+    /**
+     * Get universal language names
+     *
+     * @return array Language code to name mapping
+     */
+    private function get_language_names() {
+        return array(
+            'en' => 'English',
+            'tr' => 'Turkish',
+            'ar' => 'Arabic',
+            'es' => 'Spanish',
+            'fr' => 'French',
+            'de' => 'German',
+            'ru' => 'Russian',
+            'zh' => 'Chinese',
+            'fa' => 'Persian',
+            'pt' => 'Portuguese',
+            'nl' => 'Dutch',
+            'da' => 'Danish',
+            'fi' => 'Finnish',
+            'az' => 'Azerbaijani',
+            'uz' => 'Uzbek',
+            'ky' => 'Kyrgyz',
+            'ug' => 'Uyghur',
+            'ur' => 'Urdu',
+            'tk' => 'Turkmen'
         );
     }
 }

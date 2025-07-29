@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
- * Version: 1.0.57
+ * Version: 1.0.64
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -15,7 +15,7 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * * @package AIAssistant
- * @version 1.0.57
+ * @version 1.0.58
  */
 
 // Prevent direct access
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.57');
+    define('AI_ASSISTANT_VERSION', '1.0.64');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
@@ -89,29 +89,22 @@ class AIAssistant {
         // Activation/Deactivation hooks
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
-          // AJAX hooks
+        // AJAX hooks
         add_action('wp_ajax_ai_assistant_translate', array($this, 'ajax_translate'));
         add_action('wp_ajax_ai_assistant_translate_url', array($this, 'ajax_translate_url'));
         add_action('wp_ajax_ai_assistant_fetch_url', array($this, 'ajax_fetch_url'));
         add_action('wp_ajax_ai_assistant_generate_content', array($this, 'ajax_generate_content'));
         add_action('wp_ajax_ai_assistant_get_suggestions', array($this, 'ajax_get_suggestions'));
         add_action('wp_ajax_ai_assistant_get_html_content', array($this, 'ajax_get_html_content'));
-        add_action('wp_ajax_ai_assistant_debug_suggestions', array($this, 'ajax_debug_suggestions'));
         
         // Image generation AJAX handlers
         add_action('wp_ajax_ai_assistant_generate_image_prompt', array($this, 'ajax_generate_image_prompt'));
         add_action('wp_ajax_ai_assistant_generate_image', array($this, 'ajax_generate_image'));
         add_action('wp_ajax_ai_assistant_set_featured_image', array($this, 'ajax_set_featured_image'));
-        
-        // Translation management AJAX handlers
-        add_action('wp_ajax_ai_assistant_export_po', array($this, 'ajax_export_po'));
-        add_action('wp_ajax_ai_assistant_auto_translate', array($this, 'ajax_auto_translate'));
+        add_action('wp_ajax_ai_assistant_get_image_models', array($this, 'ajax_get_image_models'));
         
         // Language switching AJAX handler
         add_action('wp_ajax_ai_assistant_save_language', array($this, 'ajax_save_language'));
-        
-        // Debug AJAX handler
-        add_action('wp_ajax_ai_assistant_debug_language_loading', array($this, 'ajax_debug_language_loading'));
     }
       /**
      * Load plugin dependencies
@@ -129,18 +122,17 @@ class AIAssistant {
             'class-diagnostics.php'
         );
         
+        // Include required files with error handling
         foreach ($required_files as $file) {
             $file_path = $includes_dir . $file;
             if (file_exists($file_path)) {
                 require_once $file_path;
             } else {
-                error_log("AI Assistant: Missing required file: {$file}");
+                // Only log missing files if debugging is enabled
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    $this->log("Missing required file: {$file}");
+                }
             }
-        }
-        
-        // Include debug tools if needed
-        if (file_exists(AI_ASSISTANT_PLUGIN_DIR . 'debug-translation-history.php')) {
-            require_once AI_ASSISTANT_PLUGIN_DIR . 'debug-translation-history.php';
         }
         
         // Initialize components with error handling
@@ -166,14 +158,42 @@ class AIAssistant {
             }
             
         } catch (Exception $e) {
-            error_log("AI Assistant: Error loading dependencies: " . $e->getMessage());
+            // Only log errors if debugging is enabled
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                $this->log("Error loading dependencies: " . $e->getMessage());
+            }
         }
+    }
+    
+    /**
+     * Centralized logging utility
+     *
+     * @param string $message Log message
+     * @param string $level Log level (info, warning, error)
+     */
+    public static function log($message, $level = 'info') {
+        // Only log if WP_DEBUG is enabled
+        if (!defined('WP_DEBUG') || !WP_DEBUG) {
+            return;
+        }
+        
+        // Optional: Only log if WP_DEBUG_LOG is also enabled
+        if (defined('WP_DEBUG_LOG') && !WP_DEBUG_LOG) {
+            return;
+        }
+        
+        $prefix = '[AI Assistant]';
+        if ($level !== 'info') {
+            $prefix .= ' [' . strtoupper($level) . ']';
+        }
+        
+        error_log($prefix . ' ' . $message);
     }
       /**
      * Early initialization for language loading
      */
     public function early_init() {
-        // Force language setting for Chinese sites
+        // Universal language setting for all sites
         $this->ensure_language_setting();
     }
     
@@ -191,22 +211,26 @@ class AIAssistant {
     }
     
     /**
-     * Ensure language setting is properly configured
+     * Ensure language setting is properly configured for any locale
      */
     private function ensure_language_setting() {
         $wp_locale = get_locale();
         $current_setting = get_option('ai_assistant_admin_language');
         
-        // Force update for Chinese sites if not set correctly
-        if ($wp_locale === 'zh_CN' && $current_setting !== 'zh_CN') {
-            update_option('ai_assistant_admin_language', 'zh_CN');
-            error_log("AI Assistant: Force-updated Chinese language setting");
-        }
-        
-        // Same for Uyghur sites
-        if ($wp_locale === 'ug_CN' && $current_setting !== 'ug_CN') {
-            update_option('ai_assistant_admin_language', 'ug_CN');
-            error_log("AI Assistant: Force-updated Uyghur language setting");
+        // Auto-set plugin language to match WordPress locale if not configured
+        if (empty($current_setting) || $current_setting !== $wp_locale) {
+            // Check if we have a translation file for this locale
+            $lang_file = AI_ASSISTANT_PLUGIN_DIR . 'languages/ai-assistant-' . $wp_locale . '.mo';
+            if (file_exists($lang_file)) {
+                update_option('ai_assistant_admin_language', $wp_locale);
+            } else {
+                // Fallback to base language if specific variant doesn't exist
+                $base_locale = substr($wp_locale, 0, 2); // e.g., 'zh' from 'zh_CN'
+                $base_lang_file = AI_ASSISTANT_PLUGIN_DIR . 'languages/ai-assistant-' . $base_locale . '.mo';
+                if (file_exists($base_lang_file)) {
+                    update_option('ai_assistant_admin_language', $base_locale);
+                }
+            }
         }
     }
     
@@ -226,14 +250,12 @@ class AIAssistant {
             // If no global language is set, use WordPress locale
             if (empty($current_setting)) {
                 update_option('ai_assistant_admin_language', $wp_locale);
-                error_log("AI Assistant: Auto-set global language to " . $wp_locale);
             }
             
             // Set user language to match global setting for first time
             if ($current_user_id > 0) {
                 $user_language = !empty($current_setting) ? $current_setting : $wp_locale;
                 update_user_meta($current_user_id, 'ai_assistant_language', $user_language);
-                error_log("AI Assistant: Set user #{$current_user_id} language to " . $user_language);
             }
         }
         
@@ -276,10 +298,10 @@ class AIAssistant {
                 // DO NOT add global locale filter - this was causing site-wide language changes
                 // Plugin translations will be handled by the plugin_locale filter above
                 
-                // Only log success once per session for each language and only if debug logging is enabled
+                // Only log success once per session to reduce log noise
                 static $logged_languages = array();
-                if (!isset($logged_languages[$locale]) && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
-                    error_log("AI Assistant: Successfully loaded custom language: " . $locale);
+                if (!isset($logged_languages[$locale]) && defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+                    self::log("Successfully loaded custom language: " . $locale);
                     $logged_languages[$locale] = true;
                 }
             } else {
@@ -295,15 +317,41 @@ class AIAssistant {
     private function check_version_update() {
         $current_version = get_option('ai_assistant_version', '1.0.0');
         
-        // If this is version 1.0.42 and user hasn't seen the cleanup notice
-        if (version_compare($current_version, '1.0.42', '<') && AI_ASSISTANT_VERSION === '1.0.42') {
-            set_transient('ai_assistant_cleanup_notice', true, DAY_IN_SECONDS);
-            update_option('ai_assistant_version', AI_ASSISTANT_VERSION);
-        } elseif (version_compare($current_version, '1.0.26', '<') && AI_ASSISTANT_VERSION >= '1.0.26') {
-            set_transient('ai_assistant_improvements_notice', true, DAY_IN_SECONDS);
-            update_option('ai_assistant_version', AI_ASSISTANT_VERSION);
-        } elseif (version_compare($current_version, '1.0.24', '<') && AI_ASSISTANT_VERSION >= '1.0.24') {
-            set_transient('ai_assistant_performance_update_notice', true, DAY_IN_SECONDS);
+        // Dynamic version update handling
+        if (version_compare($current_version, AI_ASSISTANT_VERSION, '<')) {
+            // Determine if this is a major update based on version difference
+            $version_parts_current = explode('.', $current_version);
+            $version_parts_new = explode('.', AI_ASSISTANT_VERSION);
+            
+            $is_major_update = false;
+            
+            // Check for major version changes (first two digits)
+            if (count($version_parts_current) >= 2 && count($version_parts_new) >= 2) {
+                $current_major = (int)$version_parts_current[0];
+                $current_minor = (int)$version_parts_current[1];
+                $new_major = (int)$version_parts_new[0];
+                $new_minor = (int)$version_parts_new[1];
+                
+                // Major update if major version changes or minor version jumps significantly
+                $is_major_update = ($new_major > $current_major) || 
+                                  ($new_major === $current_major && ($new_minor - $current_minor) >= 5);
+            }
+            
+            // Set appropriate notice based on update type
+            if ($is_major_update) {
+                set_transient('ai_assistant_update_notice', array(
+                    'type' => 'major',
+                    'from_version' => $current_version,
+                    'to_version' => AI_ASSISTANT_VERSION
+                ), DAY_IN_SECONDS);
+            } else {
+                set_transient('ai_assistant_update_notice', array(
+                    'type' => 'minor',
+                    'from_version' => $current_version,
+                    'to_version' => AI_ASSISTANT_VERSION
+                ), 6 * HOUR_IN_SECONDS); // Shorter duration for minor updates
+            }
+            
             update_option('ai_assistant_version', AI_ASSISTANT_VERSION);
         }
     }
@@ -334,43 +382,26 @@ class AIAssistant {
             delete_transient('ai_assistant_activation_notice');
         }
         
-        // Show performance update notice (once after v1.0.24 update)
-        if (get_transient('ai_assistant_performance_update_notice')) {
+        // Show dynamic update notices
+        $update_notice = get_transient('ai_assistant_update_notice');
+        if ($update_notice && is_array($update_notice)) {
+            $notice_class = ($update_notice['type'] === 'major') ? 'notice-success' : 'notice-info';
+            $notice_title = ($update_notice['type'] === 'major') ? 
+                sprintf(__('AI Assistant v%s - Major Enhancement!', 'ai-assistant'), $update_notice['to_version']) :
+                sprintf(__('AI Assistant Updated to v%s', 'ai-assistant'), $update_notice['to_version']);
+            
+            $notice_message = ($update_notice['type'] === 'major') ?
+                __('Enhanced features, improved performance, better error handling, and new capabilities. Your AI Assistant is more powerful than ever!', 'ai-assistant') :
+                __('Bug fixes, improvements, and optimizations for better performance.', 'ai-assistant');
             ?>
-            <div class="notice notice-success is-dismissible">
+            <div class="notice <?php echo esc_attr($notice_class); ?> is-dismissible">
                 <p>
-                    <strong><?php _e('AI Assistant v1.0.24 Performance Update!', 'ai-assistant'); ?></strong> 
-                    <?php _e('New intelligent caching system reduces API calls by up to 70% and improves response times. Your AI Assistant is now faster and more cost-effective!', 'ai-assistant'); ?>
+                    <strong><?php echo esc_html($notice_title); ?></strong> 
+                    <?php echo esc_html($notice_message); ?>
                 </p>
             </div>
             <?php
-            delete_transient('ai_assistant_performance_update_notice');
-        }
-        
-        // Show improvements notice (once after v1.0.26 update)
-        if (get_transient('ai_assistant_improvements_notice')) {
-            ?>
-            <div class="notice notice-success is-dismissible">
-                <p>
-                    <strong><?php _e('AI Assistant v1.0.26 Improvements!', 'ai-assistant'); ?></strong> 
-                    <?php _e('Fixed tab display issues, improved textarea resizing, enhanced auto-complete suggestions, and added support for multiple languages. Now showing only your configured AI models!', 'ai-assistant'); ?>
-                </p>
-            </div>
-            <?php
-            delete_transient('ai_assistant_improvements_notice');
-        }
-        
-        // Show cleanup notice (once after v1.0.42 update)
-        if (get_transient('ai_assistant_cleanup_notice')) {
-            ?>
-            <div class="notice notice-success is-dismissible">
-                <p>
-                    <strong><?php _e('AI Assistant v1.0.42 Optimized!', 'ai-assistant'); ?></strong> 
-                    <?php _e('Plugin cleaned up and optimized! Chinese translation completed (99.5%), debug information moved to dedicated Diagnostics page, and file structure optimized. Better performance and cleaner interface!', 'ai-assistant'); ?>
-                </p>
-            </div>
-            <?php
-            delete_transient('ai_assistant_cleanup_notice');
+            delete_transient('ai_assistant_update_notice');
         }
         
         // Show configuration notice if not configured
@@ -421,7 +452,7 @@ class AIAssistant {
                 'ajaxUrl' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('ai_assistant_nonce'),
                 'availableModels' => $this->ai_service ? $this->ai_service->get_available_models() : array(),
-                'siteLanguage' => $this->get_site_language_code(),
+                'siteLanguage' => $this->get_current_language_code(),
                 'strings' => array(
                     'error' => __('Error', 'ai-assistant'),
                     'translating' => __('Translating...', 'ai-assistant'),
@@ -875,7 +906,10 @@ class AIAssistant {
                 'model' => $model
             ));
             if (!$save_result) {
-                error_log('AI Assistant ERROR: Translation history save failed');
+                // Only log translation history errors if debugging is enabled
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    self::log('Translation history save failed', 'warning');
+                }
             }
         }
 
@@ -890,8 +924,17 @@ class AIAssistant {
             check_ajax_referer('ai_assistant_nonce', 'nonce');
 
             if (!current_user_can('edit_posts')) {
-                error_log('AI Assistant ERROR: Permission denied for user');
                 wp_die(__('You do not have permission to perform this action.', 'ai-assistant'));
+            }
+
+            // Ensure AI service is available first
+            if (!isset($this->ai_service) || !$this->ai_service) {
+                if (class_exists('AI_Assistant_AI_Service')) {
+                    $this->ai_service = new AI_Assistant_AI_Service();
+                } else {
+                    self::log('AI Service class not found', 'error');
+                    wp_send_json_error('AI Service class not found. Please check plugin installation.');
+                }
             }
 
             // Ensure translator is available
@@ -899,7 +942,7 @@ class AIAssistant {
                 if (class_exists('AI_Assistant_Translator')) {
                     $this->translator = new AI_Assistant_Translator($this->ai_service);
                 } else {
-                    error_log('AI Assistant ERROR: Translator class not found');
+                    self::log('Translator class not found', 'error');
                     wp_send_json_error('Translator class not found. Please check plugin installation.');
                 }
             }
@@ -910,26 +953,36 @@ class AIAssistant {
             $model = isset($_POST['model']) ? sanitize_text_field($_POST['model']) : 'gemini-2.5-flash';
 
             if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
-                error_log('AI Assistant ERROR: Invalid URL provided');
+                self::log('Invalid URL provided: ' . $url, 'warning');
                 wp_send_json_error('Invalid or missing URL.');
             }
 
             if (empty($target_lang)) {
-                error_log('AI Assistant ERROR: Missing target language');
+                self::log('Missing target language', 'warning');
                 wp_send_json_error('Missing target language.');
             }
 
             // Use the translator's translate_url method which saves to history
             $result = $this->translator->translate_url($url, $source_lang, $target_lang, $model);
 
+            // Debug logging to track the translation result
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                self::log('Translation result: ' . print_r($result, true), 'info');
+            }
+
             if (is_wp_error($result)) {
-                error_log('AI Assistant ERROR: Translation error: ' . $result->get_error_message());
+                self::log('Translation error: ' . $result->get_error_message(), 'error');
                 wp_send_json_error($result->get_error_message());
             }
 
             if (!$result['success']) {
-                error_log('AI Assistant ERROR: Translation failed: ' . (isset($result['message']) ? $result['message'] : 'Unknown error'));
+                self::log('Translation failed: ' . (isset($result['message']) ? $result['message'] : 'Unknown error'), 'error');
                 wp_send_json_error(isset($result['message']) ? $result['message'] : 'Translation failed');
+            }
+
+            // Debug logging to see what we're sending back
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                self::log('Sending translation response with translated_content length: ' . strlen($result['translated_content']), 'info');
             }
 
             wp_send_json_success(array(
@@ -942,10 +995,10 @@ class AIAssistant {
             ));
             
         } catch (Exception $e) {
-            error_log('AI Assistant: Exception in ajax_translate_url: ' . $e->getMessage());
+            self::log('Exception in ajax_translate_url: ' . $e->getMessage(), 'error');
             wp_send_json_error('An error occurred: ' . $e->getMessage());
         } catch (Error $e) {
-            error_log('AI Assistant: Fatal error in ajax_translate_url: ' . $e->getMessage());
+            self::log('Fatal error in ajax_translate_url: ' . $e->getMessage(), 'error');
             wp_send_json_error('A fatal error occurred: ' . $e->getMessage());
         }
     }
@@ -1071,7 +1124,7 @@ class AIAssistant {
         }
         
         // Create a prompt for content continuation
-        $prompt = "Based on the following partial text, provide 3 short, contextually relevant suggestions to continue the sentence or paragraph. Each suggestion should be 5-15 words that would naturally follow the text. Format as a simple list, one suggestion per line:\n\nText: \"{$current_text}\"";
+        $prompt = "Based on the following partial text, provide 3 contextually relevant suggestions to continue the sentence or paragraph. Each suggestion should be at least 5-15 words that would naturally follow the text. Format as a simple list, one suggestion per line:\n\nText: \"{$current_text}\"";
         
         if (!empty($context)) {
             $prompt .= "\nContext/Topic: \"{$context}\"";
@@ -1114,7 +1167,6 @@ class AIAssistant {
         // Check if table exists first
         $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
         if (!$table_exists) {
-            error_log('AI Assistant: Suggestions table does not exist: ' . $table_name);
             return;
         }
         
@@ -1151,15 +1203,13 @@ class AIAssistant {
                     array('%d', '%d', '%s', '%s', '%s', '%s', '%s')
                 );
                 
-                if ($result === false) {
-                    error_log('AI Assistant: Failed to insert suggestion: ' . $wpdb->last_error);
+                if ($result === false && defined('WP_DEBUG') && WP_DEBUG) {
+                    self::log('Failed to insert suggestion: ' . $wpdb->last_error, 'error');
                 } else {
                     $stored_count++;
                 }
             }
         }
-        
-        error_log('AI Assistant: Stored ' . $stored_count . ' suggestions out of ' . count($suggestions));
     }
     
     /**
@@ -1174,7 +1224,9 @@ class AIAssistant {
         // Check if table exists first
         $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
         if (!$table_exists) {
-            error_log('AI Assistant: Suggestions table does not exist: ' . $table_name);
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                self::log('Suggestions table does not exist: ' . $table_name, 'warning');
+            }
             return;
         }
         
@@ -1182,13 +1234,16 @@ class AIAssistant {
         $api_keys = get_option('ai_assistant_api_keys', array());
         $preferred_provider = get_option('ai_assistant_preferred_provider', 'gemini');
         
+        // Get dynamic model names based on available configurations
+        $default_models = array(
+            'openai' => 'gpt-4.1',
+            'anthropic' => 'claude-4-sonnet',
+            'gemini' => 'gemini-2.5-flash'
+        );
+        
         $model_name = !empty($model) ? $model : $preferred_provider;
-        if (!empty($api_keys['openai']) && $preferred_provider === 'openai') {
-            $model_name = 'gpt-4o-mini';
-        } elseif (!empty($api_keys['anthropic']) && $preferred_provider === 'anthropic') {
-            $model_name = 'claude-3-5-haiku';
-        } elseif (!empty($api_keys['gemini']) && $preferred_provider === 'gemini') {
-            $model_name = 'gemini-2.5-flash';
+        if (!empty($api_keys[$preferred_provider]) && isset($default_models[$preferred_provider])) {
+            $model_name = $default_models[$preferred_provider];
         }
         
         // Store the content generation
@@ -1206,66 +1261,9 @@ class AIAssistant {
             array('%d', '%d', '%s', '%s', '%s', '%s', '%s')
         );
         
-        if ($result === false) {
-            error_log('AI Assistant: Failed to insert content generation: ' . $wpdb->last_error);
-        } else {
-            error_log('AI Assistant: Stored content generation (' . $content_type . ') successfully');
+        if ($result === false && defined('WP_DEBUG') && WP_DEBUG) {
+            self::log('Failed to insert content generation: ' . $wpdb->last_error, 'error');
         }
-    }
-    
-    /**
-     * Debug method to check suggestion history functionality
-     * Temporary method for debugging - remove in production
-     */
-    public function debug_suggestion_history() {
-        global $wpdb;
-        
-        $table_name = $wpdb->prefix . 'ai_assistant_suggestions';
-        
-        // Check if table exists
-        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
-        
-        $debug_info = array(
-            'table_name' => $table_name,
-            'table_exists' => $table_exists,
-            'current_user_id' => get_current_user_id(),
-            'wp_prefix' => $wpdb->prefix,
-        );
-        
-        if ($table_exists) {
-            // Get table structure
-            $columns = $wpdb->get_results("DESCRIBE $table_name");
-            $debug_info['table_columns'] = $columns;
-            
-            // Get record count
-            $count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");
-            $debug_info['record_count'] = $count;
-            
-            // Get recent records
-            $recent = $wpdb->get_results("SELECT * FROM $table_name ORDER BY created_at DESC LIMIT 5");
-            $debug_info['recent_records'] = $recent;
-            
-            // Check for any database errors
-            if ($wpdb->last_error) {
-                $debug_info['db_error'] = $wpdb->last_error;
-            }
-        }
-        
-        return $debug_info;
-    }
-    
-    /**
-     * AJAX endpoint for debugging suggestions
-     */
-    public function ajax_debug_suggestions() {
-        check_ajax_referer('ai_assistant_nonce', 'nonce');
-        
-        if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have permission to perform this action.', 'ai-assistant'));
-        }
-        
-        $debug_info = $this->debug_suggestion_history();
-        wp_send_json_success($debug_info);
     }
     
     /**
@@ -1305,51 +1303,6 @@ class AIAssistant {
     }
     
     /**
-     * AJAX handler for exporting .po files
-     */
-    public function ajax_export_po() {
-        if (!current_user_can('manage_options') || !wp_verify_nonce($_GET['nonce'], 'export_po')) {
-            wp_die(__('Unauthorized access.', 'ai-assistant'));
-        }
-        
-        $language = sanitize_text_field($_GET['lang']);
-        
-        // Use the existing admin instance or create new one
-        if (isset($this->admin) && $this->admin) {
-            $admin = $this->admin;
-        } else {
-            $admin = new AI_Assistant_Admin($this->settings);
-        }
-        
-        $po_file = $admin->get_po_file_path($language);
-        
-        if (!file_exists($po_file)) {
-            wp_die(__('Translation file not found.', 'ai-assistant'));
-        }
-        
-        // Set headers for file download
-        header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename="ai-assistant-' . $language . '.po"');
-        header('Content-Length: ' . filesize($po_file));
-        
-        // Output file content
-        readfile($po_file);
-        exit;
-    }
-    
-    /**
-     * AJAX handler for auto-translating empty strings
-     */
-    public function ajax_auto_translate() {
-        // Delegate to admin class for consistency
-        if ($this->admin && method_exists($this->admin, 'ajax_auto_translate')) {
-            $this->admin->ajax_auto_translate();
-        } else {
-            wp_send_json_error(__('Auto-translate function not available.', 'ai-assistant'));
-        }
-    }
-    
-    /**
      * AJAX handler for saving language settings
      */
     public function ajax_save_language() {
@@ -1369,8 +1322,10 @@ class AIAssistant {
             $old_language = get_option('ai_assistant_admin_language', get_locale());
         }
         
-        // Debug logging
-        error_log("AI Assistant Language Change: User #{$current_user_id}: {$old_language} → {$new_language}");
+        // Debug logging (reduced verbosity)
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            self::log("Language change: User #{$current_user_id}: {$old_language} → {$new_language}");
+        }
         
         if (empty($new_language)) {
             wp_send_json_error('No language specified');
@@ -1378,15 +1333,12 @@ class AIAssistant {
         
         // Save the new language for this specific user
         $update_result = update_user_meta($current_user_id, 'ai_assistant_language', $new_language);
-        error_log("AI Assistant: User meta update result = " . ($update_result ? 'SUCCESS' : 'FAILED'));
         
         $language_changed = ($new_language !== $old_language);
-        error_log("AI Assistant: Language changed = " . ($language_changed ? 'YES' : 'NO'));
         
         // Force reload textdomain if language changed
         if ($language_changed) {
             $unloaded = unload_textdomain('ai-assistant');
-            error_log("AI Assistant: Textdomain unloaded = " . ($unloaded ? 'SUCCESS' : 'FAILED'));
             
             // Load new language for this user
             if ($new_language !== 'en_US') {
@@ -1395,7 +1347,10 @@ class AIAssistant {
                 // Load default English
                 load_plugin_textdomain('ai-assistant', false, dirname(plugin_basename(__FILE__)) . '/languages');
             }
-            error_log("AI Assistant: New textdomain loaded for user");
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                self::log("Textdomain reloaded for user language: {$new_language}");
+            }
         }
         
         wp_send_json_success(array(
@@ -1500,51 +1455,40 @@ class AIAssistant {
     }
 
     /**
-     * Get site language code for frontend use
+     * Get current language code for frontend use
      */
-    private function get_site_language_code() {
+    private function get_current_language_code() {
         $locale = get_locale();
         
-        // Map WordPress locales to our supported language codes
-        $locale_map = array(
-             'en_US' => 'en',
-            'en_GB' => 'en',
-            'tr_TR' => 'tr',
-            'ar' => 'ar',
-            'es_ES' => 'es',
-            'es_MX' => 'es',
-            'fr_FR' => 'fr',
-            'de_DE' => 'de',
-            'ru_RU' => 'ru',
-            'zh_CN' => 'zh',
-            'zh_TW' => 'zh',
-            'fa_IR' => 'fa',
-            'pt_BR' => 'pt',
-            'pt_PT' => 'pt',
-            'nl_NL' => 'nl',
-            'da_DK' => 'da',
-            'fi' => 'fi',
-            'az' => 'az',
-            'uz_UZ' => 'uz',
-            'ky_KG' => 'ky',
-            'ug_CN' => 'ug',
-            'ur' => 'ur',
-            'tk' => 'tk'
-        );
+        // Universal language code extraction - works for any locale format
+        $language_code = $this->extract_language_code($locale);
         
-        // Return mapped language code or fallback to 'en'
-        return isset($locale_map[$locale]) ? $locale_map[$locale] : 'en';
+        return !empty($language_code) ? $language_code : 'en';
     }
-
+    
     /**
-     * AJAX handler for debugging language loading
+     * Universal language code extraction method
+     * Handles any locale format dynamically
      */
-    public function ajax_debug_language_loading() {
-        if ($this->admin && method_exists($this->admin, 'ajax_debug_language_loading')) {
-            $this->admin->ajax_debug_language_loading();
-        } else {
-            wp_send_json_error('Debug function not available');
+    private function extract_language_code($locale) {
+        if (empty($locale)) {
+            return 'en';
         }
+        
+        // Handle common locale formats: en_US, pt_BR, zh_CN, etc.
+        if (strpos($locale, '_') !== false) {
+            $parts = explode('_', $locale);
+            return strtolower($parts[0]);
+        }
+        
+        // Handle dash format: en-US, pt-BR, etc.
+        if (strpos($locale, '-') !== false) {
+            $parts = explode('-', $locale);
+            return strtolower($parts[0]);
+        }
+        
+        // Handle plain language codes: en, fr, de, etc.
+        return strtolower(substr($locale, 0, 2));
     }
     
     /**
@@ -1559,6 +1503,7 @@ class AIAssistant {
         
         $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
         $context = isset($_POST['context']) ? sanitize_textarea_field($_POST['context']) : '';
+        $style = isset($_POST['style']) ? sanitize_text_field($_POST['style']) : 'photorealistic';
         
         // Get post content and title for context
         $post_title = '';
@@ -1569,26 +1514,76 @@ class AIAssistant {
             if ($post) {
                 $post_title = $post->post_title;
                 $post_content = wp_strip_all_tags($post->post_content);
-                $post_content = wp_trim_words($post_content, 50); // Limit to 50 words
+                $post_content = wp_trim_words($post_content, 100); // Increased to 100 words for better context
             }
         }
         
-        // Prepare prompt for AI to generate image description
-        $ai_prompt = "Based on the following blog post information, create a detailed, professional image prompt for generating a featured image. The prompt should describe a visually appealing image that represents the content:\n\n";
+        // Style-specific prompting guidance
+        $style_guidance = array(
+            'photorealistic' => 'professional photography style, realistic lighting, high-quality composition',
+            'illustration' => 'digital illustration style, artistic interpretation, clean vector-like design',
+            'digital-art' => 'digital art style, creative artistic expression, modern design elements',
+            'minimalist' => 'minimalist design, clean lines, simple composition, elegant and uncluttered',
+            'professional' => 'professional business style, corporate aesthetic, clean and polished',
+            'abstract' => 'abstract artistic interpretation, creative visual metaphors, artistic composition'
+        );
+        
+        $selected_style_guidance = isset($style_guidance[$style]) ? $style_guidance[$style] : $style_guidance['photorealistic'];
+        
+        // Build comprehensive prompt for AI
+        $ai_prompt = "Create a detailed, professional image prompt for generating a featured image with {$selected_style_guidance}. The image should visually represent the following content:\n\n";
+        
+        // Enhanced logic: Use both title and content together for richer context
+        $content_context = '';
         
         if (!empty($post_title)) {
-            $ai_prompt .= "Title: " . $post_title . "\n";
+            $content_context .= "**Title:** {$post_title}\n";
         }
         
+        if (!empty($post_content) && strlen($post_content) > 30) {
+            $content_context .= "**Content Summary:** {$post_content}\n";
+        }
+        
+        // Add user-provided context if available
         if (!empty($context)) {
-            $ai_prompt .= "Context: " . $context . "\n";
+            $content_context .= "**Additional Context:** {$context}\n";
         }
         
-        if (!empty($post_content)) {
-            $ai_prompt .= "Content excerpt: " . $post_content . "\n";
+        // Analyze the combination for better image generation
+        if (!empty($post_title) && !empty($post_content) && strlen($post_content) > 50) {
+            $ai_prompt .= $content_context;
+            $ai_prompt .= "\n**INSTRUCTION:** Analyze both the title and content summary above to create an image that represents the main theme and key concepts. The title provides the topic focus, while the content provides additional context and details to make the image more specific and relevant.\n";
+        } elseif (!empty($post_title) && (empty($post_content) || strlen($post_content) <= 50)) {
+            // Title exists but little content
+            $ai_prompt .= $content_context;
+            $ai_prompt .= "\n**INSTRUCTION:** Focus primarily on the title, but use any available content hints to add relevance and specificity to the image.\n";
+        } elseif (empty($post_title) && !empty($post_content) && strlen($post_content) > 100) {
+            // No title but substantial content
+            $ai_prompt .= $content_context;
+            $ai_prompt .= "\n**INSTRUCTION:** Since no title is provided, extract the main theme and key concepts from the content summary to create a representative image that captures the essence of the article.\n";
+        } elseif (!empty($context)) {
+            // Primarily user context
+            $ai_prompt .= $content_context;
+            $ai_prompt .= "\n**INSTRUCTION:** Focus on the additional context provided by the user, supplemented by any available title or content information.\n";
+        } else {
+            // Minimal content scenario
+            $ai_prompt = "Based on the limited content provided, create a professional, generic image prompt suitable for a blog post featured image. Use {$selected_style_guidance}. The prompt should describe a visually appealing image that could work as a header image for web content.\n\n";
+            if (!empty($content_context)) {
+                $ai_prompt .= $content_context;
+            }
+            $ai_prompt .= "\n**INSTRUCTION:** Create a versatile, professional image that would work well as a blog header, drawing from any available content hints.\n";
         }
         
-        $ai_prompt .= "\nGenerate a concise, descriptive prompt (2-3 sentences) for creating a professional featured image. Focus on visual elements, colors, style, and composition that would work well as a blog post header image.";
+        $ai_prompt .= "\n**Generation Instructions:**\n";
+        $ai_prompt .= "- Generate a concise, descriptive prompt (2-3 sentences maximum)\n";
+        $ai_prompt .= "- Focus on visual elements: composition, colors, mood, and style\n";
+        $ai_prompt .= "- Combine information from title AND content for comprehensive understanding\n";
+        $ai_prompt .= "- Ensure the image would work well as a blog post header\n";
+        $ai_prompt .= "- Style requirement: {$selected_style_guidance}\n";
+        $ai_prompt .= "- Avoid text or typography in the image\n";
+        $ai_prompt .= "- Create a prompt that represents the core message and themes from both title and content\n";
+        $ai_prompt .= "- If title and content seem unrelated, find the connecting theme or focus on the stronger indicator\n\n";
+        $ai_prompt .= "Return only the image generation prompt, nothing else.";
         
         // Initialize AI service if not already done
         if (!isset($this->ai_service)) {
@@ -1598,11 +1593,16 @@ class AIAssistant {
         $result = $this->ai_service->make_api_request_public($ai_prompt);
         
         if ($result['success']) {
-            // Store prompt generation in history
+            // Store prompt generation in history with enhanced context
             $input_context = '';
             if (!empty($post_title)) $input_context .= "Title: " . $post_title;
-            if (!empty($context)) $input_context .= (!empty($input_context) ? " | " : "") . "Context: " . $context;
-            if (empty($input_context)) $input_context = "Auto-generate prompt from post content";
+            if (!empty($post_content) && strlen($post_content) > 30) {
+                $content_preview = wp_trim_words($post_content, 15);
+                $input_context .= (!empty($input_context) ? " | " : "") . "Content: " . $content_preview;
+            }
+            if (!empty($context)) $input_context .= (!empty($input_context) ? " | " : "") . "User Context: " . $context;
+            if (!empty($style)) $input_context .= (!empty($input_context) ? " | " : "") . "Style: " . $style;
+            if (empty($input_context)) $input_context = "Auto-generate prompt from available content";
             
             $this->store_content_generation_history('image-prompt', $input_context, trim($result['content']), $post_id, 'prompt-generator');
             
@@ -1785,6 +1785,38 @@ class AIAssistant {
         wp_update_attachment_metadata($attachment_id, $attachment_data);
         
         return $attachment_id;
+    }
+    
+    /**
+     * AJAX handler for getting available image models
+     */
+    public function ajax_get_image_models() {
+        check_ajax_referer('ai_assistant_nonce', 'nonce');
+        
+        if (!current_user_can('edit_posts')) {
+            wp_die(__('You do not have permission to perform this action.', 'ai-assistant'));
+        }
+        
+        // Initialize AI service if not already done
+        if (!isset($this->ai_service)) {
+            $this->ai_service = new AI_Assistant_AI_Service();
+        }
+        
+        // Check if AI service has the get_available_image_models method
+        if (method_exists($this->ai_service, 'get_available_image_models')) {
+            $image_models = $this->ai_service->get_available_image_models();
+        } else {
+            // Fallback to regular models
+            $image_models = $this->ai_service->get_available_models();
+        }
+        
+        if (!empty($image_models)) {
+            wp_send_json_success($image_models);
+        } else {
+            wp_send_json_error(array(
+                'message' => __('No image generation models available. Please configure at least one AI provider.', 'ai-assistant')
+            ));
+        }
     }
 }
 
