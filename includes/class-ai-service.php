@@ -657,6 +657,11 @@ class AI_Assistant_AI_Service {
         // Determine response language
         $response_language = $this->determine_response_language($detected_language, $user_language);
         
+        // Debug logging for language detection
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log("Content suggestion language detection - Context: '{$context}', Detected: {$detected_language}, User: {$user_language}, Response: {$response_language}", true);
+        }
+        
         $base_context = !empty($existing_content) ? 
             "Based on this existing content: \"{$existing_content}\" and the topic: \"{$context}\"" : 
             "Based on the topic: \"{$context}\"";
@@ -664,15 +669,22 @@ class AI_Assistant_AI_Service {
         // Add language instruction
         $language_instruction = "";
         if ($response_language !== 'en') {
-            $language_instruction = " IMPORTANT: Respond ENTIRELY in {$response_language} language, including ALL text, explanations, descriptions, and any introductory or explanatory content. Every single word in your response must be in {$response_language}.";
+            // Universal approach: Let the AI determine the language name based on the detected code
+            // This supports all languages dynamically without hardcoding specific mappings
+            $language_instruction = " \n\nCRITICAL LANGUAGE REQUIREMENT: You MUST respond COMPLETELY and ENTIRELY in the same language as the user's input (detected as '{$response_language}'). This includes:\n- ALL titles and headings\n- ALL explanations and descriptions\n- ALL introductory text\n- ALL body content\n- ALL examples\n- EVERY SINGLE WORD must be in the detected language\n\nDO NOT mix languages. DO NOT include English translations in parentheses. DO NOT provide English explanations. The user has provided input in their native language, so they understand it and expect the complete response in that same language only. Use the natural, native form of the language without language codes or technical references.";
         } else {
             // Even for English, be explicit about language consistency
-            $language_instruction = " IMPORTANT: Ensure all content and explanations are in clear, consistent English.";
+            $language_instruction = " \n\nProvide all content and explanations in clear, consistent English.";
         }
               
         switch ($type) {
             case 'suggestions':
-                return "{$base_context}, provide 5-7 specific content suggestions or ideas for blog posts, articles, or content pieces. Each suggestion should be practical and actionable. Format as an HTML ordered list (&lt;ol&gt;&lt;li&gt;) with brief explanations. Use proper HTML formatting for WordPress.{$language_instruction}";
+                $format_instruction = "Format as an HTML ordered list (&lt;ol&gt;&lt;li&gt;) with brief explanations. Use proper HTML formatting for WordPress.";
+                if ($response_language !== 'en') {
+                    return "{$base_context}, provide 5-7 specific content suggestions or ideas for blog posts, articles, or content pieces. Each suggestion should be practical and actionable. {$format_instruction}{$language_instruction}";
+                } else {
+                    return "{$base_context}, provide 5-7 specific content suggestions or ideas for blog posts, articles, or content pieces. Each suggestion should be practical and actionable. {$format_instruction}{$language_instruction}";
+                }
                 
             case 'full-article':
                 return "{$base_context}, write a complete, comprehensive article suitable for WordPress. The article should be well-structured with an engaging introduction, detailed body sections with subheadings, practical examples or insights, and a strong conclusion. Aim for 800-1500 words. Use clear, engaging language and include actionable advice where appropriate. Format with proper HTML headings (&lt;h2&gt; for main headings, &lt;h3&gt; for subheadings), paragraphs (&lt;p&gt;), and lists (&lt;ul&gt;&lt;li&gt; or &lt;ol&gt;&lt;li&gt;) as needed. Maintain a professional yet accessible tone. Output clean HTML that works well in WordPress editor.{$language_instruction}";

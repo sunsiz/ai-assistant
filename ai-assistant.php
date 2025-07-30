@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
- * Version: 1.0.64
+ * Version: 1.0.66
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.64');
+    define('AI_ASSISTANT_VERSION', '1.0.66');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
@@ -1118,6 +1118,18 @@ class AIAssistant {
             ));
         }
         
+        // Quick cache check for recent suggestions (5 minute cache)
+        $cache_key = 'ai_suggestions_' . md5($current_text . $context);
+        $cached_suggestions = get_transient($cache_key);
+        
+        if ($cached_suggestions !== false) {
+            wp_send_json_success(array(
+                'suggestions' => $cached_suggestions,
+                'cached' => true
+            ));
+            return;
+        }
+        
         // Initialize AI service if not already done
         if (!isset($this->ai_service)) {
             $this->ai_service = new AI_Assistant_AI_Service();
@@ -1142,11 +1154,15 @@ class AIAssistant {
             
             $final_suggestions = array_slice($suggestions, 0, 3); // Limit to 3 suggestions
             
+            // Cache successful results for 5 minutes for faster subsequent requests
+            set_transient($cache_key, $final_suggestions, 300);
+            
             // Store suggestions in database
             $this->store_suggestion_history($current_text, $final_suggestions, $post_id);
             
             wp_send_json_success(array(
-                'suggestions' => $final_suggestions
+                'suggestions' => $final_suggestions,
+                'cached' => false
             ));
         } else {
             wp_send_json_error(array(

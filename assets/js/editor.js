@@ -517,6 +517,8 @@
             console.log('AI Assistant: Setting up auto-complete for textareas:', $textareas.length);
             
             var suggestionTimeout;
+            var suggestionCache = new Map(); // Client-side cache for faster responses
+            var lastRequestTime = 0;
             var isShowingSuggestions = false;
             var currentSuggestions = [];
             var selectedSuggestionIndex = -1;
@@ -582,6 +584,25 @@
                     return;
                 }
                 
+                // Create cache key from last 30 characters to detect similar patterns
+                var cacheKey = currentText.slice(-30).toLowerCase().trim();
+                
+                // Check cache first for instant response
+                if (suggestionCache.has(cacheKey)) {
+                    console.log('AI Assistant: Using cached suggestions for:', cacheKey.substring(0, 20) + '...');
+                    var cachedSuggestions = suggestionCache.get(cacheKey);
+                    showSuggestions(cachedSuggestions, activeTextarea);
+                    return;
+                }
+                
+                // Prevent too frequent requests (max 1 per second)
+                var now = Date.now();
+                if (now - lastRequestTime < 1000) {
+                    console.log('AI Assistant: Rate limiting suggestions request');
+                    return;
+                }
+                lastRequestTime = now;
+                
                 console.log('AI Assistant: Requesting suggestions for text:', currentText.substring(0, 50) + '...');
                 
                 var context = $('#ai-content-context').val() || '';
@@ -598,6 +619,15 @@
                     success: function(response) {
                         console.log('AI Assistant: Suggestions response:', response);
                         if (response.success && response.data.suggestions) {
+                            // Cache the successful response
+                            suggestionCache.set(cacheKey, response.data.suggestions);
+                            
+                            // Limit cache size to prevent memory issues
+                            if (suggestionCache.size > 20) {
+                                var firstKey = suggestionCache.keys().next().value;
+                                suggestionCache.delete(firstKey);
+                            }
+                            
                             showSuggestions(response.data.suggestions, activeTextarea);
                         } else {
                             console.log('AI Assistant: No suggestions returned');
@@ -673,12 +703,21 @@
                 var currentText = $(this).val().trim();
                 console.log('AI Assistant: Text input detected, length:', currentText.length);
                 
+                // Smart triggering: faster for longer text, more responsive for active typing
+                var triggerDelay = 1000; // Reduced from 2000ms to 1000ms
+                var minLength = 8; // Reduced minimum length requirement
+                
+                // Even faster trigger if text ends with common completion points
+                if (/[.!?:,]\s*$/.test(currentText) || currentText.endsWith(' ')) {
+                    triggerDelay = 500; // Very fast for natural completion points
+                }
+                
                 // Trigger suggestions after typing stops
-                if (currentText.length >= 10) {
+                if (currentText.length >= minLength) {
                     suggestionTimeout = setTimeout(function() {
-                        console.log('AI Assistant: Triggering suggestions after delay');
+                        console.log('AI Assistant: Triggering suggestions after', triggerDelay, 'ms delay');
                         getSuggestions(currentText);
-                    }, 2000); // Wait 2 seconds after typing stops
+                    }, triggerDelay);
                 }
             });
             
