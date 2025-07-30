@@ -578,19 +578,33 @@
             }
             
             // Get suggestions from AI
+            // Simple hash function for Unicode strings (safe for all languages)
+            function simpleHash(str) {
+                var hash = 0;
+                if (str.length === 0) return hash;
+                for (var i = 0; i < str.length; i++) {
+                    var char = str.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32bit integer
+                }
+                return Math.abs(hash).toString(36); // Base36 for shorter strings
+            }
+            
             function getSuggestions(currentText) {
                 if (currentText.length < 5) {
                     console.log('AI Assistant: Text too short for suggestions:', currentText.length);
                     return;
                 }
                 
-                // Create more specific cache key using full text hash + last words
+                // Create Unicode-safe cache key
                 var lastWords = currentText.split(' ').slice(-5).join(' '); // Last 5 words
-                var cacheKey = btoa(currentText.slice(-50)) + '_' + lastWords.toLowerCase().trim();
+                var textHash = simpleHash(currentText.slice(-50)); // Unicode-safe hash
+                var wordsHash = simpleHash(lastWords.toLowerCase().trim());
+                var cacheKey = textHash + '_' + wordsHash + '_' + currentText.length;
                 
                 // Check cache first for instant response
                 if (suggestionCache.has(cacheKey)) {
-                    console.log('AI Assistant: Using cached suggestions for:', lastWords);
+                    console.log('AI Assistant: Using cached suggestions for:', lastWords.substring(0, 30) + '...');
                     var cachedSuggestions = suggestionCache.get(cacheKey);
                     showSuggestions(cachedSuggestions, activeTextarea);
                     return;
