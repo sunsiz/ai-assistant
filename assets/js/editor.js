@@ -1,18 +1,56 @@
 /**
- * AI Assistant Editor JS - v1.0.58
- * Handles meta box UI, tabs, and AJAX calls for translation, content generation, and image generation.
+ * AI Assistant Editor JavaScript - v1.0.69
+ * 
+ * Handles meta box UI, tabs, and AJAX calls for translation, content generation, 
+ * and image generation in the WordPress post editor.
+ * 
+ * Features:
+ * - Unicode-safe caching with custom hash function
+ * - Real-time content suggestions with intelligent triggering
+ * - Performance optimized AJAX calls with rate limiting
+ * - Comprehensive error handling and user feedback
+ * - Multi-tab interface with accessibility support
+ * 
+ * @package AIAssistant
+ * @version 1.0.69
+ * @since 1.0.0
  */
 (function($) {
     'use strict';
 
+    /**
+     * Main AI Assistant object
+     * Encapsulates all editor functionality in a clean namespace
+     */
     const AIAssistant = {
+        
+        /**
+         * Cache for storing recent API responses
+         * Reduces redundant API calls and improves performance
+         */
+        cache: new Map(),
+        
+        /**
+         * Rate limiting variables
+         * Prevents excessive API calls during rapid user input
+         */
+        suggestionTimeout: null,
+        lastSuggestionTime: 0,
+        minSuggestionInterval: 1000, // Minimum 1 second between suggestions
+        
+        /**
+         * Initialize the AI Assistant editor interface
+         * Called when DOM is ready and meta box is present
+         * 
+         * @since 1.0.0
+         */
         init: function() {
             // Ensure we are on a post edit screen with the meta box present
             if (!$('#ai-assistant-meta-box').length) {
                 return;
             }
             
-            console.log('AI Assistant: Initializing editor script v1.0.53');
+            console.log('AI Assistant: Initializing editor script v1.0.69');
             this.initializeTabs();
             this.populateLanguageDropdowns();
             this.bindEvents();
@@ -23,6 +61,13 @@
             this.populateModelDropdowns();
         },
 
+        /**
+         * Bind all event handlers for UI interactions
+         * Centralizes event management for better maintainability
+         * 
+         * @since 1.0.0
+         * @version 1.0.69
+         */
         bindEvents: function() {
             var container = $('#ai-assistant-meta-box');
 
@@ -34,7 +79,9 @@
 
             // Translate Tab Actions
             container.on('click', '.ai-assistant-translate-btn', this.handleTranslateContent);
-            container.on('click', '.ai-assistant-populate-btn', this.handlePopulateContent);            // URL Tab Actions
+            container.on('click', '.ai-assistant-populate-btn', this.handlePopulateContent);
+            
+            // URL Tab Actions
             container.on('click', '.ai-fetch-content-btn', this.handleFetchUrl);
             container.on('click', '.ai-translate-article-btn', this.handleTranslateArticle);
             container.on('click', '.ai-insert-content-btn', this.handleInsertContent);
@@ -52,15 +99,15 @@
             container.on('click', '.ai-set-featured-image-btn', this.handleSetFeaturedImage);
             container.on('click', '.ai-download-image-btn', this.handleDownloadImage);
             
-            // Enable/disable insert button when translated content changes
+            // Dynamic UI updates
             container.on('input', '#ai-translated-article', this.toggleInsertButton);
             container.on('input', '#ai-generated-content', this.toggleGeneratedButtons);
             container.on('input', '#ai-image-prompt', this.toggleImageButtons);
             
-            // Track user edits in original content textarea
+            // Track user edits for intelligent content preservation
             container.on('input', '#ai-original-article', function() {
                 $(this).data('user-edited', true);
-                console.log('AI Assistant: User edited original content - will preserve edits');
+                console.log('AI Assistant: User edited original content - preserving edits');
             });
         },
 

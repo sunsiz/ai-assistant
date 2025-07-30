@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
- * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
+ * Description: AI-powered translation and content writing assistant for multilingual WordPress websites. Supports universal language detection, real-time content suggestions, Unicode-safe caching, and comprehensive multilingual content management.
  * Version: 1.0.69
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
@@ -14,8 +14,20 @@
  * Network: true
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * * @package AIAssistant
- * @version 1.0.58
+ * 
+ * @package AIAssistant
+ * @version 1.0.69
+ * @since 1.0.0
+ * 
+ * Features:
+ * - Universal language support with dynamic detection
+ * - Real-time AI content suggestions with Unicode-safe caching
+ * - Multi-provider AI integration (OpenAI, Anthropic, Google Gemini)
+ * - Advanced translation management with .po file integrity
+ * - Featured image generation with AI
+ * - Comprehensive multilingual interface (19+ languages)
+ * - Performance optimized with intelligent rate limiting
+ * - Production-ready error handling and debugging
  */
 
 // Prevent direct access
@@ -39,16 +51,33 @@ if (!defined('AI_ASSISTANT_PLUGIN_URL')) {
 
 /**
  * Main AIAssistant Class
+ * 
+ * Core plugin class that orchestrates all AI Assistant functionality.
+ * Handles initialization, dependency loading, AJAX endpoints, and 
+ * WordPress integration for the multilingual AI assistant system.
+ * 
+ * @since 1.0.0
+ * @version 1.0.69
  */
 class AIAssistant {
     
     /**
-     * Plugin instance
+     * Plugin instance (Singleton pattern)
+     * 
+     * @var AIAssistant|null
+     * @since 1.0.0
      */
     private static $instance = null;
     
     /**
-     * Components
+     * Plugin components
+     * 
+     * @var AI_Assistant_Admin|null Admin interface handler
+     * @var AI_Assistant_AI_Service|null AI service integration
+     * @var AI_Assistant_Translator|null Translation management
+     * @var AI_Assistant_Content_Analyzer|null Content analysis utilities
+     * @var AI_Assistant_Settings|null Plugin settings management
+     * @since 1.0.0
      */
     private $admin;
     private $ai_service;
@@ -57,7 +86,13 @@ class AIAssistant {
     private $settings;
     
     /**
-     * Get plugin instance
+     * Get plugin instance (Singleton pattern)
+     * 
+     * Ensures only one instance of the plugin is running to prevent
+     * conflicts and resource duplication.
+     * 
+     * @return AIAssistant The singleton instance
+     * @since 1.0.0
      */
     public static function get_instance() {
         if (null === self::$instance) {
@@ -67,10 +102,15 @@ class AIAssistant {
     }
     
     /**
-     * Constructor
+     * Constructor - Initialize plugin
+     * 
+     * Private constructor implementing Singleton pattern.
+     * Sets up WordPress hooks and initializes plugin components.
+     * 
+     * @since 1.0.0
      */
     private function __construct() {
-        // Load plugin components
+        // Load plugin dependencies
         $this->load_dependencies();
         
         // Initialize plugin with higher priority for language loading
@@ -86,13 +126,28 @@ class AIAssistant {
             add_action('save_post', array($this, 'save_post_meta'));
         }
         
-        // Activation/Deactivation hooks
+        // Plugin lifecycle hooks
         register_activation_hook(__FILE__, array($this, 'activate'));
         register_deactivation_hook(__FILE__, array($this, 'deactivate'));
-        // AJAX hooks
+        
+        // AJAX endpoints for translation and content generation
+        $this->register_ajax_handlers();
+    }
+    /**
+     * Register AJAX handlers for all plugin endpoints
+     * 
+     * Centralizes AJAX handler registration for better organization
+     * and easier maintenance of API endpoints.
+     * 
+     * @since 1.0.69
+     */
+    private function register_ajax_handlers() {
+        // Core translation AJAX handlers
         add_action('wp_ajax_ai_assistant_translate', array($this, 'ajax_translate'));
         add_action('wp_ajax_ai_assistant_translate_url', array($this, 'ajax_translate_url'));
         add_action('wp_ajax_ai_assistant_fetch_url', array($this, 'ajax_fetch_url'));
+        
+        // Content generation AJAX handlers
         add_action('wp_ajax_ai_assistant_generate_content', array($this, 'ajax_generate_content'));
         add_action('wp_ajax_ai_assistant_get_suggestions', array($this, 'ajax_get_suggestions'));
         add_action('wp_ajax_ai_assistant_get_html_content', array($this, 'ajax_get_html_content'));
@@ -103,26 +158,33 @@ class AIAssistant {
         add_action('wp_ajax_ai_assistant_set_featured_image', array($this, 'ajax_set_featured_image'));
         add_action('wp_ajax_ai_assistant_get_image_models', array($this, 'ajax_get_image_models'));
         
-        // Language switching AJAX handler
+        // Language management AJAX handler
         add_action('wp_ajax_ai_assistant_save_language', array($this, 'ajax_save_language'));
     }
-      /**
+    
+    /**
      * Load plugin dependencies
+     * 
+     * Loads all required class files and initializes plugin components
+     * with comprehensive error handling for production environments.
+     * 
+     * @since 1.0.0
+     * @version 1.0.69
      */
     private function load_dependencies() {
         $includes_dir = AI_ASSISTANT_PLUGIN_DIR . 'includes/';
         
-        // Load required files first
+        // Core plugin class files
         $required_files = array(
-            'class-settings.php',
-            'class-ai-service.php', 
-            'class-translator.php',
-            'class-content-analyzer.php',
-            'class-admin.php',
-            'class-diagnostics.php'
+            'class-settings.php',        // Plugin settings management
+            'class-ai-service.php',      // AI provider integration
+            'class-translator.php',      // Translation engine
+            'class-content-analyzer.php', // Content analysis utilities
+            'class-admin.php',           // Admin interface
+            'class-diagnostics.php'      // System diagnostics
         );
         
-        // Include required files with error handling
+        // Load required files with error handling
         foreach ($required_files as $file) {
             $file_path = $includes_dir . $file;
             if (file_exists($file_path)) {
@@ -130,37 +192,54 @@ class AIAssistant {
             } else {
                 // Only log missing files if debugging is enabled
                 if (defined('WP_DEBUG') && WP_DEBUG) {
-                    $this->log("Missing required file: {$file}");
+                    $this->log("Critical: Missing required file: {$file}", 'error');
                 }
             }
         }
         
         // Initialize components with error handling
+        $this->initialize_components();
+    }
+    
+    /**
+     * Initialize plugin components
+     * 
+     * Creates instances of all plugin classes with proper error handling
+     * and dependency injection where needed.
+     * 
+     * @since 1.0.69
+     */
+    private function initialize_components() {
         try {
+            // Initialize settings first (required by other components)
             if (class_exists('AI_Assistant_Settings')) {
                 $this->settings = new AI_Assistant_Settings();
             }
             
+            // Initialize AI service (core component)
             if (class_exists('AI_Assistant_AI_Service')) {
                 $this->ai_service = new AI_Assistant_AI_Service();
             }
             
-            if (class_exists('AI_Assistant_Translator')) {
+            // Initialize translator with AI service dependency
+            if (class_exists('AI_Assistant_Translator') && $this->ai_service) {
                 $this->translator = new AI_Assistant_Translator($this->ai_service);
             }
             
+            // Initialize content analyzer
             if (class_exists('AI_Assistant_Content_Analyzer')) {
                 $this->content_analyzer = new AI_Assistant_Content_Analyzer();
             }
             
-            if (class_exists('AI_Assistant_Admin')) {
+            // Initialize admin interface with settings dependency
+            if (class_exists('AI_Assistant_Admin') && $this->settings) {
                 $this->admin = new AI_Assistant_Admin($this->settings);
             }
             
         } catch (Exception $e) {
-            // Only log errors if debugging is enabled
+            // Only log component initialization errors if debugging is enabled
             if (defined('WP_DEBUG') && WP_DEBUG) {
-                $this->log("Error loading dependencies: " . $e->getMessage());
+                $this->log("Component initialization error: " . $e->getMessage(), 'error');
             }
         }
     }
