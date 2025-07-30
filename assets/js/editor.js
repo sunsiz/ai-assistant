@@ -584,12 +584,13 @@
                     return;
                 }
                 
-                // Create cache key from last 30 characters to detect similar patterns
-                var cacheKey = currentText.slice(-30).toLowerCase().trim();
+                // Create more specific cache key using full text hash + last words
+                var lastWords = currentText.split(' ').slice(-5).join(' '); // Last 5 words
+                var cacheKey = btoa(currentText.slice(-50)) + '_' + lastWords.toLowerCase().trim();
                 
                 // Check cache first for instant response
                 if (suggestionCache.has(cacheKey)) {
-                    console.log('AI Assistant: Using cached suggestions for:', cacheKey.substring(0, 20) + '...');
+                    console.log('AI Assistant: Using cached suggestions for:', lastWords);
                     var cachedSuggestions = suggestionCache.get(cacheKey);
                     showSuggestions(cachedSuggestions, activeTextarea);
                     return;
@@ -623,7 +624,7 @@
                             suggestionCache.set(cacheKey, response.data.suggestions);
                             
                             // Limit cache size to prevent memory issues
-                            if (suggestionCache.size > 20) {
+                            if (suggestionCache.size > 15) {
                                 var firstKey = suggestionCache.keys().next().value;
                                 suggestionCache.delete(firstKey);
                             }
@@ -701,7 +702,15 @@
                 clearTimeout(suggestionTimeout);
                 
                 var currentText = $(this).val().trim();
-                console.log('AI Assistant: Text input detected, length:', currentText.length);
+                var textLength = currentText.length;
+                console.log('AI Assistant: Text input detected, length:', textLength);
+                
+                // Clear cache if user deleted significant amount of text (indicating context change)
+                if ($(this).data('lastLength') && $(this).data('lastLength') - textLength > 20) {
+                    console.log('AI Assistant: Significant text deletion detected, clearing cache');
+                    suggestionCache.clear();
+                }
+                $(this).data('lastLength', textLength);
                 
                 // Smart triggering: faster for longer text, more responsive for active typing
                 var triggerDelay = 1000; // Reduced from 2000ms to 1000ms
@@ -713,7 +722,7 @@
                 }
                 
                 // Trigger suggestions after typing stops
-                if (currentText.length >= minLength) {
+                if (textLength >= minLength) {
                     suggestionTimeout = setTimeout(function() {
                         console.log('AI Assistant: Triggering suggestions after', triggerDelay, 'ms delay');
                         getSuggestions(currentText);

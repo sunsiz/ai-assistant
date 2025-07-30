@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
- * Version: 1.0.66
+ * Version: 1.0.67
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.66');
+    define('AI_ASSISTANT_VERSION', '1.0.67');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
@@ -1118,8 +1118,8 @@ class AIAssistant {
             ));
         }
         
-        // Quick cache check for recent suggestions (5 minute cache)
-        $cache_key = 'ai_suggestions_' . md5($current_text . $context);
+        // Quick cache check for recent suggestions (shorter cache time for more variety)
+        $cache_key = 'ai_suggestions_' . md5(substr($current_text, -100) . $context . strlen($current_text));
         $cached_suggestions = get_transient($cache_key);
         
         if ($cached_suggestions !== false) {
@@ -1154,8 +1154,8 @@ class AIAssistant {
             
             $final_suggestions = array_slice($suggestions, 0, 3); // Limit to 3 suggestions
             
-            // Cache successful results for 5 minutes for faster subsequent requests
-            set_transient($cache_key, $final_suggestions, 300);
+            // Cache successful results for 2 minutes for faster subsequent requests (reduced from 5 minutes for more variety)
+            set_transient($cache_key, $final_suggestions, 120);
             
             // Store suggestions in database
             $this->store_suggestion_history($current_text, $final_suggestions, $post_id);
