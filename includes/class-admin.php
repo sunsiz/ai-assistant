@@ -1978,14 +1978,22 @@ class AI_Assistant_Admin {
      * Unescape strings from .po files
      */
     private function unescape_po_string($string) {
-        return str_replace(array('\\"', '\\n', '\\t', '\\\\'), array('"', "\n", "\t", '\\'), $string);
+        // Unescape in reverse order of escaping to prevent issues
+        $string = str_replace('\\\\', "\x00TEMP_BACKSLASH\x00", $string); // Temporarily replace double backslashes
+        $string = str_replace(array('\\"', '\\n', '\\t'), array('"', "\n", "\t"), $string);
+        $string = str_replace("\x00TEMP_BACKSLASH\x00", '\\', $string); // Restore single backslashes
+        return $string;
     }
     
     /**
      * Escape strings for .po files
      */
     private function escape_po_string($string) {
-        return str_replace(array('\\', '"', "\n", "\t"), array('\\\\', '\\"', '\\n', '\\t'), $string);
+        // Escape in proper order to prevent double-escaping
+        $string = str_replace('\\', '\\\\', $string);     // Escape backslashes first
+        $string = str_replace('"', '\\"', $string);       // Then escape quotes
+        $string = str_replace(array("\n", "\t"), array('\\n', '\\t'), $string); // Finally newlines and tabs
+        return $string;
     }
     
     /**
@@ -1999,6 +2007,33 @@ class AI_Assistant_Admin {
         
         $language = sanitize_text_field($_POST['edit_language']);
         $translations = isset($_POST['translations']) ? $_POST['translations'] : array();
+        
+        // Important: Unescape the incoming POST data to prevent double-escaping
+        // The data comes from HTML forms already escaped, but we need clean data for proper .po formatting
+        foreach ($translations as &$translation) {
+            if (isset($translation['msgid'])) {
+                $original = $translation['msgid'];
+                $translation['msgid'] = $this->unescape_po_string($translation['msgid']);
+                
+                // Debug logging for escaping issues
+                if (defined('WP_DEBUG') && WP_DEBUG && $original !== $translation['msgid']) {
+                    error_log("AI Assistant: Unescaped msgid - Original: {$original} | Clean: {$translation['msgid']}");
+                }
+            }
+            if (isset($translation['msgstr'])) {
+                $original = $translation['msgstr'];
+                $translation['msgstr'] = $this->unescape_po_string($translation['msgstr']);
+                
+                // Debug logging for escaping issues
+                if (defined('WP_DEBUG') && WP_DEBUG && $original !== $translation['msgstr']) {
+                    error_log("AI Assistant: Unescaped msgstr - Original: {$original} | Clean: {$translation['msgstr']}");
+                }
+            }
+            if (isset($translation['context'])) {
+                $translation['context'] = $this->unescape_po_string($translation['context']);
+            }
+        }
+        unset($translation); // Clear reference
         
         $po_file = $this->get_po_file_path($language);
         $mo_file = $this->get_mo_file_path($language);

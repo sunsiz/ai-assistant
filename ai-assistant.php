@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites.
- * Version: 1.0.68
+ * Version: 1.0.69
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -25,7 +25,7 @@ if (!defined('ABSPATH')) {
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.68');
+    define('AI_ASSISTANT_VERSION', '1.0.69');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
