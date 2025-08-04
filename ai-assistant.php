@@ -3,7 +3,7 @@
  * Plugin Name: AI Assistant for WordPress
  * Plugin URI: https://www.suleymaniyevakfi.org/
  * Description: AI-powered translation and content writing assistant for multilingual WordPress websites. Supports universal language detection, real-time content suggestions, Unicode-safe caching, and comprehensive multilingual content management.
- * Version: 1.0.69
+ * Version: 1.0.78
  * Author: Süleymaniye Vakfı
  * Author URI: https://www.suleymaniyevakfi.org/
  * Text Domain: ai-assistant
@@ -16,7 +16,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * 
  * @package AIAssistant
- * @version 1.0.69
+ * @version 1.0.78
  * @since 1.0.0
  * 
  * Features:
@@ -32,12 +32,12 @@
 
 // Prevent direct access
 if (!defined('ABSPATH')) {
-    exit('Direct access not allowed.');
+    exit(__('Direct access not allowed.', 'ai-assistant'));
 }
 
 // Define plugin constants
 if (!defined('AI_ASSISTANT_VERSION')) {
-    define('AI_ASSISTANT_VERSION', '1.0.69');
+    define('AI_ASSISTANT_VERSION', '1.0.78');
 }
 if (!defined('AI_ASSISTANT_PLUGIN_FILE')) {
     define('AI_ASSISTANT_PLUGIN_FILE', __FILE__);
@@ -57,7 +57,7 @@ if (!defined('AI_ASSISTANT_PLUGIN_URL')) {
  * WordPress integration for the multilingual AI assistant system.
  * 
  * @since 1.0.0
- * @version 1.0.69
+ * @version 1.0.78
  */
 class AIAssistant {
     
@@ -139,7 +139,7 @@ class AIAssistant {
      * Centralizes AJAX handler registration for better organization
      * and easier maintenance of API endpoints.
      * 
-     * @since 1.0.69
+     * @since 1.0.78
      */
     private function register_ajax_handlers() {
         // Core translation AJAX handlers
@@ -169,7 +169,7 @@ class AIAssistant {
      * with comprehensive error handling for production environments.
      * 
      * @since 1.0.0
-     * @version 1.0.69
+     * @version 1.0.78
      */
     private function load_dependencies() {
         $includes_dir = AI_ASSISTANT_PLUGIN_DIR . 'includes/';
@@ -207,7 +207,7 @@ class AIAssistant {
      * Creates instances of all plugin classes with proper error handling
      * and dependency injection where needed.
      * 
-     * @since 1.0.69
+     * @since 1.0.78
      */
     private function initialize_components() {
         try {
@@ -380,7 +380,7 @@ class AIAssistant {
                 // Only log success once per session to reduce log noise
                 static $logged_languages = array();
                 if (!isset($logged_languages[$locale]) && defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
-                    self::log("Successfully loaded custom language: " . $locale);
+                    // Reduce logging frequency - only log language loading in specific debug scenarios
                     $logged_languages[$locale] = true;
                 }
             } else {
@@ -532,15 +532,31 @@ class AIAssistant {
                 'nonce' => wp_create_nonce('ai_assistant_nonce'),
                 'availableModels' => $this->ai_service ? $this->ai_service->get_available_models() : array(),
                 'siteLanguage' => $this->get_current_language_code(),
+                'debug' => defined('WP_DEBUG') && WP_DEBUG,
                 'strings' => array(
                     'error' => __('Error', 'ai-assistant'),
                     'translating' => __('Translating...', 'ai-assistant'),
                     'fetching' => __('Fetching...', 'ai-assistant'),
                     'generating' => __('Generating...', 'ai-assistant'),
+                    'enhance' => __('Enhance', 'ai-assistant'),
+                    'enhancing' => __('Enhancing...', 'ai-assistant'),
+                    'processing' => __('Processing...', 'ai-assistant'),
+                    'editorEmpty' => __('Editor content is empty.', 'ai-assistant'),
                     'translateContent' => __('Translate Content', 'ai-assistant'),
                     'fetchContent' => __('Fetch Content', 'ai-assistant'),
                     'translateArticle' => __('Translate Article', 'ai-assistant'),
                     'generateContent' => __('Generate', 'ai-assistant'),
+                    // Content type switching strings
+                    'topicContentOptional' => __('Content Topic (Optional)', 'ai-assistant'),
+                    'topicContent' => __('Topic/Content', 'ai-assistant'),
+                    'enterTopicOptional' => __('Optional: Enter the main topic or leave blank...', 'ai-assistant'),
+                    'enterTopicGeneration' => __('Enter topic for content generation...', 'ai-assistant'),
+                    'contentSuggestionsPlaceholder' => __('Content suggestions will appear here...', 'ai-assistant'),
+                    'fullArticlePlaceholder' => __('Full article content will appear here...', 'ai-assistant'),
+                    'keywordsPlaceholder' => __('SEO keywords will appear here...', 'ai-assistant'),
+                    'metaDescriptionPlaceholder' => __('Meta descriptions will appear here...', 'ai-assistant'),
+                    'titleIdeasPlaceholder' => __('Title ideas will appear here...', 'ai-assistant'),
+                    'generatedContentPlaceholder' => __('Generated content will appear here...', 'ai-assistant'),
                     'contentFetched' => __('Content fetched successfully!', 'ai-assistant'),
                     'fetchFailed' => __('Failed to fetch content', 'ai-assistant'),
                     'translationFailed' => __('Translation failed', 'ai-assistant'),
@@ -558,6 +574,15 @@ class AIAssistant {
                     'featuredImageSet' => __('Featured image set successfully!', 'ai-assistant'),
                     'featuredImageFailed' => __('Failed to set featured image', 'ai-assistant'),
                     'enterImagePrompt' => __('Please enter an image description.', 'ai-assistant'),
+                    // Content enhancement placeholders
+                    'grammarCheckPlaceholder' => __('Paste the content you want to improve for grammar and style here...', 'ai-assistant'),
+                    'readabilityPlaceholder' => __('Paste the content you want to optimize for readability here...', 'ai-assistant'),
+                    'toneAdjustmentPlaceholder' => __('Paste the content you want to adjust the tone for here...', 'ai-assistant'),
+                    'seoOptimizationPlaceholder' => __('Paste the content you want to optimize for SEO here...', 'ai-assistant'),
+                    // Validation messages
+                    'contentTooShort' => __('Content is too short for meaningful processing.', 'ai-assistant'),
+                    'contentLengthError' => __('Content for enhancement should be between 10 and 25,000 characters.', 'ai-assistant'),
+                    'engagementPlaceholder' => __('Paste the content you want to make more engaging here...', 'ai-assistant'),
                     // Language names for dropdowns
                     'autoDetect' => __('Auto-detect', 'ai-assistant'),
                     'english' => __('English', 'ai-assistant'),
@@ -725,7 +750,9 @@ class AIAssistant {
                             <div class="ai-control-group"><label for="ai-target-lang"><?php _e('Target Language', 'ai-assistant'); ?></label><select id="ai-target-lang" name="ai_target_lang"></select></div>
                             <div class="ai-control-group"><label for="ai-model-select"><?php _e('AI Model', 'ai-assistant'); ?></label><select id="ai-model-select" name="ai_model_select">
                                 <option value="gemini-2.5-flash" <?php selected($default_model, 'gemini-2.5-flash'); ?>>Gemini 2.5 Flash</option>
-                                <option value="gpt-4" <?php selected($default_model, 'gpt-4'); ?>>GPT-4</option>
+                                <option value="gpt-4.1" <?php selected($default_model, 'gpt-4.1'); ?>>GPT-4.1 (Latest Flagship)</option>
+                                <option value="gpt-4o" <?php selected($default_model, 'gpt-4o'); ?>>GPT-4o (Reasoning)</option>
+                                <option value="gpt-4o-mini" <?php selected($default_model, 'gpt-4o-mini'); ?>>GPT-4o Mini (Fast)</option>
                             </select></div>
                             <div class="ai-control-group"><button type="button" class="button button-secondary ai-assistant-populate-btn"><?php _e('Use Post Content', 'ai-assistant'); ?></button></div>
                             <div class="ai-control-group"><button type="button" class="button button-primary ai-assistant-translate-btn"><?php _e('Translate Content', 'ai-assistant'); ?></button></div>
@@ -755,7 +782,9 @@ class AIAssistant {
                             <div class="ai-control-group"><label for="ai-url-target-lang"><?php _e('Target Language', 'ai-assistant'); ?></label><select id="ai-url-target-lang" name="ai_url_target_lang"></select></div>
                             <div class="ai-control-group"><label for="ai-url-model-select"><?php _e('AI Model', 'ai-assistant'); ?></label><select id="ai-url-model-select" name="ai_url_model_select">
                                 <option value="gemini-2.5-flash" <?php selected($default_model, 'gemini-2.5-flash'); ?>>Gemini 2.5 Flash</option>
-                                <option value="gpt-4" <?php selected($default_model, 'gpt-4'); ?>>GPT-4</option>
+                                <option value="gpt-4.1" <?php selected($default_model, 'gpt-4.1'); ?>>GPT-4.1 (Latest Flagship)</option>
+                                <option value="gpt-4o" <?php selected($default_model, 'gpt-4o'); ?>>GPT-4o (Reasoning)</option>
+                                <option value="gpt-4o-mini" <?php selected($default_model, 'gpt-4o-mini'); ?>>GPT-4o Mini (Fast)</option>
                             </select></div>
                             <div class="ai-control-group"><button type="button" class="button button-primary ai-fetch-content-btn"><?php _e('Fetch Content', 'ai-assistant'); ?></button></div>
                             <div class="ai-control-group"><button type="button" class="button button-secondary ai-translate-article-btn"><?php _e('Translate Article', 'ai-assistant'); ?></button></div>
@@ -785,7 +814,7 @@ class AIAssistant {
                     <div class="ai-tab-help">
                         <p class="ai-help-text">
                             <span class="dashicons dashicons-info"></span>
-                            <?php _e('Generate content using AI. Choose content type (articles, keywords, descriptions), enter your topic, and let AI create professional content for your posts.', 'ai-assistant'); ?>
+                            <?php _e('Generate and enhance content using AI. Choose content type (articles, keywords, descriptions, or content improvements), enter your topic or paste existing content, and let AI create or improve professional content for your posts.', 'ai-assistant'); ?>
                         </p>
                     </div>
                     <div class="ai-assistant-controls">
@@ -797,15 +826,24 @@ class AIAssistant {
                                     <option value="keywords"><?php _e('SEO Keywords', 'ai-assistant'); ?></option>
                                     <option value="meta-description"><?php _e('Meta Description', 'ai-assistant'); ?></option>
                                     <option value="title-ideas"><?php _e('Title Ideas', 'ai-assistant'); ?></option>
+                                    <optgroup label="<?php _e('Content Enhancement', 'ai-assistant'); ?>">
+                                        <option value="grammar-check"><?php _e('Grammar & Style Enhancement', 'ai-assistant'); ?></option>
+                                        <option value="readability"><?php _e('Improve Readability', 'ai-assistant'); ?></option>
+                                        <option value="tone-adjustment"><?php _e('Tone & Style Adjustment', 'ai-assistant'); ?></option>
+                                        <option value="seo-optimization"><?php _e('SEO Content Optimization', 'ai-assistant'); ?></option>
+                                        <option value="engagement"><?php _e('Improve Engagement', 'ai-assistant'); ?></option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="ai-control-group">
-                                <label for="ai-content-context"><?php _e('Topic/Context', 'ai-assistant'); ?></label>
-                                <input type="text" id="ai-content-context" placeholder="<?php _e('Enter topic or context...', 'ai-assistant'); ?>" class="text">
+                                <label for="ai-content-context"><?php _e('Topic/Content', 'ai-assistant'); ?></label>
+                                <input type="text" id="ai-content-context" placeholder="<?php _e('Enter topic or paste existing content to improve...', 'ai-assistant'); ?>" class="text">
                             </div>
                             <div class="ai-control-group"><label for="ai-content-model-select"><?php _e('AI Model', 'ai-assistant'); ?></label><select id="ai-content-model-select" name="ai_content_model_select">
                                 <option value="gemini-2.5-flash" <?php selected($default_model, 'gemini-2.5-flash'); ?>>Gemini 2.5 Flash</option>
-                                <option value="gpt-4" <?php selected($default_model, 'gpt-4'); ?>>GPT-4</option>
+                                <option value="gpt-4.1" <?php selected($default_model, 'gpt-4.1'); ?>>GPT-4.1 (Latest Flagship)</option>
+                                <option value="gpt-4o" <?php selected($default_model, 'gpt-4o'); ?>>GPT-4o (Reasoning)</option>
+                                <option value="gpt-4o-mini" <?php selected($default_model, 'gpt-4o-mini'); ?>>GPT-4o Mini (Fast)</option>
                             </select></div>
                             <div class="ai-control-group">
                                 <button type="button" class="button button-secondary ai-use-post-title-btn"><?php _e('Use Post Title', 'ai-assistant'); ?></button>
@@ -1141,38 +1179,106 @@ class AIAssistant {
         $content_type = isset($_POST['content_type']) ? sanitize_text_field($_POST['content_type']) : 'suggestions';
         $context = isset($_POST['context']) ? sanitize_textarea_field($_POST['context']) : '';
         $existing_content = isset($_POST['existing_content']) ? sanitize_textarea_field($_POST['existing_content']) : '';
+        $content_to_improve = isset($_POST['content_to_improve']) ? sanitize_textarea_field($_POST['content_to_improve']) : '';
         $model = isset($_POST['model']) ? sanitize_text_field($_POST['model']) : 'gemini-2.5-flash';
         
-        if (empty($context)) {
+        // Check requirements based on content type
+        $enhancement_types = array('grammar-check', 'readability', 'tone-adjustment', 'seo-optimization', 'engagement');
+        if (in_array($content_type, $enhancement_types)) {
+            if (empty($content_to_improve)) {
+                wp_send_json_error(array(
+                    'message' => __('Please provide content to improve for this operation.', 'ai-assistant')
+                ));
+            }
+        } else if (empty($context)) {
             wp_send_json_error(array(
                 'message' => __('Please provide a topic or context for content generation.', 'ai-assistant')
             ));
         }
         
         // Initialize AI service if not already done
-        if (!isset($this->ai_service)) {
-            $this->ai_service = new AI_Assistant_AI_Service();
+        if (!isset($this->ai_service) || !$this->ai_service) {
+            if (class_exists('AI_Assistant_AI_Service')) {
+                $this->ai_service = new AI_Assistant_AI_Service();
+            } else {
+                wp_send_json_error(array(
+                    'message' => __('AI Service not available. Please check plugin installation.', 'ai-assistant')
+                ));
+                return;
+            }
         }
         
-        $result = $this->ai_service->generate_content($content_type, $context, $existing_content, $model);
+        // Handle content enhancement vs content generation
+        if (in_array($content_type, $enhancement_types)) {
+            // Use content analyzer for improvement features
+            if (!isset($this->content_analyzer)) {
+                require_once(plugin_dir_path(__FILE__) . 'includes/class-content-analyzer.php');
+                $this->content_analyzer = new AI_Assistant_Content_Analyzer();
+            }
+            
+            // Map frontend content types to backend improvement types
+            $improvement_type_map = array(
+                'grammar-check' => 'general',
+                'readability' => 'readability',
+                'tone-adjustment' => 'tone-adjustment',
+                'seo-optimization' => 'seo',
+                'engagement' => 'engagement'
+            );
+            
+            $improvement_type = isset($improvement_type_map[$content_type]) ? $improvement_type_map[$content_type] : 'general';
+            
+            try {
+                $result = $this->content_analyzer->improve_content($content_to_improve, $improvement_type, $model);
+            } catch (Exception $e) {
+                wp_send_json_error(array(
+                    'message' => 'An error occurred while processing your content: ' . $e->getMessage()
+                ));
+                return;
+            }
+            
+            if ($result['success']) {
+                $content = $result['improved_content'];
+                $context_used = $context ?: 'Content Enhancement: ' . ucfirst(str_replace('-', ' ', $content_type));
+            } else {
+                // If content analyzer fails, send error
+                wp_send_json_error(array(
+                    'message' => isset($result['error']) ? $result['error'] : (isset($result['message']) ? $result['message'] : 'Content enhancement failed')
+                ));
+                return;
+            }
+        } else {
+            // Regular content generation
+            $result = $this->ai_service->generate_content($content_type, $context, $existing_content, $model);
+            
+            if ($result['success']) {
+                $content = $result['content'];
+                $context_used = $context;
+            } else {
+                // If content generation fails, send error
+                wp_send_json_error(array(
+                    'message' => isset($result['error']) ? $result['error'] : (isset($result['message']) ? $result['message'] : 'Content generation failed')
+                ));
+                return;
+            }
+        }
         
         if ($result['success']) {
             // Store content generation in history
             $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : null;
-            $this->store_content_generation_history($content_type, $context, $result['content'], $post_id, $model);
+            $this->store_content_generation_history($content_type, $context_used, $content, $post_id, $model);
             
             wp_send_json_success(array(
-                'content' => $result['content'],
+                'content' => $content,
                 'html_content' => isset($result['html_content']) ? $result['html_content'] : '',
                 'html_cache_key' => isset($result['html_cache_key']) ? $result['html_cache_key'] : '',
-                'type' => $result['type'],
-                'context' => $result['context'],
-                'provider' => $result['provider'],
-                'model' => $result['model']
+                'type' => $content_type,
+                'context' => $context_used,
+                'provider' => isset($result['provider']) ? $result['provider'] : 'ai-service',
+                'model' => $model
             ));
         } else {
             wp_send_json_error(array(
-                'message' => $result['error']
+                'message' => isset($result['error']) ? $result['error'] : $result['message']
             ));
         }
     }
@@ -1918,8 +2024,10 @@ class AIAssistant {
 /**
  * Initialize the plugin
  */
-function ai_assistant_init() {
-    AIAssistant::get_instance();
+if (!function_exists('ai_assistant_init')) {
+    function ai_assistant_init() {
+        AIAssistant::get_instance();
+    }
 }
 
 // Start the plugin

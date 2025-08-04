@@ -100,6 +100,14 @@ class AI_Assistant_Content_Analyzer {
             return array('success' => false, 'message' => 'AI service not available');
         }
         
+        // Sanitize inputs
+        $content = wp_strip_all_tags($content);
+        $model = sanitize_text_field($model);
+        
+        if (empty($content)) {
+            return array('success' => false, 'message' => __('Content cannot be empty', 'ai-assistant'));
+        }
+        
         // Get site language for localized analysis
         $site_language = $this->get_site_language();
         $language_name = $this->get_language_name($site_language);
@@ -170,31 +178,148 @@ class AI_Assistant_Content_Analyzer {
             return array('success' => false, 'message' => 'AI service not available');
         }
         
+        // Sanitize inputs
+        $content = wp_strip_all_tags($content);
+        $improvement_type = sanitize_text_field($improvement_type);
+        $model = sanitize_text_field($model);
+        
+        if (empty($content)) {
+            return array('success' => false, 'error' => __('Content cannot be empty', 'ai-assistant'));
+        }
+        
         // Get site language for localized improvements
         $site_language = $this->get_site_language();
         $language_name = $this->get_language_name($site_language);
         
         $improvement_prompts = array(
-            'readability' => 'Improve the readability of the following content while maintaining its meaning and key information. Respond in {language}:',
-            'seo' => 'Optimize the following content for SEO by improving keyword usage, headings, and structure. Respond in {language}:',
-            'engagement' => 'Rewrite the following content to be more engaging and compelling for readers. Respond in {language}:',
-            'structure' => 'Improve the structure and organization of the following content. Respond in {language}:',
-            'general' => 'Improve the following content for better clarity, readability, and engagement. Respond in {language}:'
+            'readability' => 'Please improve the readability of this content while keeping all the original information and length. Make it clearer and easier to understand. Respond only with the improved content in {language}:',
+            'seo' => 'Please optimize this content for SEO by improving keywords, structure, and readability while maintaining all original information. Respond only with the optimized content in {language}:',
+            'engagement' => 'Please rewrite this content to be more engaging and compelling while preserving all original information and topics. Respond only with the improved content in {language}:',
+            'structure' => 'Please improve the structure and organization of this content while maintaining all original information. Respond only with the restructured content in {language}:',
+            'tone-adjustment' => 'Please adjust the tone of this content to be more professional while preserving all original information and topics. Respond only with the improved content in {language}:',
+            'general' => 'Please improve this content for better clarity, readability, and engagement while preserving all original information. Respond only with the improved content in {language}:'
         );
         
         $prompt_template = isset($improvement_prompts[$improvement_type]) ? $improvement_prompts[$improvement_type] : $improvement_prompts['general'];
         $prompt = str_replace('{language}', $language_name, $prompt_template);
         $prompt .= "\n\n" . $content;
         
-        $result = $this->ai_service->send_request($model, $prompt, array('max_tokens' => 3000));
+        // Calculate appropriate max_tokens based on content length
+        $content_length = strlen($content);
+        $estimated_input_tokens = ceil($content_length / 3.5); // More accurate estimate: ~3.5 chars per token
+        
+        // Set max_tokens dynamically but more conservatively to avoid timeouts
+        // Gemini 2.5 Flash supports up to 1M input tokens and 8192 output tokens
+        if ($content_length > 15000) {
+            $max_tokens = 7000; // Increased from 6000 for very large content
+        } elseif ($content_length > 10000) {
+            $max_tokens = 6000; // Large content
+        } elseif ($content_length > 5000) {
+            $max_tokens = 5000; // Medium content
+        } elseif ($content_length > 2000) {
+            $max_tokens = 4000; // Small-medium content
+        } else {
+            $max_tokens = 3000; // Small content
+        }
+        
+        // Ensure we don't exceed reasonable limits to prevent timeouts
+        $total_estimated_tokens = $estimated_input_tokens + $max_tokens;
+        if ($total_estimated_tokens > 20000) { // More conservative limit
+            $max_tokens = max(2000, 20000 - $estimated_input_tokens); // Ensure minimum 2000 output tokens
+        }
+        
+        // Log content enhancement parameters for debugging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log("Content Enhancement Debug - Length: {$content_length} chars, Est. Input Tokens: {$estimated_input_tokens}, Max Output Tokens: {$max_tokens}, Type: {$improvement_type}", true);
+        }
+        
+        $start_time = microtime(true);
+        $result = $this->ai_service->make_api_request_public($prompt, array(
+            'max_tokens' => $max_tokens * 2, // Double the tokens to account for excessive thoughts tokens
+            'temperature' => 0.7,  // Good balance for creative improvement
+            'top_p' => 0.9,        // Focus on high-probability tokens
+            'content_enhancement' => true // Flag for content enhancement optimization
+        ));
+        $end_time = microtime(true);
+        
+        // Debug: Log the API response
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log("Content Enhancement API Response: " . wp_json_encode($result), true);
+        }
+        
+        // Log processing time for large content debugging
+        if ($content_length > 5000 && defined('WP_DEBUG') && WP_DEBUG) {
+            $processing_time = round($end_time - $start_time, 2);
+            AIAssistant::log("Content Enhancement Timing - {$content_length} chars processed in {$processing_time}s", true);
+        }
         
         if ($result['success']) {
+            // Check for empty response with better validation
+            $enhanced_content = isset($result['content']) ? trim($result['content']) : '';
+            
+            // More thorough empty response check
+            if (empty($enhanced_content) || strlen($enhanced_content) < 10) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    AIAssistant::log("Content Enhancement Warning: Empty or too short response received. Length: " . strlen($enhanced_content), true);
+                    AIAssistant::log("Content Enhancement Response raw: " . print_r($result, true), true);
+                }
+                
+                // Clear any cached failed response before returning error
+                $this->clear_enhancement_cache($improvement_type, $content);
+                
+                return array(
+                    'success' => false,
+                    'error' => __('The AI service returned an empty response. Please try again in a moment.', 'ai-assistant')
+                );
+            }
+            
+            // Validate that enhanced content is not significantly shorter than original
+            $enhanced_length = strlen($enhanced_content);
+            $length_ratio = $enhanced_length > 0 ? $enhanced_length / $content_length : 0;
+            
+            // Debug log the result for large content
+            if ($content_length > 5000 && defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log("Content Enhancement Result - Input: {$content_length} chars, Output: {$enhanced_length} chars, Ratio: " . round($length_ratio, 2) . ", Type: {$improvement_type}", true);
+                AIAssistant::log("Content Enhancement Output Preview: " . substr($enhanced_content, 0, 200) . "...", true);
+            }
+            
+            // If enhanced content is less than 50% of original length, warn but still return result
+            $warning_message = null;
+            if ($length_ratio < 0.5 && $content_length > 1000) {
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    AIAssistant::log("Content Enhancement Warning: Output significantly shorter than input (Ratio: " . round($length_ratio, 2) . "). Original: {$content_length} chars, Enhanced: {$enhanced_length} chars", true);
+                }
+                $warning_message = __('Enhanced content appears shorter than original. You may want to try again.', 'ai-assistant');
+            }
+            
             return array(
                 'success' => true,
-                'improved_content' => $result['content'],
+                'improved_content' => $enhanced_content,
                 'improvement_type' => $improvement_type,
                 'model' => $model,
-                'usage' => isset($result['usage']) ? $result['usage'] : null
+                'usage' => isset($result['usage']) ? $result['usage'] : null,
+                'warning' => $warning_message
+            );
+        } else {
+            // Handle specific error cases for better user experience
+            $error_message = isset($result['error']) ? $result['error'] : __('Failed to enhance content', 'ai-assistant');
+            
+            // Check if this looks like a timeout or rate limit error
+            if (stripos($error_message, 'timeout') !== false || stripos($error_message, 'time') !== false) {
+                $error_message = __('Request timed out. Please try with shorter content or try again later.', 'ai-assistant');
+            } elseif (stripos($error_message, 'rate') !== false || stripos($error_message, 'limit') !== false) {
+                $error_message = __('Rate limit reached. Please try again in a few minutes.', 'ai-assistant');
+            } elseif (stripos($error_message, 'quota') !== false) {
+                $error_message = __('API quota exceeded. Please try again later.', 'ai-assistant');
+            }
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log("Content Enhancement Failed - Error: " . $error_message . ", Content Length: {$content_length}", true);
+            }
+            
+            return array(
+                'success' => false,
+                'error' => $error_message
             );
         }
         
@@ -639,5 +764,21 @@ class AI_Assistant_Content_Analyzer {
             'ur' => 'Urdu',
             'tk' => 'Turkmen'
         );
+    }
+    
+    /**
+     * Clear cached enhancement results for failed responses
+     *
+     * @param string $improvement_type Type of improvement
+     * @param string $content Original content
+     */
+    private function clear_enhancement_cache($improvement_type, $content) {
+        // Generate the same cache key that would be used
+        $cache_key = 'ai_assistant_enhancement_' . md5($improvement_type . '_' . $content);
+        delete_transient($cache_key);
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            AIAssistant::log("Cleared enhancement cache for key: " . $cache_key, true);
+        }
     }
 }

@@ -1,4 +1,4 @@
-/* AI Assistant Plugin Editor Styles - v1.0.58 - PROFESSIONAL MODERN DESIGN */
+/* AI Assistant Plugin Editor Styles - v1.0.71 - PROFESSIONAL MODERN DESIGN */
 /* Modern, Responsive, Professional WordPress Plugin Styles */
 
 .ai-assistant-meta-box {
@@ -431,9 +431,11 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     box-shadow: 0 2px 4px rgba(0,115,170,0.2);
+    position: relative;
+    overflow: hidden;
 }
 
-.ai-assistant-button:hover {
+.ai-assistant-button:hover:not(:disabled) {
     background: linear-gradient(135deg, #005a87 0%, #004466 100%);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0,115,170,0.3);
@@ -445,10 +447,23 @@
 }
 
 .ai-assistant-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+    background: #ccc !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.6;
+}
+
+/* Enhanced loading state for buttons */
+.ai-assistant-button.loading {
+    background: #ccc !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    pointer-events: none;
+}
+
+.ai-assistant-button.loading .ai-spinner {
+    margin-right: 8px;
 }
 
 /* Status and Loading Indicators */
@@ -495,7 +510,25 @@
     animation: ai-assistant-spin 1s linear infinite;
 }
 
+/* Enhanced Spinner Styles for New Loading System */
+.ai-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #666;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
 @keyframes ai-assistant-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
@@ -891,6 +924,7 @@
 /* Full-width workspace for content tools */
 .ai-workspace-full {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .ai-workspace-full h5 {
@@ -913,6 +947,65 @@
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
     font-size: 14px !important;
     line-height: 1.6 !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-workspace-full textarea:focus {
+    border-color: #2271b1 !important;
+    box-shadow: 0 0 0 1px #2271b1 !important;
+    outline: none !important;
+}
+
+/* Content Enhancement Specific Styling */
+.content-enhancement-section {
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.content-enhancement-section h5 {
+    margin: 0 0 10px 0;
+    color: #2c3338;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.content-enhancement-section h5::before {
+    content: "✨";
+    font-size: 16px;
+}
+
+.content-enhancement-help {
+    background: #e7f3ff;
+    border: 1px solid #b8daff;
+    border-radius: 4px;
+    padding: 10px 12px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: #004085;
+    line-height: 1.4;
+}
+
+.content-enhancement-help strong {
+    color: #002752;
+}
+
+/* Dynamic content type styling */
+.content-type-adaptive {
+    transition: all 0.3s ease;
+}
+
+.content-type-adaptive.content-generation {
+    border-left: 4px solid #00a32a;
+}
+
+.content-type-adaptive.content-enhancement {
+    border-left: 4px solid #2271b1;
 }
 
 /* Content type specific styling */
@@ -1101,3 +1194,45 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* ==========================================================================
+   CSS Performance Optimizations - v1.0.71
+   ========================================================================== */
+
+/* Use transform instead of changing properties for better performance */
+.ai-assistant-button,
+.action-button,
+.ai-intro-toggle {
+    will-change: transform, box-shadow;
+}
+
+/* Use hardware acceleration for animations */
+.ai-spinner,
+.ai-assistant-loading::after,
+.ai-image-loading {
+    will-change: transform;
+    transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Reduce repaints for hover effects */
+.ai-assistant-button:hover:not(:disabled),
+.action-button:hover {
+    will-change: auto; /* Reset after animation */
+}
+
+/* Optimize transitions for better performance */
+.ai-assistant-textarea,
+.ai-assistant-url-input,
+.ai-assistant-language-select {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Improve rendering performance for large content areas */
+.ai-assistant-workspace textarea {
+    contain: layout style;
+    transform: translateZ(0);
+}
+
+/* ==========================================================================
+   End Performance Optimizations
+   ========================================================================== */

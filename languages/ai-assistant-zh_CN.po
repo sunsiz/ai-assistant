@@ -1,148 +1,60 @@
+# AI Assistant WordPress Plugin Translation
+# Language: 简体中文 (Chinese Simplified) ✅ (zh_CN)
+# Generated: 2025-08-04 20:53:12 +0000
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Assistant 1.0.50nt for WordPress 1.0.41\n"
+"Project-Id-Version: AI Assistant\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 11:03:46+0000\n"
-"PO-Revision-Date: 2025-07-01 11:39:30+0000\n"
-"Last-Translator: Süleymaniye Vakfı\n"
-"Language-Team: 中文\n"
+"POT-Creation-Date: 2025-08-04 20:53:12 +0000\n"
+"PO-Revision-Date: 2025-08-04 20:53:12 +0000\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Manual Translation System\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: AI Assistant Translation Manager\n"
 
-msgid "Error"
-msgstr "错误"
+msgid " empty interface strings using AI. Continue?"
+msgstr "空接口字符串使用人工智能。继续？"
 
-msgid "Translating..."
-msgstr "翻译中..."
+msgid " interface strings!"
+msgstr "界面字符串！"
 
-msgid "Fetching..."
-msgstr "获取中..."
+msgid "\\"
+msgstr "\\"
 
-msgid "Generating..."
-msgstr "生成中..."
+msgid "%d of %d languages are active with compiled translations."
+msgstr "%d 种语言中有 %d 种已激活并编译翻译。"
 
-msgid "Translate Content"
-msgstr "翻译内容"
+msgid "%s configured"
+msgstr "已配置"
 
-msgid "Fetch Content"
-msgstr "获取内容"
+msgid "..."
+msgstr "..."
 
-msgid "Translate Article"
-msgstr "翻译文章"
+msgid ".mo Files:"
+msgstr ".mo文件："
 
-msgid "Generate"
-msgstr "生成"
+msgid ".mo Size:"
+msgstr ".mo 大小："
 
-msgid "Content fetched successfully!"
-msgstr "内容获取成功！"
+msgid ".mo file exists:"
+msgstr ".mo file exists:"
 
-msgid "Failed to fetch content"
-msgstr "获取内容失败"
+msgid ".po Files:"
+msgstr ".po文件："
 
-msgid "Translation failed"
-msgstr "翻译失败"
+msgid ".po Size:"
+msgstr ".po 大小："
 
-msgid "Content generation failed"
-msgstr "内容生成失败"
+msgid ".po file exists:"
+msgstr ".po file exists:"
 
 msgid "A connection error occurred."
 msgstr "发生连接错误。"
 
-msgid "Please enter content to translate."
-msgstr "请输入要翻译的内容。"
-
-msgid "Please enter a URL to fetch."
-msgstr "请输入要获取的URL。"
-
-msgid "Please enter a topic or context."
-msgstr "请输入主题或上下文。"
-
-msgid "Generating prompt..."
-msgstr "正在生成提示..."
-
-msgid "Generating image..."
-msgstr "正在生成图像..."
-
-msgid "Image generated successfully!"
-msgstr "图像生成成功！"
-
-msgid "Image generation failed"
-msgstr "图像生成失败"
-
-msgid "Setting featured image..."
-msgstr "正在设置特色图像..."
-
-msgid "Featured image set successfully!"
-msgstr "特色图像设置成功！"
-
-msgid "Failed to set featured image"
-msgstr "设置特色图像失败"
-
-msgid "Please enter an image description."
-msgstr "请输入图像描述。"
-
-msgid "Auto-detect"
-msgstr "自动检测"
-
-msgid "English"
-msgstr "英语"
-
-msgid "Turkish"
-msgstr "土耳其语"
-
-msgid "Arabic"
-msgstr "阿拉伯语"
-
-msgid "Spanish"
-msgstr "西班牙语"
-
-msgid "French"
-msgstr "法语"
-
-msgid "German"
-msgstr "德语"
-
-msgid "Russian"
-msgstr "俄语"
-
-msgid "Chinese"
-msgstr "中文"
-
-msgid "Persian"
-msgstr "波斯语"
-
-msgid "Portuguese"
-msgstr "葡萄牙语"
-
-msgid "Dutch"
-msgstr "荷兰语"
-
-msgid "Danish"
-msgstr "丹麦语"
-
-msgid "Azerbaijani"
-msgstr "阿塞拜疆语"
-
-msgid "Uzbek"
-msgstr "乌兹别克语"
-
-msgid "Kyrgyz"
-msgstr "吉尔吉斯语"
-
-msgid "Uyghur"
-msgstr "维吾尔语"
-
-msgid "Urdu"
-msgstr "乌尔都语"
-
-msgid "Finnish"
-msgstr "芬兰语"
-
-msgid "Turkmen"
-msgstr "土库曼语"
+msgid "AI API Status"
+msgstr "AI API状态"
 
 msgid "AI Assistant"
 msgstr "AI助手"
@@ -150,236 +62,65 @@ msgstr "AI助手"
 msgid "AI Assistant (Compact)"
 msgstr "AI助手（紧凑版）"
 
-msgid "Source Content"
-msgstr "源内容"
+msgid "AI Assistant Dashboard"
+msgstr "AI助手仪表板"
 
-msgid "Editable"
-msgstr "可编辑"
+msgid "AI Assistant Diagnostics"
+msgstr "AI助手诊断"
 
-msgid "Translated Content"
-msgstr "翻译内容"
+msgid "AI Assistant History"
+msgstr "AI助手历史"
 
-msgid "You do not have permission to perform this action."
-msgstr "您没有执行此操作的权限。"
+msgid "AI Assistant Quick Guide"
+msgstr "AI助手快速指南"
 
-msgid "Please provide a topic or context for content generation."
-msgstr "请提供内容生成的主题或上下文。"
+msgid "AI Assistant Settings"
+msgstr "AI助手设置"
 
-msgid "No text provided for suggestions."
-msgstr "未提供建议文本。"
+msgid "AI Assistant Tools Available:"
+msgstr "可用的AI助手工具："
 
-msgid "No cache key provided."
-msgstr "未提供缓存键。"
-
-msgid "HTML content not found or expired."
-msgstr "HTML内容未找到或已过期。"
-
-msgid "Unauthorized access."
-msgstr "未授权访问。"
-
-msgid "Translation file not found."
-msgstr "翻译文件未找到。"
-
-msgid "Auto-translate function not available."
-msgstr "自动翻译功能不可用。"
-
-msgid "Language settings saved successfully."
-msgstr "语言设置保存成功。"
-
-msgid "Please provide an image description."
-msgstr "请提供图像描述。"
-
-msgid "Image generation is not available. Please check your AI service configuration."
-msgstr "图像生成不可用。请检查您的AI服务配置。"
-
-msgid "Missing post ID or image URL."
-msgstr "缺少文章ID或图像URL。"
-
-msgid "Failed to set featured image."
-msgstr "设置特色图像失败。"
+msgid "AI Assistant Updated to v%s"
+msgstr "ai助手已更新至v%s"
 
 msgid "AI Assistant for WordPress"
 msgstr "WordPress AI助手"
 
-msgid "has been successfully activated!"
-msgstr "已成功激活！"
-
-msgid "Please configure your AI provider API keys to start using the plugin."
-msgstr "请配置您的AI提供商API密钥以开始使用插件。"
-
-msgid "Go to Settings"
-msgstr "转到设置"
-
-msgid "Translate"
-msgstr "翻译"
-
-msgid "URL Translation"
-msgstr "URL翻译"
-
-msgid "Content Tools"
-msgstr "内容工具"
-
-msgid "Featured Image"
-msgstr "特色图像"
-
-msgid "Source Language"
-msgstr "源语言"
-
-msgid "Target Language"
-msgstr "目标语言"
+msgid "AI Assistant v%s - Major Enhancement!"
+msgstr "AI助手 v%s - 重大增强！"
 
 msgid "AI Model"
 msgstr "AI模型"
 
-msgid "Use Post Content"
-msgstr "使用文章内容"
+msgid "AI Service not available. Please check plugin installation."
+msgstr "ai服务不可用。请检查插件安装。"
 
-msgid "Enter or paste content to translate..."
-msgstr "输入或粘贴要翻译的内容..."
+msgid "AI Translate"
+msgstr "AI翻译"
 
-msgid "Translation will appear here..."
-msgstr "翻译将在此处显示..."
+msgid "AI service not available."
+msgstr "ai服务不可用。"
 
-msgid "Article URL"
-msgstr "文章URL"
+msgid "API Configuration"
+msgstr "API配置"
 
-msgid "Original Article"
-msgstr "原文章"
+msgid "API Connection Test"
+msgstr "API连接测试"
 
-msgid "Fetched content will appear here..."
-msgstr "获取的内容将在此处显示..."
+msgid "API Connection Test Results:"
+msgstr "api连接测试结果："
 
-msgid "Translated Article"
-msgstr "翻译文章"
+msgid "API Error (%d): %s"
+msgstr "错误"
 
-msgid "Translated article will appear here..."
-msgstr "翻译的文章将在此处显示..."
+msgid "API Error: %s"
+msgstr "api 错误：%s"
 
-msgid "Insert Translated Content"
-msgstr "插入翻译内容"
+msgid "API Keys"
+msgstr "API密钥"
 
-msgid "Review and edit the translation above, then click to insert into WordPress editor"
-msgstr "查看并编辑上面的翻译，然后点击插入到WordPress编辑器"
-
-msgid "Content Type"
-msgstr "内容类型"
-
-msgid "Content Suggestions"
-msgstr "内容建议"
-
-msgid "Full Article"
-msgstr "完整文章"
-
-msgid "SEO Keywords"
-msgstr "SEO关键词"
-
-msgid "Meta Description"
-msgstr "元描述"
-
-msgid "Title Ideas"
-msgstr "标题创意"
-
-msgid "Topic/Context"
-msgstr "主题/上下文"
-
-msgid "Enter topic or context..."
-msgstr "输入主题或上下文..."
-
-msgid "Use Post Title"
-msgstr "使用文章标题"
-
-msgid "Generated Content"
-msgstr "生成的内容"
-
-msgid "Generated content will appear here..."
-msgstr "生成的内容将在此处显示..."
-
-msgid "Insert to Editor"
-msgstr "插入到编辑器"
-
-msgid "Apply to Yoast SEO"
-msgstr "应用到Yoast SEO"
-
-msgid "Review the generated content above, then choose an action"
-msgstr "查看上面生成的内容，然后选择一个操作"
-
-msgid "Image Description/Prompt"
-msgstr "图像描述/提示"
-
-msgid "Describe the image you want to generate (e.g., A modern office workspace with laptop and coffee)..."
-msgstr "描述您要生成的图像（例如，带有笔记本电脑和咖啡的现代办公工作区）..."
-
-msgid "Image Style"
-msgstr "图片风格"
-
-msgid "Photorealistic"
-msgstr "真实感"
-
-msgid "Illustration"
-msgstr "插图"
-
-msgid "Digital Art"
-msgstr "数字艺术"
-
-msgid "Minimalist"
-msgstr "极简主义"
-
-msgid "Professional/Business"
-msgstr "专业/商务"
-
-msgid "Abstract"
-msgstr "抽象"
-
-msgid "Image Size"
-msgstr "图片尺寸"
-
-msgid "Square (1024x1024)"
-msgstr "方形 (1024x1024)"
-
-msgid "Landscape (1792x1024)"
-msgstr "横向 (1792x1024)"
-
-msgid "Portrait (1024x1792)"
-msgstr "纵向 (1024x1792)"
-
-msgid "Auto-Generate Prompt"
-msgstr "自动生成提示"
-
-msgid "Generate Image"
-msgstr "生成图像"
-
-msgid "Generated Image Preview"
-msgstr "生成图片预览"
-
-msgid "Generated image will appear here..."
-msgstr "生成的图片将显示在这里..."
-
-msgid "Set as Featured Image"
-msgstr "设为特色图像"
-
-msgid "Download Image"
-msgstr "下载图像"
-
-msgid "Generate an image, then use the buttons above to set it as featured image or download"
-msgstr "生成图片后，使用上方按钮设为特色图片或下载"
-
-msgid "Use the main AI Assistant panel below for translation and content tools."
-msgstr "使用下方的AI助手主面板进行翻译和内容工具。"
-
-msgid "Go to Main Panel"
-msgstr "转到主面板"
-
-msgid "This is a compact view. The full-featured tool is in the main content area."
-msgstr "这是紧凑视图。完整功能工具在主内容区域。"
-
-msgid "Settings"
-msgstr "设置"
-
-msgid "Translation History"
-msgstr "翻译历史"
-
-msgid "Translation Management"
-msgstr "翻译管理"
+msgid "API authentication failed. Please check your API key configuration."
+msgstr "API 认证失败。请检查您的 API 密钥配置。"
 
 msgid "API configured"
 msgstr "API已配置"
@@ -387,482 +128,704 @@ msgstr "API已配置"
 msgid "API not configured"
 msgstr "API未配置"
 
-msgid "languages available"
-msgstr "种语言可用"
+msgid "API quota exceeded. Please try again later."
+msgstr "API配额已超出。请稍后再试。"
 
-msgid "Translations loaded"
-msgstr "翻译已加载"
+msgid "API rate limit exceeded. Please wait a few minutes before trying again."
+msgstr "API速率限制已超出。请稍等几分钟后再试。"
 
-msgid "Save Language Settings"
-msgstr "保存语言设置"
+msgid "API test failed - AJAX error. Check console for details."
+msgstr "API测试失败 - AJAX错误。请检查控制台以获取详细信息。"
 
-msgid "Save API Settings"
-msgstr "保存API设置"
+msgid "Abstract"
+msgstr "抽象"
 
-msgid "Database error: %s"
-msgstr "数据库错误：%s"
-
-msgid "Post #%d (deleted)"
-msgstr "文章 #%d（已删除）"
-
-msgid "Post #%d"
-msgstr "文章 #%d"
-
-msgid "Translation not found."
-msgstr "未找到翻译。"
-
-msgid "Suggestion not found."
-msgstr "未找到建议。"
-
-msgid "Post ID: %d"
-msgstr "文章ID：%d"
-
-msgid "Editing: %s"
-msgstr "编辑：%s"
-
-msgid "Save Translations to .po File"
-msgstr "保存翻译到 .po 文件"
-
-msgid "Security check failed."
-msgstr "安全检查失败。"
-
-msgid "Insufficient permissions."
-msgstr "权限不足。"
-
-msgid "Successfully compiled %d .mo files"
-msgstr "成功编译了 %d 个 .mo 文件"
-
-msgid "AI Assistant Dashboard"
-msgstr "AI助手仪表板"
-
-msgid "AI auto-translate has been disabled in favor of manual translation. This is a one-time translation task that works better with manual translation. Please translate the strings manually using the interface below."
-msgstr "请o-translate has been disabled in favor of manual translation. This is a one-time translation task that works better with manual translation. Please translate the strings manually using the interface below."
-
-msgid "Translations saved successfully!"
-msgstr "翻译保存成功！"
-
-msgid "Saving..."
-msgstr "保存中..."
-
-msgid "Saved!"
-msgstr "已保存！"
-
-msgid "Error saving settings"
-msgstr "错误"
-
-msgid "Language changed. The page will reload to apply the new language."
-msgstr "语言已更改。页面将重新加载以应用新语言。"
-
-msgid "Testing..."
-msgstr "测试中..."
-
-msgid "Success!"
-msgstr "成功！"
-
-msgid "Test failed"
-msgstr "测试失败"
-
-msgid "Compiling .mo files..."
-msgstr "编译 .mo 文件中..."
-
-msgid "Plugin Status"
-msgstr "插件状态"
-
-msgid "Enabled"
-msgstr "已启用"
-
-msgid "Disabled"
-msgstr "已禁用"
-
-msgid "API Configuration"
-msgstr "API配置"
-
-msgid "Configured"
-msgstr "已配置"
-
-msgid "No API keys configured"
-msgstr "未配置API密钥"
-
-msgid "Database"
-msgstr "数据库"
-
-msgid "Tables created"
-msgstr "表已创建"
-
-msgid "Tables missing"
-msgstr "表缺失"
-
-msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
-msgstr "翻译已成功保存到 %s 并编译到 %s。更改现在在插件界面中生效。"
-
-msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
-msgstr "翻译已成功保存到 %s。警告：编译 .mo 文件失败 - 翻译可能不会在插件界面中显示。"
-
-msgid "Failed to save translations. Please check file permissions."
-msgstr "请 to save translations. Please check file permissions."
-
-msgid "No translations found for this language."
-msgstr "此语言未找到翻译。"
-
-msgid "English Text (msgid)"
-msgstr "英文文本 (msgid)"
-
-msgid "Translation (msgstr)"
-msgstr "翻译 (msgstr)"
-
-msgid "Status"
-msgstr "状态"
+msgid "Access the full-featured AI tools in the main content area below."
+msgstr "在下面的主内容区域访问全功能AI工具。"
 
 msgid "Actions"
 msgstr "操作"
 
-msgid "Enter translation..."
-msgstr "输入翻译..."
-
-msgid "Translated"
-msgstr "已翻译"
-
-msgid "Missing"
-msgstr "缺失"
-
-msgid "AI Translate"
-msgstr "AI翻译"
-
-msgid "Not Available"
-msgstr "不可用"
-
-msgid "Complete"
-msgstr "完成"
-
-msgid "In Progress"
-msgstr "进行中"
-
-msgid "Strings:"
-msgstr "字符串："
-
-msgid ".po Size:"
-msgstr ".po 大小："
-
-msgid ".mo Size:"
-msgstr ".mo 大小："
-
-msgid "Manage"
-msgstr "管理"
-
-msgid "Summary"
-msgstr "摘要"
-
-msgid "%d of %d languages are active with compiled translations."
-msgstr "%d 种语言中有 %d 种已激活并编译翻译。"
-
-msgid "Complete missing translations and compile .mo files to activate more languages."
-msgstr "完成缺失翻译并编译 .mo 文件以激活更多语言。"
-
-msgid "Usage Statistics"
-msgstr "使用统计"
-
-msgid "Translations this month"
-msgstr "本月翻译"
-
-msgid "Content suggestions"
-msgstr "内容建议"
-
 msgid "Active AI models"
 msgstr "活跃的AI模型"
-
-msgid "Quick Actions"
-msgstr "快速操作"
-
-msgid "Configure Settings"
-msgstr "配置设置"
-
-msgid "Create New Post"
-msgstr "创建新文章"
-
-msgid "View History"
-msgstr "查看历史"
-
-msgid "System Status"
-msgstr "系统状态"
-
-msgid "Multilingual Status"
-msgstr "多语言状态"
-
-msgid "AI Assistant Settings"
-msgstr "AI助手设置"
-
-msgid "View Diagnostics"
-msgstr "查看诊断"
-
-msgid "Language Settings"
-msgstr "语言设置"
 
 msgid "Admin Interface Language"
 msgstr "管理界面语言"
 
-msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
-msgstr "选择AI助手管理界面的语言。这会影响插件界面语言。"
+msgid "All %d translation attempts failed. "
+msgstr "所有 %d 次翻译尝试均失败。"
 
-msgid "Test API Connection"
-msgstr "测试API连接"
+msgid "Anthropic API Key"
+msgstr "Anthropic API密钥"
 
-msgid "Test your Gemini API key to ensure it is working correctly."
-msgstr "测试您的Gemini API密钥以确保其正常工作。"
-
-msgid "Test Gemini API"
-msgstr "测试Gemini API"
-
-msgid "Compilation Tools"
-msgstr "编译工具"
-
-msgid "Manage .mo file compilation for all languages."
-msgstr "管理所有语言的 .mo 文件编译。"
-
-msgid "Compile All .mo Files"
-msgstr "编译所有 .mo 文件"
-
-msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress."
-msgstr "这将把所有 .po 文件编译为 .mo 文件。这是WordPress中翻译工作所必需的。"
-
-msgid "AI Assistant History"
-msgstr "AI助手历史"
-
-msgid "Translations"
-msgstr "翻译"
-
-msgid "Suggestions"
-msgstr "建议"
-
-msgid "Translation history table does not exist. Please contact your administrator."
-msgstr "请ation history table does not exist. Please contact your administrator."
-
-msgid "Date"
-msgstr "日期"
-
-msgid "Post/URL"
-msgstr "文章/URL"
-
-msgid "From"
-msgstr "从"
-
-msgid "To"
-msgstr "到"
-
-msgid "Model"
-msgstr "模型"
-
-msgid "No translations found. Try performing some translations to see them here."
-msgstr "未找到翻译。尝试执行一些翻译以在此处查看。"
-
-msgid "Translation history table not available."
-msgstr "翻译历史表不可用。"
-
-msgid "Manual Translation"
-msgstr "手动翻译"
-
-msgid "View"
-msgstr "查看"
-
-msgid "Content Suggestions History"
-msgstr "内容建议历史"
-
-msgid "Suggestions history table does not exist. Please contact your administrator."
-msgstr "请tions history table does not exist. Please contact your administrator."
-
-msgid "User"
-msgstr "用户"
-
-msgid "Input Text"
-msgstr "输入文本"
-
-msgid "Suggestion"
-msgstr "建议"
-
-msgid "Type"
-msgstr "类型"
-
-msgid "Post"
-msgstr "文章"
-
-msgid "No suggestions found. Start using the AI Assistant to generate content suggestions."
-msgstr "未找到建议。开始使用AI助手生成内容建议。"
-
-msgid "Suggestions history table not available."
-msgstr "建议历史表不可用。"
-
-msgid "Global"
-msgstr "全局"
-
-msgid "View Details"
-msgstr "查看详情"
-
-msgid "Translation Details"
-msgstr "翻译详情"
-
-msgid "← Back to History"
-msgstr "← 返回历史"
-
-msgid "Translation Information"
-msgstr "翻译信息"
-
-msgid "Translation ID"
-msgstr "翻译ID"
-
-msgid "Date & Time"
-msgstr "日期和时间"
-
-msgid "Associated Post"
-msgstr "关联文章"
-
-msgid "Source URL"
-msgstr "源URL"
-
-msgid "Content Comparison"
-msgstr "内容比较"
-
-msgid "Original Content"
-msgstr "原始内容"
-
-msgid "characters"
-msgstr "字符"
-
-msgid "Edit Associated Post"
-msgstr "编辑关联文章"
-
-msgid "Suggestion Details"
-msgstr "建议详情"
-
-msgid "← Back to Suggestions"
-msgstr "← 返回建议"
-
-msgid "Suggestion Information"
-msgstr "建议信息"
-
-msgid "Suggestion ID"
-msgstr "建议ID"
-
-msgid "Unknown User"
-msgstr "未知用户"
-
-msgid "Suggestion Type"
-msgstr "建议类型"
-
-msgid "Context"
-msgstr "上下文"
-
-msgid "Global suggestion (not associated with a specific post)"
-msgstr "全局建议（不与特定文章关联）"
-
-msgid "Content Details"
-msgstr "内容详情"
-
-msgid "Input/Context"
-msgstr "输入/上下文"
-
-msgid "Generated Suggestion"
-msgstr "生成的建议"
-
-msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
-msgstr "直接从.po文件编辑插件界面翻译。更改保存到语言文件并自动编译。"
-
-msgid "Select Language to Edit"
-msgstr "选择要编辑的语言"
-
-msgid "Translation file exists"
-msgstr "翻译文件存在"
-
-msgid "No translation file found - will create new"
-msgstr "未找到翻译文件 - 将创建新文件"
-
-msgid "total strings"
-msgstr "总字符串"
-
-msgid "translated"
-msgstr "已翻译"
-
-msgid "untranslated"
-msgstr "未翻译"
-
-msgid "Search translations..."
-msgstr "搜索翻译..."
-
-msgid "Show untranslated only"
-msgstr "仅显示未翻译"
-
-msgid "Untranslated"
-msgstr "未翻译"
-
-msgid "Download .po File"
-msgstr "下载 .po 文件"
-
-msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for content."
-msgstr "手动翻译方法：填写上面的空翻译字段，然后保存到 .po 文件。这确保了内容的准确性。"
-
-msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
-msgstr "这将把所有 .po 文件编译为 .mo 文件。这是WordPress中翻译工作所必需的。继续？"
-
-msgid "Compiling..."
-msgstr "编译中..."
-
-msgid "Compilation failed: "
-msgstr "Compilation failed: "
-
-msgid "Unknown error"
-msgstr "未知错误"
-
-msgid "Compilation request failed. Please try again."
-msgstr "请ation request failed. Please try again."
-
-msgid "Image generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
-msgstr "请generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
-
-msgid "Network error: "
-msgstr "Network error: "
-
-msgid "API Error (%d): %s"
-msgstr "错误"
-
-msgid "Invalid response from image generation API"
-msgstr "图片生成API响应无效"
-
-msgid "Google Gemini image generation is not available in your region or requires special access. This feature may be limited to certain accounts or geographic areas. Please use OpenAI (DALL-E) for reliable image generation."
-msgstr "请 Gemini image generation is not available in your region or requires special access. This feature may be limited to certain accounts or geographic areas. Please use OpenAI (DALL-E) for reliable image generation."
-
-msgid "Gemini image generation is not available in your region or requires special access. API Error (%d): %s. Please use OpenAI (DALL-E) for image generation."
-msgstr "错误"
-
-msgid "Gemini image generation not available. Please use OpenAI (DALL-E) for image generation."
-msgstr "请 image generation not available. Please use OpenAI (DALL-E) for image generation."
-
-msgid "Gemini image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
-msgstr "请 image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
-
-msgid "Failed to process generated image"
-msgstr "失败"
+msgid "Anthropic API key not configured for the selected model."
+msgstr "所选模型未配置 Anthropic API 密钥。"
 
 msgid "Anthropic Claude does not support direct image generation yet. However, Claude enhanced your prompt: "
 msgstr "Anthropic Claude does not support direct image generation yet. However, Claude enhanced your prompt: "
 
-msgid "Please use OpenAI (DALL-E) or Google Gemini for actual image generation."
-msgstr "请 use OpenAI (DALL-E) or Google Gemini for actual image generation."
-
 msgid "Anthropic Claude does not support direct image generation. Please use OpenAI (DALL-E) or Google Gemini for image generation."
 msgstr "请pic Claude does not support direct image generation. Please use OpenAI (DALL-E) or Google Gemini for image generation."
+
+msgid "Apply to Yoast SEO"
+msgstr "应用到Yoast SEO"
+
+msgid "Arabic"
+msgstr "阿拉伯语"
+
+msgid "Article URL"
+msgstr "文章URL"
+
+msgid "Associated Post"
+msgstr "关联文章"
+
+msgid "Auto Translate All Empty Strings"
+msgstr "自动翻译所有空字符串"
+
+msgid "Auto-Generate Prompt"
+msgstr "自动生成提示"
+
+msgid "Auto-detect"
+msgstr "自动检测"
+
+msgid "Available .mo files (%d):"
+msgstr "Available .mo files (%d):"
+
+msgid "Azerbaijani"
+msgstr "阿塞拜疆语"
+
+msgid "Basic Information"
+msgstr "基本信息"
+
+msgid "Be descriptive in your prompt for best results. Include style, colors, mood, and composition details."
+msgstr "在您的提示中要详细描述以获得最佳结果。包括样式、颜色、情绪和构图细节。"
+
+msgid "Bug fixes, improvements, and optimizations for better performance."
+msgstr "错误修复、改进和优化以获得更好的性能。"
+
+msgid "Check Database"
+msgstr "检查数据库"
+
+msgid "Check database tables and data integrity for AI Assistant."
+msgstr "检查AI助手的数据库表和数据完整性。"
+
+msgid "Checking database health..."
+msgstr "检查数据库健康状况..."
+
+msgid "Checking..."
+msgstr "检查中..."
+
+msgid "Chinese"
+msgstr "中文"
+
+msgid "Clear AI Cache"
+msgstr "清除AI缓存"
+
+msgid "Compilation Tools"
+msgstr "编译工具"
+
+msgid "Compilation failed: "
+msgstr "Compilation failed: "
+
+msgid "Compilation request failed. Please try again."
+msgstr "请ation request failed. Please try again."
+
+msgid "Compile All .mo Files"
+msgstr "编译所有 .mo 文件"
+
+msgid "Compiling .mo files..."
+msgstr "编译 .mo 文件中..."
+
+msgid "Complete"
+msgstr "完成"
+
+msgid "Complete missing translations and compile .mo files to activate more languages."
+msgstr "完成缺失翻译并编译 .mo 文件以激活更多语言。"
+
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr "为不同的AI提供商配置API密钥。目前使用Gemini进行翻译，但您可以配置多个提供商以备将来使用。"
+
+msgid "Configure Settings"
+msgstr "配置设置"
+
+msgid "Configure general AI Assistant settings."
+msgstr "配置AI助手常规设置。"
+
+msgid "Configured"
+msgstr "已配置"
+
+msgid "Connected"
+msgstr "连接"
+
+msgid "Content Comparison"
+msgstr "内容比较"
+
+msgid "Content Details"
+msgstr "内容详情"
+
+msgid "Content Enhancement"
+msgstr "内容增强"
+
+msgid "Content Suggestion Prompt"
+msgstr "内容建议提示"
+
+msgid "Content Suggestions"
+msgstr "内容建议"
+
+msgid "Content Suggestions History"
+msgstr "内容建议历史"
+
+msgid "Content Tools"
+msgstr "内容工具"
+
+msgid "Content Type"
+msgstr "内容类型"
+
+msgid "Content cannot be empty"
+msgstr "内容不能为空"
+
+msgid "Content fetched successfully!"
+msgstr "内容获取成功！"
+
+msgid "Content for enhancement should be between 10 and 25,000 characters."
+msgstr "用于增强的内容应在 10 到 25,000 个字符之间。"
+
+msgid "Content generation failed"
+msgstr "内容生成失败"
+
+msgid "Content is too short for meaningful processing."
+msgstr "内容太短，无法进行有意义的处理。"
+
+msgid "Content suggestions"
+msgstr "内容建议"
+
+msgid "Content too long for API processing. Try translating fewer strings at once."
+msgstr "内容太长，无法进行 API 处理。请尝试一次翻译更少的字符串。"
+
+msgid "Context"
+msgstr "上下文"
+
+msgid "Copy the above information when reporting issues."
+msgstr "报告问题时请复制上述信息。"
+
+msgid "Could not detect language"
+msgstr "无法检测语言"
+
+msgid "Could not extract content from the URL"
+msgstr "无法从URL提取内容"
+
+msgid "Create New Post"
+msgstr "创建新文章"
+
+msgid "Custom Language Setting:"
+msgstr "Custom Language Setting:"
+
+msgid "Custom Prompts"
+msgstr "自定义提示"
+
+msgid "Custom load result:"
+msgstr "Custom load result:"
+
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr "自定义SEO关键词建议的提示。"
+
+msgid "Customize the prompt for content suggestions."
+msgstr "自定义内容建议的提示。"
+
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr "自定义翻译请求的提示。使用{source_language}和{target_language}作为占位符。"
+
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr "自定义发送到AI模型的提示。在翻译提示中使用占位符，如 {source_language} 和 {target_language}。"
+
+msgid "Danish"
+msgstr "丹麦语"
+
+msgid "Database"
+msgstr "数据库"
+
+msgid "Database Connection:"
+msgstr "数据库连接"
+
+msgid "Database Health Check"
+msgstr "数据库健康检查"
+
+msgid "Database Health Check Results:"
+msgstr "数据库健康检查结果："
+
+msgid "Database check failed - AJAX error"
+msgstr "数据库检查失败 - AJAX错误"
+
+msgid "Database error: %s"
+msgstr "数据库错误：%s"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Date & Time"
+msgstr "日期和时间"
+
+msgid "Default AI Model"
+msgstr "默认AI模型"
+
+msgid "Describe the image you want to generate (e.g., A modern office workspace with laptop and coffee)..."
+msgstr "描述您要生成的图像（例如，带有笔记本电脑和咖啡的现代办公工作区）..."
 
 msgid "Diagnostics"
 msgstr "诊断"
 
-msgid "Yes"
-msgstr "是"
+msgid "Digital Art"
+msgstr "数字艺术"
 
-msgid "No"
-msgstr "否"
+msgid "Direct access not allowed."
+msgstr "不允许直接访问。"
+
+msgid "Directory:"
+msgstr "Directory:"
+
+msgid "Disabled"
+msgstr "已禁用"
+
+msgid "Download .po File"
+msgstr "下载 .po 文件"
+
+msgid "Download Image"
+msgstr "下载图像"
+
+msgid "Dutch"
+msgstr "荷兰语"
+
+msgid "Edit Associated Post"
+msgstr "编辑关联文章"
+
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr "直接从.po文件编辑插件界面翻译。更改保存到语言文件并自动编译。"
+
+msgid "Editable"
+msgstr "可编辑"
+
+msgid "Editing: %s"
+msgstr "编辑：%s"
+
+msgid "Editor content is empty."
+msgstr "编辑器内容为空。"
+
+msgid "Enable AI Assistant"
+msgstr "启用AI助手"
+
+msgid "Enable AI Assistant functionality"
+msgstr "启用AI助手功能"
+
+msgid "Enabled"
+msgstr "已启用"
+
+msgid "English"
+msgstr "英语"
+
+msgid "English Text (msgid)"
+msgstr "英文文本 (msgid)"
+
+msgid "Enhance"
+msgstr "增强"
+
+msgid "Enhanced content appears shorter than original. You may want to try again."
+msgstr "增强内容比原始内容显示得更短。您可能想再试一次。"
+
+msgid "Enhanced features, improved performance, better error handling, and new capabilities. Your AI Assistant is more powerful than ever!"
+msgstr "增强的功能，改进的性能，更好的错误处理和新的功能。您的 AI 助手比以往任何时候都更强大！"
+
+msgid "Enhancing..."
+msgstr "增强"
+
+msgid "Enter or paste content to translate..."
+msgstr "输入或粘贴要翻译的内容..."
+
+msgid "Enter topic or paste existing content to improve..."
+msgstr "输入主题或粘贴现有内容以改进..."
+
+msgid "Enter translation..."
+msgstr "输入翻译..."
+
+msgid "Error"
+msgstr "错误"
+
+msgid "Error saving settings"
+msgstr "错误"
+
+msgid "Error:"
+msgstr "错误"
+
+msgid "Exists"
+msgstr "存在"
+
+msgid "Expected .mo file:"
+msgstr "Expected .mo file:"
+
+msgid "FAILED"
+msgstr "失败"
+
+msgid "FAILED - .mo file not found"
+msgstr "失败 - 找不到.mo文件"
+
+msgid "Failed"
+msgstr "失败"
+
+msgid "Failed to enhance content"
+msgstr "未能增强内容"
+
+msgid "Failed to fetch content"
+msgstr "获取内容失败"
+
+msgid "Failed to process generated image"
+msgstr "失败"
+
+msgid "Failed to save translations. Please check file permissions."
+msgstr "请 to save translations. Please check file permissions."
+
+msgid "Failed to set featured image"
+msgstr "设置特色图像失败"
+
+msgid "Failed to set featured image."
+msgstr "设置特色图像失败。"
+
+msgid "Featured Image"
+msgstr "特色图像"
+
+msgid "Featured image set successfully!"
+msgstr "特色图像设置成功！"
+
+msgid "Fetch Content"
+msgstr "获取内容"
+
+msgid "Fetched content will appear here..."
+msgstr "获取的内容将在此处显示..."
+
+msgid "Fetching..."
+msgstr "获取中..."
+
+msgid "File Information"
+msgstr "文件信息"
+
+msgid "Finnish"
+msgstr "芬兰语"
+
+msgid "For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active."
+msgstr "对于SEO关键词，如果插件处于活动状态，生成的关键词将自动填充Yoast SEO字段。"
 
 msgid "Found"
 msgstr "找到"
 
+msgid "French"
+msgstr "法语"
+
+msgid "From"
+msgstr "从"
+
+msgid "Full Article"
+msgstr "完整文章"
+
+msgid "Gemini 2.0 API error (%d): %s"
+msgstr "gemini 2.0 API 错误 (%d): %s"
+
+msgid "Gemini API Key"
+msgstr "Gemini API密钥"
+
+msgid "Gemini image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
+msgstr "请 image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
+
+msgid "Gemini image generation is not available in your region or requires special access. API Error (%d): %s. Please use OpenAI (DALL-E) for image generation."
+msgstr "错误"
+
+msgid "Gemini image generation is not available. Used OpenAI DALL-E instead."
+msgstr "Gemini 图像生成不可用。改用 OpenAI 的 DALL-E。"
+
+msgid "Gemini image generation not available. Please use OpenAI (DALL-E) for image generation."
+msgstr "请 image generation not available. Please use OpenAI (DALL-E) for image generation."
+
+msgid "General Settings"
+msgstr "常规设置"
+
+msgid "Generate"
+msgstr "生成"
+
+msgid "Generate Image"
+msgstr "生成图像"
+
+msgid "Generate Report"
+msgstr "生成报告"
+
+msgid "Generate a comprehensive system report for troubleshooting and support requests."
+msgstr "生成用于故障排除和支持请求的综合系统报告。"
+
+msgid "Generate an image, then use the buttons above to set it as featured image or download"
+msgstr "生成图片后，使用上方按钮设为特色图片或下载"
+
+msgid "Generate and enhance content using AI. Choose content type (articles, keywords, descriptions, or content improvements), enter your topic or paste existing content, and let AI create or improve professional content for your posts."
+msgstr "使用人工智能生成和增强内容。选择内容类型（文章、关键词、描述或内容改进），输入您的主题或粘贴现有内容，让人工智能为您的帖子创建或改进专业内容。"
+
+msgid "Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic."
+msgstr "根据您的主题生成内容创意、SEO关键词、元描述或完整文章。"
+
+msgid "Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts."
+msgstr "使用AI生成自定义图像。详细描述您想要的图像，选择样式，为您的文章创建专业图像。"
+
+msgid "Generate custom images using AI. Describe what you want and get professional images for your posts."
+msgstr "使用AI生成自定义图像。描述您想要的内容，为您的文章获得专业图像。"
+
+msgid "Generated Content"
+msgstr "生成的内容"
+
+msgid "Generated Image Preview"
+msgstr "生成图片预览"
+
+msgid "Generated Suggestion"
+msgstr "生成的建议"
+
+msgid "Generated content will appear here..."
+msgstr "生成的内容将在此处显示..."
+
+msgid "Generated image will appear here..."
+msgstr "生成的图片将显示在这里..."
+
+msgid "Generating image..."
+msgstr "正在生成图像..."
+
+msgid "Generating prompt..."
+msgstr "正在生成提示..."
+
+msgid "Generating system report..."
+msgstr "正在生成系统报告..."
+
+msgid "Generating..."
+msgstr "生成中..."
+
+msgid "German"
+msgstr "德语"
+
+msgid "Global"
+msgstr "全局"
+
+msgid "Global suggestion (not associated with a specific post)"
+msgstr "全局建议（不与特定文章关联）"
+
+msgid "Go to Settings"
+msgstr "转到设置"
+
+msgid "Google Gemini API key not configured for the selected model."
+msgstr "Google Gemini API 密钥未为所选模型配置。"
+
+msgid "Grammar & Style Enhancement"
+msgstr "语法和风格增强"
+
+msgid "HTML content not found or expired."
+msgstr "HTML内容未找到或已过期。"
+
+msgid "Illustration"
+msgstr "插图"
+
+msgid "Image Description/Prompt"
+msgstr "图像描述/提示"
+
+msgid "Image Size"
+msgstr "图片尺寸"
+
+msgid "Image Style"
+msgstr "图片风格"
+
+msgid "Image Tips:"
+msgstr "图像提示："
+
+msgid "Image generated successfully!"
+msgstr "图像生成成功！"
+
+msgid "Image generation failed"
+msgstr "图像生成失败"
+
+msgid "Image generation is not available. Please check your AI service configuration."
+msgstr "图像生成不可用。请检查您的AI服务配置。"
+
+msgid "Image generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
+msgstr "请generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
+
+msgid "Improve Engagement"
+msgstr "提高参与度"
+
+msgid "Improve Readability"
+msgstr "提高可读性"
+
+msgid "In Progress"
+msgstr "进行中"
+
+msgid "Input Text"
+msgstr "输入文本"
+
+msgid "Input/Context"
+msgstr "输入/上下文"
+
+msgid "Insert Translated Content"
+msgstr "插入翻译内容"
+
+msgid "Insert to Editor"
+msgstr "插入到编辑器"
+
+msgid "Insufficient permissions"
+msgstr "权限不足"
+
+msgid "Insufficient permissions."
+msgstr "权限不足。"
+
+msgid "Invalid URL provided"
+msgstr "提供的URL无效"
+
+msgid "Invalid response from image generation API"
+msgstr "图片生成API响应无效"
+
+msgid "Kyrgyz"
+msgstr "吉尔吉斯语"
+
+msgid "Landscape (1792x1024)"
+msgstr "横向 (1792x1024)"
+
+msgid "Language Loading Debug Test Results"
+msgstr "加载中"
+
+msgid "Language Settings"
+msgstr "语言设置"
+
+msgid "Language System"
+msgstr "语言系统"
+
+msgid "Language System Test"
+msgstr "语言系统测试"
+
+msgid "Language Test Results:"
+msgstr "语言测试结果："
+
+msgid "Language changed. The page will reload to apply the new language."
+msgstr "语言已更改。页面将重新加载以应用新语言。"
+
+msgid "Language directory is not writable"
+msgstr "语言目录不可写"
+
+msgid "Language directory is writable"
+msgstr "语言目录可写"
+
+msgid "Language loading test completed"
+msgstr "语言加载测试完成"
+
+msgid "Language parameter missing."
+msgstr "语言参数缺失。"
+
+msgid "Language settings saved successfully."
+msgstr "语言设置保存成功。"
+
+msgid "Language settings saved successfully. This is your personal language setting for AI Assistant."
+msgstr "语言设置保存成功。这是您的AI助手个人语言设置。"
+
 msgid "Loaded"
 msgstr "已加载"
+
+msgid "Manage"
+msgstr "管理"
+
+msgid "Manage .mo file compilation for all languages."
+msgstr "管理所有语言的 .mo 文件编译。"
+
+msgid "Manual Language Loading Test"
+msgstr "加载中"
+
+msgid "Manual Translation"
+msgstr "手动翻译"
+
+msgid "Max Execution Time:"
+msgstr "最大执行时间："
+
+msgid "Memory Limit:"
+msgstr "内存限制："
+
+msgid "Meta Description"
+msgstr "元描述"
+
+msgid "Minimalist"
+msgstr "极简主义"
+
+msgid "Missing"
+msgstr "缺失"
+
+msgid "Missing language or no valid strings to translate found."
+msgstr "缺少语言或未找到要翻译的有效字符串。"
+
+msgid "Missing post ID or image URL."
+msgstr "缺少文章ID或图像URL。"
+
+msgid "Model"
+msgstr "模型"
+
+msgid "Multilingual Status"
+msgstr "多语言状态"
+
+msgid "Multisite:"
+msgstr "多站点："
+
+msgid "MySQL Version:"
+msgstr "MySQL版本："
+
+msgid "NO"
+msgstr "否"
+
+msgid "NOT SET"
+msgstr "未设置"
+
+msgid "Network error: "
+msgstr "Network error: "
+
+msgid "Next Steps:"
+msgstr "下一步："
+
+msgid "No"
+msgstr "否"
+
+msgid "No AI service API keys configured. Please check your settings."
+msgstr "未配置任何 AI 服务 API 密钥。请检查您的设置。"
+
+msgid "No API keys configured"
+msgstr "未配置API密钥"
+
+msgid "No cache key provided."
+msgstr "未提供缓存键。"
+
+msgid "No content found at the URL"
+msgstr "在该URL找不到内容"
+
+msgid "No image generation models available. Please configure at least one AI provider."
+msgstr "没有可用的图像生成模型。请至少配置一个 AI 提供商。"
+
+msgid "No strings could be translated. "
+msgstr "无法翻译任何字符串。"
+
+msgid "No suggestions found. Start using the AI Assistant to generate content suggestions."
+msgstr "未找到建议。开始使用AI助手生成内容建议。"
+
+msgid "No text provided for suggestions."
+msgstr "未提供建议文本。"
+
+msgid "No text to translate."
+msgstr "无文本可翻译。"
+
+msgid "No translation file found - will create new"
+msgstr "未找到翻译文件 - 将创建新文件"
+
+msgid "No translations found for this language."
+msgstr "此语言未找到翻译。"
+
+msgid "No translations found. Try performing some translations to see them here."
+msgstr "未找到翻译。尝试执行一些翻译以在此处查看。"
+
+msgid "No untranslated strings found."
+msgstr "未找到未翻译的字符串。"
+
+msgid "Not Available"
+msgstr "不可用"
 
 msgid "Not Loaded"
 msgstr "未加载"
@@ -870,284 +833,194 @@ msgstr "未加载"
 msgid "Not Set"
 msgstr "未设置"
 
-msgid "Writable"
-msgstr "可写"
+msgid "Note: Each user can choose their own preferred language for the AI Assistant plugin."
+msgstr "注意：每个用户都可以为AI助手插件选择自己偏好的语言。"
 
-msgid "Read-only"
-msgstr "只读"
+msgid "Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere."
+msgstr "翻译完成后，您可以直接将其插入到文章内容中或复制到其他地方使用。"
 
-msgid "Insufficient permissions"
-msgstr "权限不足"
-
-msgid "Language Loading Debug Test Results"
-msgstr "加载中"
-
-msgid "Basic Information"
-msgstr "基本信息"
-
-msgid "WordPress Locale:"
-msgstr "WordPress Locale:"
-
-msgid "Custom Language Setting:"
-msgstr "Custom Language Setting:"
-
-msgid "NOT SET"
-msgstr "未设置"
-
-msgid "Plugin Textdomain Loaded:"
-msgstr "Plugin Textdomain Loaded:"
-
-msgid "YES"
-msgstr "是"
-
-msgid "NO"
-msgstr "否"
-
-msgid "Translation Tests"
-msgstr "翻译测试"
-
-msgid "File Information"
-msgstr "文件信息"
-
-msgid "Expected .mo file:"
-msgstr "Expected .mo file:"
-
-msgid ".mo file exists:"
-msgstr ".mo file exists:"
-
-msgid ".po file exists:"
-msgstr ".po file exists:"
-
-msgid "Available .mo files (%d):"
-msgstr "Available .mo files (%d):"
-
-msgid "Manual Language Loading Test"
-msgstr "加载中"
-
-msgid "Unload result:"
-msgstr "Unload result:"
-
-msgid "SUCCESS"
-msgstr "成功"
-
-msgid "FAILED"
-msgstr "失败"
-
-msgid "Custom load result:"
-msgstr "Custom load result:"
-
-msgid "Test translation after manual load:"
-msgstr "Test translation after manual load:"
-
-msgid "FAILED - .mo file not found"
-msgstr "失败 - 找不到.mo文件"
-
-msgid "Language loading test completed"
-msgstr "语言加载测试完成"
-
-msgid "API connection test completed"
-msgstr "API连接测试完成"
-
-msgid "Language directory is writable"
-msgstr "语言目录可写"
-
-msgid "Language directory is not writable"
-msgstr "语言目录不可写"
-
-msgid "AI Assistant Diagnostics"
-msgstr "AI助手诊断"
-
-msgid "🔍 Diagnostics & System Information"
-msgstr "🔍 诊断与系统信息"
-
-msgid "This page provides comprehensive system information and debugging tools for troubleshooting AI Assistant issues."
-msgstr "此页面提供全面的系统信息和调试工具，用于解决AI助手问题。"
-
-msgid "📊 System Status Dashboard"
-msgstr "📊 系统状态仪表板"
-
-msgid "Version:"
-msgstr "Version:"
-
-msgid "Plugin Active:"
-msgstr "Plugin Active:"
-
-msgid "Directory:"
-msgstr "Directory:"
-
-msgid "Language System"
-msgstr "语言系统"
-
-msgid "WP Locale:"
-msgstr "WP区域设置："
-
-msgid "Plugin Language:"
-msgstr "插件语言："
-
-msgid "Textdomain:"
-msgstr "文本域："
-
-msgid "AI API Status"
-msgstr "AI API状态"
-
-msgid "Translation Files"
-msgstr "翻译文件"
-
-msgid ".po Files:"
-msgstr ".po文件："
-
-msgid ".mo Files:"
-msgstr ".mo文件："
-
-msgid "🖥️ System Environment"
-msgstr "🖥️ 系统环境"
-
-msgid "WordPress Environment"
-msgstr "WordPress环境"
-
-msgid "WordPress Version:"
-msgstr "WordPress版本："
-
-msgid "WordPress Language:"
-msgstr "WordPress语言："
-
-msgid "Site URL:"
-msgstr "站点URL："
-
-msgid "Multisite:"
-msgstr "多站点："
-
-msgid "Server Environment"
-msgstr "服务器环境"
-
-msgid "PHP Version:"
-msgstr "PHP版本："
-
-msgid "MySQL Version:"
-msgstr "MySQL版本："
-
-msgid "Memory Limit:"
-msgstr "内存限制："
-
-msgid "Max Execution Time:"
-msgstr "最大执行时间："
-
-msgid "🔧 Diagnostic Tools"
-msgstr "🔧 诊断工具"
-
-msgid "Language System Test"
-msgstr "语言系统测试"
-
-msgid "Test language loading functionality and view detailed debug information."
-msgstr "测试语言加载功能并查看详细调试信息。"
-
-msgid "Run Language Test"
-msgstr "运行语言测试"
-
-msgid "API Connection Test"
-msgstr "API连接测试"
-
-msgid "Test API connections and verify configuration for all providers."
-msgstr "测试API连接并验证所有提供商的配置。"
-
-msgid "Test API Connections"
-msgstr "测试API连接"
-
-msgid "System Report Generator"
-msgstr "系统报告生成器"
-
-msgid "Generate a comprehensive system report for troubleshooting and support requests."
-msgstr "生成用于故障排除和支持请求的综合系统报告。"
-
-msgid "Generate Report"
-msgstr "生成报告"
-
-msgid "Database Health Check"
-msgstr "数据库健康检查"
-
-msgid "Check database tables and data integrity for AI Assistant."
-msgstr "检查AI助手的数据库表和数据完整性。"
-
-msgid "Check Database"
-msgstr "检查数据库"
-
-msgid "Running language loading test..."
-msgstr "正在运行语言加载测试..."
-
-msgid "Language Test Results:"
-msgstr "语言测试结果："
-
-msgid "Error:"
-msgstr "错误"
-
-msgid "Test failed - AJAX error"
-msgstr "测试失败 - AJAX错误"
-
-msgid "Testing API connections..."
-msgstr "正在测试API连接..."
-
-msgid "API connection test feature coming soon..."
-msgstr "API连接测试功能即将推出..."
-
-msgid "Generating system report..."
-msgstr "正在生成系统报告..."
-
-msgid "System Report Generated:"
-msgstr "系统报告已生成："
-
-msgid "Copy the above information when reporting issues."
-msgstr "报告问题时请复制上述信息。"
-
-msgid "Report generation failed - AJAX error"
-msgstr "报告生成失败 - AJAX错误"
-
-msgid "General Settings"
-msgstr "常规设置"
-
-msgid "API Keys"
-msgstr "API密钥"
-
-msgid "Custom Prompts"
-msgstr "自定义提示"
-
-msgid "Enable AI Assistant"
-msgstr "启用AI助手"
-
-msgid "Default AI Model"
-msgstr "默认AI模型"
-
-msgid "Preferred AI Provider"
-msgstr "首选AI提供商"
+msgid "Open AI Assistant Panel"
+msgstr "打开AI助手面板"
 
 msgid "OpenAI API Key"
 msgstr "OpenAI API密钥"
 
-msgid "Anthropic API Key"
-msgstr "Anthropic API密钥"
+msgid "OpenAI API key not configured for the selected model."
+msgstr "所选模型未配置 OpenAI API 密钥。"
 
-msgid "Gemini API Key"
-msgstr "Gemini API密钥"
+msgid "Original Article"
+msgstr "原文章"
 
-msgid "Translation Prompt"
-msgstr "翻译提示"
+msgid "Original Content"
+msgstr "原始内容"
 
-msgid "Content Suggestion Prompt"
-msgstr "内容建议提示"
+msgid "PHP Version:"
+msgstr "PHP版本："
+
+msgid "Paste the content you want to adjust the tone for here..."
+msgstr "请在此处粘贴您希望调整语气的内​​容..."
+
+msgid "Paste the content you want to improve for grammar and style here..."
+msgstr "请在此处粘贴您希望改进语法和风格的内容……"
+
+msgid "Paste the content you want to make more engaging here..."
+msgstr "将您想要更具吸引力的内容粘贴到此处..."
+
+msgid "Paste the content you want to optimize for SEO here..."
+msgstr "在此处粘贴您想要优化SEO的内容..."
+
+msgid "Paste the content you want to optimize for readability here..."
+msgstr "在此处粘贴您希望优化可读性的内容..."
+
+msgid "Persian"
+msgstr "波斯语"
+
+msgid "Photorealistic"
+msgstr "真实感"
+
+msgid "Please check your API configuration and try again."
+msgstr "请检查您的API配置，然后重试。"
+
+msgid "Please configure your AI provider API keys to start using the plugin."
+msgstr "请配置您的AI提供商API密钥以开始使用插件。"
+
+msgid "Please enter a URL to fetch."
+msgstr "请输入要获取的URL。"
+
+msgid "Please enter a topic or context."
+msgstr "请输入主题或上下文。"
+
+msgid "Please enter an image description."
+msgstr "请输入图像描述。"
+
+msgid "Please enter content to translate."
+msgstr "请输入要翻译的内容。"
+
+msgid "Please provide a topic or context for content generation."
+msgstr "请提供内容生成的主题或上下文。"
+
+msgid "Please provide an image description."
+msgstr "请提供图像描述。"
+
+msgid "Please provide content to improve for this operation."
+msgstr "请提供内容以改进此操作。"
+
+msgid "Please use OpenAI (DALL-E) or Google Gemini for actual image generation."
+msgstr "请 use OpenAI (DALL-E) or Google Gemini for actual image generation."
+
+msgid "Plugin Active:"
+msgstr "Plugin Active:"
+
+msgid "Plugin Language:"
+msgstr "插件语言："
+
+msgid "Plugin Status"
+msgstr "插件状态"
+
+msgid "Plugin Textdomain Loaded:"
+msgstr "Plugin Textdomain Loaded:"
+
+msgid "Portrait (1024x1792)"
+msgstr "纵向 (1024x1792)"
+
+msgid "Portuguese"
+msgstr "葡萄牙语"
+
+msgid "Post"
+msgstr "文章"
+
+msgid "Post #%d"
+msgstr "文章 #%d"
+
+msgid "Post #%d (deleted)"
+msgstr "文章 #%d（已删除）"
+
+msgid "Post ID: %d"
+msgstr "文章ID：%d"
+
+msgid "Post/URL"
+msgstr "文章/URL"
+
+msgid "Preferred AI Provider"
+msgstr "首选AI提供商"
+
+msgid "Pro Tip:"
+msgstr "专业提示："
+
+msgid "Processing..."
+msgstr "处理中..."
+
+msgid "Professional/Business"
+msgstr "专业/商务"
+
+msgid "Quick Actions"
+msgstr "快速操作"
+
+msgid "Quick Workflow Tips:"
+msgstr "快速工作流提示："
+
+msgid "Rate limit reached. Please try again in a few minutes."
+msgstr "已达到速率限制。请稍后重试。"
+
+msgid "Read-only"
+msgstr "只读"
+
+msgid "Report generation failed - AJAX error"
+msgstr "报告生成失败 - AJAX错误"
+
+msgid "Request timed out. Please try with shorter content or try again later."
+msgstr "请求超时。请尝试使用较短的内容或稍后再试。"
+
+msgid "Review and edit the translation above, then click to insert into WordPress editor"
+msgstr "查看并编辑上面的翻译，然后点击插入到WordPress编辑器"
+
+msgid "Review the generated content above, then choose an action"
+msgstr "查看上面生成的内容，然后选择一个操作"
+
+msgid "Run Language Test"
+msgstr "运行语言测试"
+
+msgid "Running language loading test..."
+msgstr "正在运行语言加载测试..."
+
+msgid "Russian"
+msgstr "俄语"
+
+msgid "SEO Content Optimization"
+msgstr "SEO内容优化"
+
+msgid "SEO Keywords"
+msgstr "SEO关键词"
 
 msgid "SEO Keywords Prompt"
 msgstr "SEO关键词提示"
 
-msgid "Configure general AI Assistant settings."
-msgstr "配置AI助手常规设置。"
+msgid "SUCCESS"
+msgstr "成功"
 
-msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
-msgstr "为不同的AI提供商配置API密钥。目前使用Gemini进行翻译，但您可以配置多个提供商以备将来使用。"
+msgid "Save API Settings"
+msgstr "保存API设置"
 
-msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
-msgstr "自定义发送到AI模型的提示。在翻译提示中使用占位符，如 {source_language} 和 {target_language}。"
+msgid "Save Language Settings"
+msgstr "保存语言设置"
 
-msgid "Enable AI Assistant functionality"
-msgstr "启用AI助手功能"
+msgid "Save Translations to .po File"
+msgstr "保存翻译到 .po 文件"
+
+msgid "Saved!"
+msgstr "已保存！"
+
+msgid "Saving..."
+msgstr "保存中..."
+
+msgid "Search translations..."
+msgstr "搜索翻译..."
+
+msgid "Security check failed."
+msgstr "安全检查失败。"
+
+msgid "Select Language to Edit"
+msgstr "选择要编辑的语言"
 
 msgid "Select the default AI model to use for requests."
 msgstr "选择请求使用的默认AI模型。"
@@ -1155,34 +1028,182 @@ msgstr "选择请求使用的默认AI模型。"
 msgid "Select your preferred AI provider for requests."
 msgstr "选择您首选的请求AI提供商。"
 
-msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
-msgstr "自定义翻译请求的提示。使用{source_language}和{target_language}作为占位符。"
+msgid "Server Environment"
+msgstr "服务器环境"
 
-msgid "Customize the prompt for content suggestions."
-msgstr "自定义内容建议的提示。"
+msgid "Set as Featured Image"
+msgstr "设为特色图像"
 
-msgid "Customize the prompt for SEO keyword suggestions."
-msgstr "自定义SEO关键词建议的提示。"
+msgid "Setting featured image..."
+msgstr "正在设置特色图像..."
 
-msgid "Invalid URL provided"
-msgstr "提供的URL无效"
+msgid "Settings"
+msgstr "设置"
 
-msgid "No content found at the URL"
-msgstr "在该URL找不到内容"
+msgid "Show translate buttons for all strings"
+msgstr "为所有字符串显示翻译按钮"
 
-msgid "Could not extract content from the URL"
-msgstr "无法从URL提取内容"
-
-msgid "Could not detect language"
-msgstr "无法检测语言"
-
-
-# Metabox Guide Strings - v1.0.51
-msgid "AI Assistant Quick Guide"
-msgstr "AI助手快速指南"
+msgid "Show untranslated only"
+msgstr "仅显示未翻译"
 
 msgid "Show/Hide Tips"
 msgstr "显示/隐藏提示"
+
+msgid "Site URL:"
+msgstr "站点URL："
+
+msgid "Source Content"
+msgstr "源内容"
+
+msgid "Source Language"
+msgstr "源语言"
+
+msgid "Source URL"
+msgstr "源URL"
+
+msgid "Spanish"
+msgstr "西班牙语"
+
+msgid "Square (1024x1024)"
+msgstr "方形 (1024x1024)"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Strings:"
+msgstr "字符串："
+
+msgid "Success!"
+msgstr "成功！"
+
+msgid "Successfully compiled %d .mo files"
+msgstr "成功编译了 %d 个 .mo 文件"
+
+msgid "Successfully translated "
+msgstr "成功翻译"
+
+msgid "Suggestion"
+msgstr "建议"
+
+msgid "Suggestion Details"
+msgstr "建议详情"
+
+msgid "Suggestion ID"
+msgstr "建议ID"
+
+msgid "Suggestion Information"
+msgstr "建议信息"
+
+msgid "Suggestion Type"
+msgstr "建议类型"
+
+msgid "Suggestion not found."
+msgstr "未找到建议。"
+
+msgid "Suggestions"
+msgstr "建议"
+
+msgid "Suggestions Table:"
+msgstr "建议表"
+
+msgid "Suggestions history table does not exist. Please contact your administrator."
+msgstr "请tions history table does not exist. Please contact your administrator."
+
+msgid "Suggestions history table not available."
+msgstr "建议历史表不可用。"
+
+msgid "Summary"
+msgstr "摘要"
+
+msgid "System Report Generated:"
+msgstr "系统报告已生成："
+
+msgid "System Report Generator"
+msgstr "系统报告生成器"
+
+msgid "System Status"
+msgstr "系统状态"
+
+msgid "Tables created"
+msgstr "表已创建"
+
+msgid "Tables missing"
+msgstr "表缺失"
+
+msgid "Target Language"
+msgstr "目标语言"
+
+msgid "Test API Connection"
+msgstr "测试API连接"
+
+msgid "Test API Connections"
+msgstr "测试API连接"
+
+msgid "Test API connections and verify configuration for all providers."
+msgstr "测试API连接并验证所有提供商的配置。"
+
+msgid "Test Gemini API"
+msgstr "测试Gemini API"
+
+msgid "Test failed"
+msgstr "测试失败"
+
+msgid "Test failed - AJAX error"
+msgstr "测试失败 - AJAX错误"
+
+msgid "Test language loading functionality and view detailed debug information."
+msgstr "测试语言加载功能并查看详细调试信息。"
+
+msgid "Test translation after manual load:"
+msgstr "Test translation after manual load:"
+
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "测试您的Gemini API密钥以确保其正常工作。"
+
+msgid "Testing API connections..."
+msgstr "正在测试API连接..."
+
+msgid "Testing..."
+msgstr "测试中..."
+
+msgid "Textdomain:"
+msgstr "文本域："
+
+msgid "The AI service returned an empty response. Please try again in a moment."
+msgstr "AI 服务返回了空响应。请稍后重试。"
+
+msgid "This page provides comprehensive system information and debugging tools for troubleshooting AI Assistant issues."
+msgstr "此页面提供全面的系统信息和调试工具，用于解决AI助手问题。"
+
+msgid "This will attempt to auto-translate "
+msgstr "这将尝试自动翻译"
+
+msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress."
+msgstr "这将把所有 .po 文件编译为 .mo 文件。这是WordPress中翻译工作所必需的。"
+
+msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
+msgstr "这将把所有 .po 文件编译为 .mo 文件。这是WordPress中翻译工作所必需的。继续？"
+
+msgid "Title Ideas"
+msgstr "标题创意"
+
+msgid "To"
+msgstr "到"
+
+msgid "Tone & Style Adjustment"
+msgstr "语气和风格调整"
+
+msgid "Topic/Content"
+msgstr "主题/内容"
+
+msgid "Translate"
+msgstr "翻译"
+
+msgid "Translate Article"
+msgstr "翻译文章"
+
+msgid "Translate Content"
+msgstr "翻译内容"
 
 msgid "Translate any text content. Paste your text, choose languages, and get instant translations."
 msgstr "翻译任何文本内容。粘贴您的文本，选择语言，即可获得即时翻译。"
@@ -1190,40 +1211,230 @@ msgstr "翻译任何文本内容。粘贴您的文本，选择语言，即可获
 msgid "Translate entire articles from URLs. Enter a web address to fetch and translate content automatically."
 msgstr "从URL翻译整篇文章。输入网址以自动获取和翻译内容。"
 
-msgid "Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic."
-msgstr "根据您的主题生成内容创意、SEO关键词、元描述或完整文章。"
-
-msgid "Generate custom images using AI. Describe what you want and get professional images for your posts."
-msgstr "使用AI生成自定义图像。描述您想要的内容，为您的文章获得专业图像。"
-
-msgid "Quick Workflow Tips:"
-msgstr "快速工作流提示："
-
-msgid "Next Steps:"
-msgstr "下一步："
-
-msgid "Pro Tip:"
-msgstr "专业提示："
-
-msgid "Image Tips:"
-msgstr "图像提示："
-
-
-# Additional Metabox Strings - v1.0.51
-msgid "Translate text content between languages. Use \"Use Post Content\" to quickly populate with your current post content, or paste any text to translate."
-msgstr "在语言之间翻译文本内容。使用\"使用文章内容\"快速填充当前文章内容，或粘贴任何要翻译的文本。"
-
 msgid "Translate entire articles from web URLs. Enter any article URL, fetch the content automatically, then translate it to your target language."
 msgstr "从网络URL翻译整篇文章。输入任何文章URL，自动获取内容，然后翻译到您的目标语言。"
 
-msgid "Generate content using AI. Choose content type (articles, keywords, descriptions), enter your topic, and let AI create professional content for your posts."
-msgstr "使用AI生成内容。选择内容类型（文章、关键词、描述），输入您的主题，让AI为您的文章创建专业内容。"
+msgid "Translated"
+msgstr "翻译"
 
-msgid "Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts."
-msgstr "使用AI生成自定义图像。详细描述您想要的图像，选择样式，为您的文章创建专业图像。"
+msgid "Translated Article"
+msgstr "翻译文章"
 
-msgid "AI Assistant Tools Available:"
-msgstr "可用的AI助手工具："
+msgid "Translated Content"
+msgstr "翻译内容"
+
+msgid "Translated article will appear here..."
+msgstr "翻译的文章将在此处显示..."
+
+msgid "Translating..."
+msgstr "翻译中..."
+
+msgid "Translation (msgstr)"
+msgstr "翻译 (msgstr)"
+
+msgid "Translation Details"
+msgstr "翻译详情"
+
+msgid "Translation Files"
+msgstr "翻译文件"
+
+msgid "Translation History"
+msgstr "翻译历史"
+
+msgid "Translation ID"
+msgstr "翻译ID"
+
+msgid "Translation Information"
+msgstr "翻译信息"
+
+msgid "Translation Management"
+msgstr "翻译管理"
+
+msgid "Translation Prompt"
+msgstr "翻译提示"
+
+msgid "Translation Tests"
+msgstr "翻译测试"
+
+msgid "Translation failed"
+msgstr "翻译失败"
+
+msgid "Translation failed for this string."
+msgstr "翻译失败"
+
+msgid "Translation failed: "
+msgstr "翻译失败"
+
+msgid "Translation file exists"
+msgstr "翻译文件存在"
+
+msgid "Translation file not found."
+msgstr "翻译文件未找到。"
+
+msgid "Translation history table does not exist. Please contact your administrator."
+msgstr "请ation history table does not exist. Please contact your administrator."
+
+msgid "Translation history table not available."
+msgstr "翻译历史表不可用。"
+
+msgid "Translation not found."
+msgstr "未找到翻译。"
+
+msgid "Translation request failed. Please try again."
+msgstr "翻译请求失败。请重试。"
+
+msgid "Translation will appear here..."
+msgstr "翻译将在此处显示..."
+
+msgid "Translations"
+msgstr "翻译"
+
+msgid "Translations Table:"
+msgstr "翻译表："
+
+msgid "Translations loaded"
+msgstr "翻译已加载"
+
+msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+msgstr "翻译已成功保存到 %s 并编译到 %s。更改现在在插件界面中生效。"
+
+msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
+msgstr "翻译已成功保存到 %s。警告：编译 .mo 文件失败 - 翻译可能不会在插件界面中显示。"
+
+msgid "Translations saved successfully!"
+msgstr "翻译保存成功！"
+
+msgid "Translations this month"
+msgstr "本月翻译"
+
+msgid "Turkish"
+msgstr "土耳其语"
+
+msgid "Turkmen"
+msgstr "土库曼语"
+
+msgid "Type"
+msgstr "类型"
+
+msgid "URL Translation"
+msgstr "URL翻译"
+
+msgid "Unauthorized access."
+msgstr "未授权访问。"
+
+msgid "Unknown User"
+msgstr "未知用户"
+
+msgid "Unknown error"
+msgstr "未知错误"
+
+msgid "Unload result:"
+msgstr "Unload result:"
+
+msgid "Untranslated"
+msgstr "未翻译"
+
+msgid "Urdu"
+msgstr "乌尔都语"
+
+msgid "Usage Statistics"
+msgstr "使用统计"
+
+msgid "Use AI to translate empty interface strings automatically, or fill them manually for better accuracy."
+msgstr "使用人工智能自动翻译空接口字符串，或手动填写以获得更好的准确性。"
+
+msgid "Use Post Content"
+msgstr "使用文章内容"
+
+msgid "Use Post Title"
+msgstr "使用文章标题"
+
+msgid "User"
+msgstr "用户"
+
+msgid "Uyghur"
+msgstr "维吾尔语"
+
+msgid "Uzbek"
+msgstr "乌兹别克语"
+
+msgid "Version:"
+msgstr "Version:"
+
+msgid "View"
+msgstr "查看"
+
+msgid "View Details"
+msgstr "查看详情"
+
+msgid "View Diagnostics"
+msgstr "查看诊断"
+
+msgid "View History"
+msgstr "查看历史"
+
+msgid "WP Locale:"
+msgstr "WP区域设置："
+
+msgid "WordPress Environment"
+msgstr "WordPress环境"
+
+msgid "WordPress Language:"
+msgstr "WordPress语言："
+
+msgid "WordPress Locale:"
+msgstr "WordPress Locale:"
+
+msgid "WordPress Version:"
+msgstr "WordPress版本："
+
+msgid "Writable"
+msgstr "可写"
+
+msgid "YES"
+msgstr "是的"
+
+msgid "Yes"
+msgstr "是的"
+
+msgid "You do not have permission to perform this action."
+msgstr "您没有执行此操作的权限。"
+
+msgid "characters"
+msgstr "字符"
+
+msgid "has been successfully activated!"
+msgstr "已成功激活！"
+
+msgid "languages available"
+msgstr "种语言可用"
+
+msgid "records"
+msgstr "记录"
+
+msgid "total strings"
+msgstr "总字符串"
+
+msgid "translated"
+msgstr "翻译"
+
+msgid "untranslated"
+msgstr "未翻译"
+
+msgid "← Back to History"
+msgstr "← 返回历史"
+
+msgid "← Back to Suggestions"
+msgstr "← 返回建议"
+
+msgid "⚙️ Configure your API keys in Settings for enhanced translation quality"
+msgstr "⚙️ 在设置中配置您的API密钥以获得增强的翻译质量"
+
+msgid "✓ AI Image Creation"
+msgstr "✓ AI图像创建"
+
+msgid "✓ Content Generation"
+msgstr "✓ 内容生成"
 
 msgid "✓ Content Translation"
 msgstr "✓ 内容翻译"
@@ -1231,45 +1442,36 @@ msgstr "✓ 内容翻译"
 msgid "✓ URL Article Translation"
 msgstr "✓ URL文章翻译"
 
-msgid "✓ Content Generation"
-msgstr "✓ 内容生成"
-
-msgid "✓ AI Image Creation"
-msgstr "✓ AI图像创建"
-
-msgid "Open AI Assistant Panel"
-msgstr "打开AI助手面板"
-
-msgid "Access the full-featured AI tools in the main content area below."
-msgstr "在下面的主内容区域访问全功能AI工具。"
-
-msgid "Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere."
-msgstr "翻译完成后，您可以直接将其插入到文章内容中或复制到其他地方使用。"
-
-msgid "For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active."
-msgstr "对于SEO关键词，如果插件处于活动状态，生成的关键词将自动填充Yoast SEO字段。"
-
-msgid "Be descriptive in your prompt for best results. Include style, colors, mood, and composition details."
-msgstr "在您的提示中要详细描述以获得最佳结果。包括样式、颜色、情绪和构图细节。"
-
-
-msgid "💡 Use "Use Post Content" to quickly populate the translator with your existing content"
-msgstr "💡 使用"使用文章内容"快速填充翻译器与您现有的内容"
-
-msgid "🔄 Review and edit translations before inserting them into your post"
-msgstr "🔄 在将翻译插入您的文章之前，请查看和编辑翻译"
-
-msgid "⚙️ Configure your API keys in Settings for enhanced translation quality"
-msgstr "⚙️ 在设置中配置您的API密钥以获得增强的翻译质量"
+msgid "📊 System Status Dashboard"
+msgstr "📊 系统状态仪表板"
 
 msgid "📝 Generated content can be directly inserted into your WordPress editor"
 msgstr "📝 生成的内容可以直接插入到您的WordPress编辑器中"
 
-msgid "Select your personal language for the AI Assistant interface. This setting is specific to your user account and won\'t affect other users or the WordPress site language."
-msgstr "选择您个人的AI助手界面语言。此设置特定于您的用户账户，不会影响其他用户或WordPress网站语言。"
+msgid "🔄 Review and edit translations before inserting them into your post"
+msgstr "🔄 在将翻译插入您的文章之前，请查看和编辑翻译"
 
-msgid "Note: Each user can choose their own preferred language for the AI Assistant plugin."
-msgstr "注意：每个用户都可以为AI助手插件选择自己偏好的语言。"
+msgid "🔍 Diagnostics & System Information"
+msgstr "🔍 诊断与系统信息"
 
-msgid "Language settings saved successfully. This is your personal language setting for AI Assistant."
-msgstr "语言设置保存成功。这是您的AI助手个人语言设置。"
+msgid "🔧 Diagnostic Tools"
+msgstr "🔧 诊断工具"
+
+msgid "🖥️ System Environment"
+msgstr "🖥️ 系统环境"
+
+msgid "Translate text content between languages. Use \"Use Post Content\" to quickly populate with your current post content, or paste any text to translate."
+msgstr "在多种语言之间翻译文本内容。使用“使用帖子内容”功能快速填充您当前的帖子内容，或粘贴任何文本进行翻译。"
+
+msgid "Content Topic (Optional)"
+msgstr "内容主题（可选）"
+
+msgid "Optional: Enter the main topic or leave blank..."
+msgstr "可选：输入主题或留空..."
+
+msgid "Enter topic for content generation..."
+msgstr "输入内容生成主题..."
+
+msgid "💡 Use \"Use Post Content\" to quickly populate the translator with your existing content"
+msgstr "💡 使用“使用帖子内容”快速将现有内容填充到翻译器中"
+

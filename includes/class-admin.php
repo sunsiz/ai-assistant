@@ -53,6 +53,9 @@ class AI_Assistant_Admin {
         
         // AJAX handler for auto-translating empty .po strings in translation management
         add_action('wp_ajax_ai_assistant_auto_translate', array($this, 'ajax_auto_translate'));
+        
+        // AJAX handler for exporting .po files
+        add_action('wp_ajax_ai_assistant_export_po', array($this, 'ajax_export_po'));
     }
     
     /**
@@ -319,6 +322,10 @@ class AI_Assistant_Admin {
                     <button type="button" id="compile-all-mo" class="button button-primary">
                         <span class="dashicons dashicons-update"></span>
                         <?php _e('Compile All .mo Files', 'ai-assistant'); ?>
+                    </button>
+                    <button type="button" id="clear-ai-cache" class="button button-secondary" style="margin-left: 10px;">
+                        <span class="dashicons dashicons-trash"></span>
+                        <?php _e('Clear AI Cache', 'ai-assistant'); ?>
                     </button>
                     <span class="compile-status" id="compile-status"></span>
                 </div>
@@ -983,6 +990,10 @@ class AI_Assistant_Admin {
                             <input type="checkbox" id="show-untranslated-only" />
                             <?php _e('Show untranslated only', 'ai-assistant'); ?>
                         </label>
+                        <label>
+                            <input type="checkbox" id="show-translate-buttons" />
+                            <?php _e('Show translate buttons for all strings', 'ai-assistant'); ?>
+                        </label>
                     </div>
                     
                     <table class="widefat translation-table">
@@ -1021,11 +1032,9 @@ class AI_Assistant_Admin {
                                         <?php endif; ?>
                                     </td>
                                     <td class="actions-cell">
-                                        <?php if (empty($translation['msgstr'])): ?>
-                                            <button type="button" class="button button-small auto-translate-single" data-index="<?php echo $index; ?>" data-msgid="<?php echo esc_attr($translation['msgid']); ?>">
-                                                🤖 <?php _e('AI Translate', 'ai-assistant'); ?>
-                                            </button>
-                                        <?php endif; ?>
+                                        <button type="button" class="button button-small auto-translate-single" data-index="<?php echo $index; ?>" data-msgid="<?php echo esc_attr($translation['msgid']); ?>" style="<?php echo empty($translation['msgstr']) ? '' : 'display: none;'; ?>">
+                                            🤖 <?php _e('AI Translate', 'ai-assistant'); ?>
+                                        </button>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -1167,22 +1176,48 @@ class AI_Assistant_Admin {
      * This is specifically for translation management, not content translation
      */
     public function ajax_auto_translate() {
+        // Debug: Log all POST data first
+        AIAssistant::log('Auto-translate AJAX called with POST data: ' . print_r($_POST, true), true);
+        
         check_ajax_referer('ai_assistant_admin_nonce', 'nonce');
         
         if (!current_user_can('manage_options')) {
+            AIAssistant::log('Auto-translate failed: Unauthorized access for user: ' . get_current_user_id(), true);
             wp_send_json_error(__('Unauthorized access.', 'ai-assistant'));
         }
         
         $language = isset($_POST['language']) ? sanitize_text_field($_POST['language']) : '';
         $strings = isset($_POST['strings']) ? array_map('sanitize_text_field', $_POST['strings']) : array();
         
-        // Debug logging
-        AIAssistant::log('Auto-translate AJAX called. Language: ' . $language . ', Strings count: ' . count($strings), true);
+        // Enhanced debug logging
+        AIAssistant::log('Auto-translate processing - Language: "' . $language . '", Strings count: ' . count($strings), true);
+        AIAssistant::log('Auto-translate strings array: ' . print_r($strings, true), true);
         
-        if (empty($language) || empty($strings)) {
-            AIAssistant::log('Missing language or strings. Language: ' . $language . ', Strings: ' . print_r($strings, true), true);
-            wp_send_json_error(__('Missing language or strings to translate.', 'ai-assistant'));
+        // Filter out invalid strings (actual error messages from system, not legitimate strings)
+        $valid_strings = array();
+        foreach ($strings as $string) {
+            $string = trim($string);
+            if (!empty($string) && 
+                strlen($string) >= 3 &&
+                // Only reject actual system error messages, not legitimate translatable strings
+                !stripos($string, 'could not detect') &&
+                !stripos($string, 'could not extract') &&
+                !preg_match('/^(error|failed|invalid|missing):/i', $string) && // Only reject if starts with error/failed patterns
+                $string !== 'error' && $string !== 'failed') { // Don't reject single words that might be legitimate
+                $valid_strings[] = $string;
+            } else {
+                AIAssistant::log('Rejected invalid string: "' . $string . '"', true);
+            }
         }
+        
+        if (empty($language) || empty($valid_strings)) {
+            AIAssistant::log('VALIDATION FAILED - Empty language or no valid strings. Language: "' . $language . '", Valid strings count: ' . count($valid_strings), true);
+            wp_send_json_error(__('Missing language or no valid strings to translate found.', 'ai-assistant'));
+        }
+        
+        // Update strings array to use only valid strings
+        $strings = $valid_strings;
+        AIAssistant::log('Proceeding with ' . count($strings) . ' valid strings', true);
         
         // Initialize AI service
         if (!class_exists('AI_Assistant_AI_Service')) {
@@ -1208,62 +1243,217 @@ class AI_Assistant_Admin {
         // Get target language name for better context
         $target_language_name = $this->get_language_display_name($language);
         
+        // Rate limiting tracking
+        $last_request_time = 0;
+        
+        // Track API errors for better error reporting
+        $api_errors = array();
+        
+        // Adaptive rate limiting based on batch size
+        $batch_size = count($strings);
+        $rate_limit_delay = 6; // Default 6 seconds for large batches
+        
+        if ($batch_size <= 3) {
+            $rate_limit_delay = 3; // Faster processing for small batches (3 seconds)
+        } elseif ($batch_size <= 5) {
+            $rate_limit_delay = 4; // Medium processing for medium batches (4 seconds)
+        }
+        
+        AIAssistant::log('Processing batch of ' . $batch_size . ' strings with ' . $rate_limit_delay . ' second rate limit', true);
+        
         foreach ($strings as $string) {
             if (empty(trim($string))) continue;
             
+            // Adaptive rate limiting based on batch size
+            $time_since_last = microtime(true) - $last_request_time;
+            if ($time_since_last < $rate_limit_delay && $last_request_time > 0) {
+                $sleep_time = $rate_limit_delay - $time_since_last;
+                AIAssistant::log('Rate limiting: sleeping for ' . round($sleep_time, 2) . ' seconds', true);
+                usleep(intval($sleep_time * 1000000)); // Fix: cast to int to avoid deprecation warning
+            }
+            
+            $last_request_time = microtime(true);
+            
+            // Skip empty strings and strings that are too short
+            if (strlen($string) < 2) {
+                AIAssistant::log('Skipping string too short: "' . $string . '"', true);
+                $failed_count++;
+                continue;
+            }
+            
             AIAssistant::log('Translating string: "' . $string . '" to ' . $language, true);
             
-            // Create a direct prompt for interface translation
+            // Create a very direct prompt to minimize reasoning tokens
             $prompt = sprintf(
-                "Translate only this text to %s (%s). Return only the translated text, no explanations:\n\n%s",
+                "Translate to %s: %s",
                 $target_language_name,
-                $language,
                 $string
             );
             
-            $result = $ai_service->make_api_request_public($prompt);
+            // Try up to 3 times for reliability
+            $max_attempts = 3;
+            $translation_successful = false;
             
-            AIAssistant::log('AI service result for "' . $string . '": ' . print_r($result, true), true);
-            
-            if ($result['success'] && !empty($result['content'])) {
-                // Aggressively clean up the translation to extract only the translated text
-                $translation = trim($result['content']);
-                
-                // Remove quotes, asterisks, and other formatting
-                $translation = trim($translation, '"\'*');
-                
-                // If response contains multiple lines, take only the first meaningful line
-                $lines = explode("\n", $translation);
-                $translation = trim($lines[0]);
-                
-                // Remove any explanatory text patterns
-                $translation = preg_replace('/^(The translation is|Translation:|Translated:)\s*/i', '', $translation);
-                $translation = preg_replace('/\s*\([^)]*\)\s*$/', '', $translation); // Remove parenthetical explanations
-                
-                // Final cleanup
-                $translation = strip_tags($translation);
-                $translation = trim($translation, '"\'*');
-                
-                if (!empty($translation)) {
-                    $translated_strings[$string] = $translation;
-                } else {
-                    $failed_count++;
+            for ($attempt = 1; $attempt <= $max_attempts && !$translation_successful; $attempt++) {
+                if ($attempt > 1) {
+                    AIAssistant::log('Retry attempt ' . $attempt . ' for string: "' . $string . '"', true);
+                    usleep(1000000); // 1 second delay between retries
                 }
-            } else {
-                $failed_count++;
+                
+                $result = $ai_service->make_api_request_public($prompt, array(
+                    'max_tokens' => 300,  // Much higher limit to account for excessive thoughts tokens
+                    'temperature' => 0.1, // Very low temperature for consistent translations
+                    'simple_translation' => true, // Minimize reasoning tokens for simple translations
+                    'model' => 'gemini-2.5-flash-lite' // Try lighter model for simple translations
+                ));
+                
+                AIAssistant::log('AI service result for "' . $string . '" (attempt ' . $attempt . '): ' . print_r($result, true), true);
+                
+                if ($result['success'] && !empty($result['content'])) {
+                    // Aggressively clean up the translation to extract only the translated text
+                    $translation = trim($result['content']);
+                    
+                    // Remove quotes, asterisks, and other formatting
+                    $translation = trim($translation, '"\'*');
+                    
+                    // If response contains multiple lines, take only the first meaningful line
+                    $lines = explode("\n", $translation);
+                    $translation = trim($lines[0]);
+                    
+                    // Remove any explanatory text patterns
+                    $translation = preg_replace('/^(The translation is|Translation:|Translated:)\s*/i', '', $translation);
+                    $translation = preg_replace('/\s*\([^)]*\)\s*$/', '', $translation); // Remove parenthetical explanations
+                    
+                    // Final cleanup
+                    $translation = strip_tags($translation);
+                    $translation = trim($translation, '"\'*');
+                    
+                    // More strict validation - translation should be different and not empty
+                    if (!empty($translation) && $translation !== $string && strlen($translation) > 0) {
+                        $translated_strings[$string] = $translation;
+                        $translation_successful = true;
+                        AIAssistant::log('Translation successful: "' . $string . '" -> "' . $translation . '"', true);
+                        break; // Exit the retry loop
+                    } else {
+                        AIAssistant::log('Translation result invalid - empty, same as input, or too short for: "' . $string . '" -> "' . $translation . '"', true);
+                    }
+                } else {
+                    $error_msg = isset($result['error']) ? $result['error'] : (isset($result['message']) ? $result['message'] : 'Unknown error');
+                    AIAssistant::log('Translation API failed for "' . $string . '" (attempt ' . $attempt . '): ' . $error_msg, true);
+                    
+                    // Store API error for final error message
+                    if (!empty($error_msg)) {
+                        $api_errors[] = $error_msg;
+                    }
+                    
+                    // Check for rate limiting and add longer delay
+                    if (stripos($error_msg, '429') !== false || stripos($error_msg, 'quota') !== false || stripos($error_msg, 'rate') !== false) {
+                        AIAssistant::log('Rate limiting detected for "' . $string . '", adding longer delay', true);
+                        if ($attempt < $max_attempts) {
+                            usleep(5000000); // 5 second delay for rate limiting
+                        }
+                    }
+                }
             }
             
-            // Small delay to avoid API rate limits
-            usleep(100000); // 0.1 seconds
+            if (!$translation_successful) {
+                $failed_count++;
+                AIAssistant::log('Translation completely failed for: "' . $string . '" after ' . $max_attempts . ' attempts', true);
+            }
+            
+            // Longer delay to avoid API rate limits
+            usleep(300000); // 0.3 seconds between strings
         }
         
         if (!empty($translated_strings)) {
-            AIAssistant::log('Translation completed successfully. Translated ' . count($translated_strings) . ' strings, failed ' . $failed_count, true);
+            $success_count = count($translated_strings);
+            $total_count = count($strings);
+            AIAssistant::log('Translation completed. Translated ' . $success_count . ' of ' . $total_count . ' strings, failed ' . $failed_count, true);
             wp_send_json_success($translated_strings);
         } else {
-            AIAssistant::log('Translation failed completely. Failed count: ' . $failed_count, true);
-            wp_send_json_error(__('No strings could be translated. Please check your API configuration.', 'ai-assistant'));
+            AIAssistant::log('Translation failed completely. Failed count: ' . $failed_count . ' out of ' . count($strings), true);
+            
+            // Get the most recent API error message to provide more specific feedback
+            $last_error = '';
+            if (!empty($api_errors)) {
+                // Use the most recent error
+                $last_error = end($api_errors);
+            }
+            
+            // Provide more specific error message based on API response
+            $error_message = __('No strings could be translated. ', 'ai-assistant');
+            
+            if (!empty($last_error)) {
+                // Check for common API errors and provide user-friendly messages
+                if (stripos($last_error, '429') !== false || stripos($last_error, 'quota') !== false || stripos($last_error, 'rate limit') !== false) {
+                    $error_message .= __('API rate limit exceeded. Please wait a few minutes before trying again.', 'ai-assistant');
+                } elseif (stripos($last_error, 'MAX_TOKENS') !== false || stripos($last_error, 'token') !== false) {
+                    $error_message .= __('Content too long for API processing. Try translating fewer strings at once.', 'ai-assistant');
+                } elseif (stripos($last_error, 'API key') !== false || stripos($last_error, 'authentication') !== false) {
+                    $error_message .= __('API authentication failed. Please check your API key configuration.', 'ai-assistant');
+                } else {
+                    // Show the actual error message for other errors
+                    $error_message .= sprintf(__('API Error: %s', 'ai-assistant'), $last_error);
+                }
+            } else {
+                if ($failed_count > 0) {
+                    $error_message .= sprintf(__('All %d translation attempts failed. ', 'ai-assistant'), $failed_count);
+                }
+                $error_message .= __('Please check your API configuration and try again.', 'ai-assistant');
+            }
+            
+            wp_send_json_error($error_message);
         }
+    }
+    
+    /**
+     * AJAX handler for exporting .po files
+     */
+    public function ajax_export_po() {
+        // Debug logging
+        AIAssistant::log('Export PO handler called. GET params: ' . print_r($_GET, true), true);
+        
+        // Check nonce and capabilities - use more permissive check
+        $nonce_check = check_ajax_referer('ai_assistant_export_nonce', 'nonce', false);
+        if (!$nonce_check) {
+            AIAssistant::log('Export PO nonce check failed', true);
+            wp_die(__('Security check failed.', 'ai-assistant'));
+        }
+
+        if (!current_user_can('manage_options')) {
+            AIAssistant::log('Export PO insufficient permissions for user: ' . get_current_user_id(), true);
+            wp_die(__('Insufficient permissions.', 'ai-assistant'));
+        }
+
+        $language = isset($_GET['lang']) ? sanitize_text_field($_GET['lang']) : '';
+        
+        if (empty($language)) {
+            AIAssistant::log('Export PO no language parameter provided', true);
+            wp_die(__('Language parameter missing.', 'ai-assistant'));
+        }
+
+        $po_file_path = AI_ASSISTANT_PLUGIN_DIR . 'languages/ai-assistant-' . $language . '.po';
+        
+        AIAssistant::log('Export PO looking for file: ' . $po_file_path, true);
+        
+        if (!file_exists($po_file_path)) {
+            AIAssistant::log('Export PO file not found: ' . $po_file_path, true);
+            wp_die(__('Translation file not found.', 'ai-assistant'));
+        }
+
+        AIAssistant::log('Export PO file found, sending headers and file content', true);
+
+        // Set headers for file download
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="ai-assistant-' . $language . '.po"');
+        header('Content-Length: ' . filesize($po_file_path));
+        header('Cache-Control: no-cache, no-store, must-revalidate');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+
+        // Output file content
+        readfile($po_file_path);
+        exit;
     }
     
     /**
@@ -1379,11 +1569,14 @@ class AI_Assistant_Admin {
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('ai_assistant_admin_nonce'),
             'export_nonce' => wp_create_nonce('ai_assistant_export_nonce'),
-            'current_language' => isset($_GET['edit_lang']) ? sanitize_text_field($_GET['edit_lang']) : '',
+            'current_language' => $this->get_current_editing_language(),
+            'debug' => defined('WP_DEBUG') && WP_DEBUG,
             'strings' => array(
                 'saving' => __('Saving...', 'ai-assistant'),
                 'saved' => __('Saved!', 'ai-assistant'),
+                'processing' => __('Processing...', 'ai-assistant'),
                 'error' => __('Error saving settings', 'ai-assistant'),
+                'saveLanguageSettings' => __('Save Language Settings', 'ai-assistant'),
                 'confirm_reload' => __('Language changed. The page will reload to apply the new language.', 'ai-assistant'),
                 'testing' => __('Testing...', 'ai-assistant'),
                 'success' => __('Success!', 'ai-assistant'),
@@ -1541,8 +1734,22 @@ class AI_Assistant_Admin {
      * Get content suggestions count
      */
     private function get_content_suggestions_count() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'ai_assistant_suggestions';
+        
+        // Check if table exists first
+        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
+        
+        if (!$table_exists) {
+            // Create the table if it doesn't exist
+            $this->create_suggestions_table();
+            return 0; // Return 0 for now
+        }
+        
+        $count = $wpdb->get_var("SELECT COUNT(*) FROM $table_name WHERE created_at >= DATE_SUB(NOW(), INTERVAL 1 MONTH)");
+        return (int) $count;
         // This would be tracked in a separate table or option
-        return get_option('ai_assistant_suggestions_count', 0);
+        //return get_option('ai_assistant_suggestions_count', 0);
     }
     
     /**
@@ -1606,9 +1813,8 @@ class AI_Assistant_Admin {
         
         // Only log once per session/request to avoid log spam
         static $logged_this_request = false;
-        if (!$logged_this_request && WP_DEBUG_LOG) {
-            AIAssistant::log("Language Debug: Custom lang = " . ($custom_lang ?: 'NOT SET'), true);
-            AIAssistant::log("Language Debug: Current locale = " . $current_locale, true);
+        if (!$logged_this_request && defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
+            // Only log once per request to avoid spam
             $logged_this_request = true;
         }
         
@@ -1647,10 +1853,10 @@ class AI_Assistant_Admin {
             // Load with maximum priority
             $loaded = load_textdomain('ai-assistant', $mo_file);
             
-            if ($loaded && WP_DEBUG_LOG) {
+            if ($loaded && defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
                 static $force_logged = false;
                 if (!$force_logged) {
-                    AIAssistant::log("Force immediate reload successful for " . $locale, true);
+                    // Log only once per session when debug is specifically enabled
                     $force_logged = true;
                 }
             }
@@ -1712,10 +1918,9 @@ class AI_Assistant_Admin {
             // DO NOT add global locale filter - this was causing site-wide language changes
             // Plugin translations will be handled by the plugin_locale filter instead
             
-            // Only log success once per session/request and only if debug logging is enabled
+            // Only log success once per session/request and only if debug logging is specifically enabled
             static $success_logged = array();
-            if (!isset($success_logged[$locale]) && WP_DEBUG_LOG) {
-                AIAssistant::log("Successfully loaded custom language: " . $locale, true);
+            if (!isset($success_logged[$locale]) && defined('WP_DEBUG') && WP_DEBUG && defined('WP_DEBUG_LOG') && WP_DEBUG_LOG) {
                 $success_logged[$locale] = true;
             }
         } else {
@@ -1821,7 +2026,6 @@ class AI_Assistant_Admin {
         if ($domain === 'ai-assistant') {
             $custom_lang = $this->get_user_language();
             if ($custom_lang) {
-                AIAssistant::log("Language Debug: Plugin locale filter applied - returning: " . $custom_lang, true);
                 return $custom_lang;
             }
         }
@@ -1838,8 +2042,6 @@ class AI_Assistant_Admin {
         // Only log once per request to avoid spam
         static $logged_files = array();
         if (!isset($logged_files[$locale])) {
-            AIAssistant::log("Language Debug: Looking for .mo file: " . $lang_file, true);
-            AIAssistant::log("Language Debug: .mo file exists = " . (file_exists($lang_file) ? 'YES' : 'NO'), true);
             $logged_files[$locale] = true;
         }
         
@@ -1847,7 +2049,6 @@ class AI_Assistant_Admin {
         if (file_exists($lang_file)) {
             $loaded = load_textdomain('ai-assistant', $lang_file);
             if (!isset($logged_files[$locale . '_result'])) {
-                AIAssistant::log("Language Debug: Direct .mo load result = " . ($loaded ? 'SUCCESS' : 'FAILED'), true);
                 $logged_files[$locale . '_result'] = true;
             }
             if ($loaded) {
@@ -2596,5 +2797,35 @@ class AI_Assistant_Admin {
         );
 
         return isset($language_names[$locale]) ? $language_names[$locale] : $locale;
+    }
+    
+    /**
+     * Get current editing language from various sources
+     */
+    private function get_current_editing_language() {
+        // Check URL parameter first
+        if (isset($_GET['edit_lang']) && !empty($_GET['edit_lang'])) {
+            return sanitize_text_field($_GET['edit_lang']);
+        }
+        
+        // Check POST data
+        if (isset($_POST['edit_language']) && !empty($_POST['edit_language'])) {
+            return sanitize_text_field($_POST['edit_language']);
+        }
+        
+        // Check if we're on a translation page
+        if (isset($_GET['page']) && $_GET['page'] === 'ai-assistant-translation-editor' && isset($_GET['language'])) {
+            return sanitize_text_field($_GET['language']);
+        }
+        
+        // Get from current translation settings
+        $translation_settings = get_option('ai_assistant_translation_settings', array());
+        if (!empty($translation_settings['selected_language'])) {
+            return $translation_settings['selected_language'];
+        }
+        
+        // Fallback to site locale
+        $locale = get_locale();
+        return !empty($locale) ? $locale : 'en_US';
     }
 }

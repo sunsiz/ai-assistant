@@ -1,1266 +1,2071 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Assistant 1.0.50nt for WordPress 1.0.41\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-07 11:03:46+0000\n"
-"PO-Revision-Date: 2025-07-01 11:39:30+0000\n"
-"Last-Translator: Süleymaniye Vakfı\n"
-"Language-Team: Español\n"
-"Language: es_ES\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Manual Translation System\n"
-
-msgid "Error"
-msgstr "Error"
-
-msgid "Translating..."
-msgstr ""
-
-msgid "Fetching..."
-msgstr "Obteniendo..."
-
-msgid "Generating..."
-msgstr "Generando..."
-
-msgid "Translate Content"
-msgstr "Traducir contenido"
-
-msgid "Fetch Content"
-msgstr "Obtener contenido"
-
-msgid "Translate Article"
-msgstr "Traducir artículo"
-
-msgid "Generate"
-msgstr "Generar"
-
-msgid "Content fetched successfully!"
-msgstr ""
-
-msgid "Failed to fetch content"
-msgstr ""
-
-msgid "Translation failed"
-msgstr "Traducción fallida"
-
-msgid "Content generation failed"
-msgstr ""
-
-msgid "A connection error occurred."
-msgstr ""
-
-msgid "Please enter content to translate."
-msgstr ""
-
-msgid "Please enter a URL to fetch."
-msgstr ""
-
-msgid "Please enter a topic or context."
-msgstr ""
-
-msgid "Generating prompt..."
-msgstr ""
-
-msgid "Generating image..."
-msgstr ""
-
-msgid "Image generated successfully!"
-msgstr ""
-
-msgid "Image generation failed"
-msgstr ""
-
-msgid "Setting featured image..."
-msgstr ""
-
-msgid "Featured image set successfully!"
-msgstr ""
-
-msgid "Failed to set featured image"
-msgstr ""
-
-msgid "Please enter an image description."
-msgstr ""
-
-msgid "Auto-detect"
-msgstr ""
-
-msgid "English"
-msgstr ""
-
-msgid "Turkish"
-msgstr ""
-
-msgid "Arabic"
-msgstr ""
-
-msgid "Spanish"
-msgstr ""
-
-msgid "French"
-msgstr ""
-
-msgid "German"
-msgstr ""
-
-msgid "Russian"
-msgstr ""
-
-msgid "Chinese"
-msgstr ""
-
-msgid "Persian"
-msgstr ""
-
-msgid "Portuguese"
-msgstr ""
-
-msgid "Dutch"
-msgstr ""
-
-msgid "Danish"
-msgstr ""
-
-msgid "Azerbaijani"
-msgstr ""
-
-msgid "Uzbek"
-msgstr ""
-
-msgid "Kyrgyz"
-msgstr ""
-
-msgid "Uyghur"
-msgstr ""
-
-msgid "Urdu"
-msgstr ""
-
-msgid "Finnish"
-msgstr ""
-
-msgid "Turkmen"
-msgstr ""
-
-msgid "AI Assistant"
-msgstr "Asistente IA"
-
-msgid "AI Assistant (Compact)"
-msgstr ""
-
-msgid "Source Content"
-msgstr "Contenido fuente"
-
-msgid "Editable"
-msgstr "Editable"
-
-msgid "Translated Content"
-msgstr "Contenido traducido"
-
-msgid "You do not have permission to perform this action."
-msgstr ""
-
-msgid "Please provide a topic or context for content generation."
-msgstr ""
-
-msgid "No text provided for suggestions."
-msgstr ""
-
-msgid "No cache key provided."
-msgstr ""
-
-msgid "HTML content not found or expired."
-msgstr ""
-
-msgid "Unauthorized access."
-msgstr ""
-
-msgid "Translation file not found."
-msgstr ""
-
-msgid "Auto-translate function not available."
-msgstr ""
-
-msgid "Language settings saved successfully."
-msgstr "Configuración de idioma guardada exitosamente."
-
-msgid "Please provide an image description."
-msgstr ""
-
-msgid "Image generation is not available. Please check your AI service configuration."
-msgstr ""
-
-msgid "Missing post ID or image URL."
-msgstr ""
-
-msgid "Failed to set featured image."
-msgstr ""
-
-msgid "AI Assistant for WordPress"
-msgstr ""
-
-msgid "has been successfully activated!"
-msgstr ""
-
-msgid "Please configure your AI provider API keys to start using the plugin."
-msgstr ""
-
-msgid "Go to Settings"
-msgstr ""
-
-msgid "Translate"
-msgstr "Traducir"
-
-msgid "URL Translation"
-msgstr "Traducción de URL"
-
-msgid "Content Tools"
-msgstr "Herramientas de contenido"
-
-msgid "Featured Image"
-msgstr ""
-
-msgid "Source Language"
-msgstr "Idioma de origen"
-
-msgid "Target Language"
-msgstr "Idioma de destino"
-
-msgid "AI Model"
-msgstr "Modelo IA"
-
-msgid "Use Post Content"
-msgstr "Usar contenido de la entrada"
-
-msgid "Enter or paste content to translate..."
-msgstr "Ingrese o pegue contenido para traducir..."
-
-msgid "Translation will appear here..."
-msgstr "La traducción aparecerá aquí..."
-
-msgid "Article URL"
-msgstr "URL del artículo"
-
-msgid "Original Article"
-msgstr "Artículo original"
-
-msgid "Fetched content will appear here..."
-msgstr ""
-
-msgid "Translated Article"
-msgstr "Artículo traducido"
-
-msgid "Translated article will appear here..."
-msgstr ""
-
-msgid "Insert Translated Content"
-msgstr ""
-
-msgid "Review and edit the translation above, then click to insert into WordPress editor"
-msgstr ""
-
-msgid "Content Type"
-msgstr ""
-
-msgid "Content Suggestions"
-msgstr ""
-
-msgid "Full Article"
-msgstr ""
-
-msgid "SEO Keywords"
-msgstr ""
-
-msgid "Meta Description"
-msgstr ""
-
-msgid "Title Ideas"
-msgstr ""
-
-msgid "Topic/Context"
-msgstr ""
-
-msgid "Enter topic or context..."
-msgstr "Ingrese tema o contexto..."
-
-msgid "Use Post Title"
-msgstr "Usar título de la entrada"
-
-msgid "Generated Content"
-msgstr "Contenido generado"
-
-msgid "Generated content will appear here..."
-msgstr ""
-
-msgid "Insert to Editor"
-msgstr ""
-
-msgid "Apply to Yoast SEO"
-msgstr ""
-
-msgid "Review the generated content above, then choose an action"
-msgstr ""
-
-msgid "Image Description/Prompt"
-msgstr ""
-
-msgid "Describe the image you want to generate (e.g., A modern office workspace with laptop and coffee)..."
-msgstr ""
-
-msgid "Image Style"
-msgstr ""
-
-msgid "Photorealistic"
-msgstr ""
-
-msgid "Illustration"
-msgstr ""
-
-msgid "Digital Art"
-msgstr ""
-
-msgid "Minimalist"
-msgstr ""
-
-msgid "Professional/Business"
-msgstr ""
-
-msgid "Abstract"
-msgstr ""
-
-msgid "Image Size"
-msgstr ""
-
-msgid "Square (1024x1024)"
-msgstr ""
-
-msgid "Landscape (1792x1024)"
-msgstr ""
-
-msgid "Portrait (1024x1792)"
-msgstr ""
-
-msgid "Auto-Generate Prompt"
-msgstr ""
-
-msgid "Generate Image"
-msgstr ""
-
-msgid "Generated Image Preview"
-msgstr ""
-
-msgid "Generated image will appear here..."
-msgstr ""
-
-msgid "Set as Featured Image"
-msgstr ""
-
-msgid "Download Image"
-msgstr ""
-
-msgid "Generate an image, then use the buttons above to set it as featured image or download"
-msgstr ""
-
-msgid "Use the main AI Assistant panel below for translation and content tools."
-msgstr ""
-
-msgid "Go to Main Panel"
-msgstr ""
-
-msgid "This is a compact view. The full-featured tool is in the main content area."
-msgstr ""
-
-msgid "Settings"
-msgstr "Configuración"
-
-msgid "Translation History"
-msgstr "Historial de traducciones"
-
-msgid "Translation Management"
-msgstr "Gestión de traducciones"
-
-msgid "API configured"
-msgstr ""
-
-msgid "API not configured"
-msgstr ""
-
-msgid "languages available"
-msgstr ""
-
-msgid "Translations loaded"
-msgstr ""
-
-msgid "Save Language Settings"
-msgstr "Guardar configuración de idioma"
-
-msgid "Save API Settings"
-msgstr "Guardar configuración de API"
-
-msgid "Database error: %s"
-msgstr ""
-
-msgid "Post #%d (deleted)"
-msgstr ""
-
-msgid "Post #%d"
-msgstr ""
-
-msgid "Translation not found."
-msgstr ""
-
-msgid "Suggestion not found."
-msgstr ""
-
-msgid "Post ID: %d"
-msgstr ""
-
-msgid "Editing: %s"
-msgstr "Editando: %s"
-
-msgid "Save Translations to .po File"
-msgstr ""
-
-msgid "Security check failed."
-msgstr ""
-
-msgid "Insufficient permissions."
-msgstr ""
-
-msgid "Successfully compiled %d .mo files"
-msgstr ""
-
-msgid "AI Assistant Dashboard"
-msgstr "Panel de control del Asistente IA"
-
-msgid "AI auto-translate has been disabled in favor of manual translation. This is a one-time translation task that works better with manual translation. Please translate the strings manually using the interface below."
-msgstr ""
-
-msgid "Translations saved successfully!"
-msgstr ""
-
-msgid "Saving..."
-msgstr ""
-
-msgid "Saved!"
-msgstr ""
-
-msgid "Error saving settings"
-msgstr ""
-
-msgid "Language changed. The page will reload to apply the new language."
-msgstr ""
-
-msgid "Testing..."
-msgstr ""
-
-msgid "Success!"
-msgstr ""
-
-msgid "Test failed"
-msgstr ""
-
-msgid "Compiling .mo files..."
-msgstr ""
-
-msgid "Plugin Status"
-msgstr ""
-
-msgid "Enabled"
-msgstr ""
-
-msgid "Disabled"
-msgstr ""
-
-msgid "API Configuration"
-msgstr "Configuración API"
-
-msgid "Configured"
-msgstr ""
-
-msgid "No API keys configured"
-msgstr ""
-
-msgid "Database"
-msgstr ""
-
-msgid "Tables created"
-msgstr ""
-
-msgid "Tables missing"
-msgstr ""
-
-msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
-msgstr "Traducciones guardadas exitosamente en %s y compiladas en %s. Los cambios están ahora activos en la interfaz del plugin."
-
-msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
-msgstr "Traducciones guardadas exitosamente en %s. Advertencia: Falló la compilación del archivo .mo - las traducciones pueden no aparecer en la interfaz del plugin."
-
-msgid "Failed to save translations. Please check file permissions."
-msgstr ""
-
-msgid "No translations found for this language."
-msgstr ""
-
-msgid "English Text (msgid)"
-msgstr "Texto en inglés (msgid)"
-
-msgid "Translation (msgstr)"
-msgstr "Traducción (msgstr)"
-
-msgid "Status"
-msgstr "Estado"
-
-msgid "Actions"
-msgstr "Acciones"
-
-msgid "Enter translation..."
-msgstr "Ingresar traducción..."
-
-msgid "Translated"
-msgstr "Traducido"
-
-msgid "Missing"
-msgstr ""
-
-msgid "AI Translate"
-msgstr ""
-
-msgid "Not Available"
-msgstr ""
-
-msgid "Complete"
-msgstr ""
-
-msgid "In Progress"
-msgstr ""
-
-msgid "Strings:"
-msgstr ""
-
-msgid ".po Size:"
-msgstr ""
-
-msgid ".mo Size:"
-msgstr ""
-
-msgid "Manage"
-msgstr ""
-
-msgid "Summary"
-msgstr ""
-
+"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1587
+msgid " empty interface strings using AI. Continue?"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1596
+msgid " interface strings!"
+msgstr ""
+
+msgid "\"
+msgstr "
+msgstr "\"
+\"Project-Id-Version: AI Assistant 1.0.50nt for WordPress 1.0.41
+\"
+\"Report-Msgid-Bugs-To: 
+\"
+\"POT-Creation-Date: 2025-07-07 11:03:46+0000
+\"
+\"PO-Revision-Date: 2025-07-01 11:39:30+0000
+\"
+\"Last-Translator: Süleymaniye Vakfı
+\"
+\"Language-Team: Español
+\"
+\"Language: es_ES
+\"
+\"MIME-Version: 1.0
+\"
+\"Content-Type: text/plain; charset=UTF-8
+\"
+\"Content-Transfer-Encoding: 8bit
+\"
+\"X-Generator: Manual Translation System
+"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2678
 msgid "%d of %d languages are active with compiled translations."
 msgstr ""
 
-msgid "Complete missing translations and compile .mo files to activate more languages."
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:913
+msgid "%s configured"
 msgstr ""
 
-msgid "Usage Statistics"
-msgstr "Estadísticas de uso"
-
-msgid "Translations this month"
-msgstr "Traducciones este mes"
-
-msgid "Content suggestions"
-msgstr "Sugerencias de contenido"
-
-msgid "Active AI models"
-msgstr "Modelos IA activos"
-
-msgid "Quick Actions"
-msgstr "Acciones rápidas"
-
-msgid "Configure Settings"
-msgstr "Configurar ajustes"
-
-msgid "Create New Post"
-msgstr "Crear nueva entrada"
-
-msgid "View History"
-msgstr "Ver historial"
-
-msgid "System Status"
-msgstr "Estado del sistema"
-
-msgid "Multilingual Status"
-msgstr ""
-
-msgid "AI Assistant Settings"
-msgstr "Configuración del asistente IA"
-
-msgid "View Diagnostics"
-msgstr ""
-
-msgid "Language Settings"
-msgstr "Configuración de idioma"
-
-msgid "Admin Interface Language"
-msgstr "Idioma de la interfaz de administración"
-
-msgid "Select the language for the AI Assistant admin interface. This affects the plugin interface language."
-msgstr "Seleccione el idioma para la interfaz de administración del asistente IA. Esto afecta el idioma de la interfaz del plugin."
-
-msgid "Test API Connection"
-msgstr "Probar conexión API"
-
-msgid "Test your Gemini API key to ensure it is working correctly."
-msgstr "Pruebe su clave API de Gemini para asegurar que funciona correctamente."
-
-msgid "Test Gemini API"
-msgstr "Probar API de Gemini"
-
-msgid "Compilation Tools"
-msgstr ""
-
-msgid "Manage .mo file compilation for all languages."
-msgstr ""
-
-msgid "Compile All .mo Files"
-msgstr ""
-
-msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress."
-msgstr ""
-
-msgid "AI Assistant History"
-msgstr ""
-
-msgid "Translations"
-msgstr ""
-
-msgid "Suggestions"
-msgstr ""
-
-msgid "Translation history table does not exist. Please contact your administrator."
-msgstr ""
-
-msgid "Date"
-msgstr "Fecha"
-
-msgid "Post/URL"
-msgstr ""
-
-msgid "From"
-msgstr "De"
-
-msgid "To"
-msgstr "A"
-
-msgid "Model"
-msgstr ""
-
-msgid "No translations found. Try performing some translations to see them here."
-msgstr ""
-
-msgid "Translation history table not available."
-msgstr ""
-
-msgid "Manual Translation"
-msgstr ""
-
-msgid "View"
-msgstr "Ver"
-
-msgid "Content Suggestions History"
-msgstr ""
-
-msgid "Suggestions history table does not exist. Please contact your administrator."
-msgstr ""
-
-msgid "User"
-msgstr ""
-
-msgid "Input Text"
-msgstr ""
-
-msgid "Suggestion"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
-msgid "Post"
-msgstr "Entrada"
-
-msgid "No suggestions found. Start using the AI Assistant to generate content suggestions."
-msgstr ""
-
-msgid "Suggestions history table not available."
-msgstr ""
-
-msgid "Global"
-msgstr ""
-
-msgid "View Details"
-msgstr ""
-
-msgid "Translation Details"
-msgstr ""
-
-msgid "← Back to History"
-msgstr ""
-
-msgid "Translation Information"
-msgstr ""
-
-msgid "Translation ID"
-msgstr ""
-
-msgid "Date & Time"
-msgstr ""
-
-msgid "Associated Post"
-msgstr ""
-
-msgid "Source URL"
-msgstr ""
-
-msgid "Content Comparison"
-msgstr ""
-
-msgid "Original Content"
-msgstr ""
-
-msgid "characters"
-msgstr ""
-
-msgid "Edit Associated Post"
-msgstr ""
-
-msgid "Suggestion Details"
-msgstr ""
-
-msgid "← Back to Suggestions"
-msgstr ""
-
-msgid "Suggestion Information"
-msgstr ""
-
-msgid "Suggestion ID"
-msgstr ""
-
-msgid "Unknown User"
-msgstr ""
-
-msgid "Suggestion Type"
-msgstr ""
-
-msgid "Context"
-msgstr ""
-
-msgid "Global suggestion (not associated with a specific post)"
-msgstr ""
-
-msgid "Content Details"
-msgstr ""
-
-msgid "Input/Context"
-msgstr ""
-
-msgid "Generated Suggestion"
-msgstr ""
-
-msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
-msgstr "Edite las traducciones de la interfaz del plugin directamente desde archivos .po. Los cambios se guardan en los archivos de idioma y se compilan automáticamente."
-
-msgid "Select Language to Edit"
-msgstr "Seleccionar idioma para editar"
-
-msgid "Translation file exists"
-msgstr "El archivo de traducción existe"
-
-msgid "No translation file found - will create new"
-msgstr "No se encontró archivo de traducción - se creará uno nuevo"
-
-msgid "total strings"
-msgstr "cadenas totales"
-
-msgid "translated"
-msgstr "traducido"
-
-msgid "untranslated"
-msgstr "sin traducir"
-
-msgid "Search translations..."
-msgstr "Buscar traducciones..."
-
-msgid "Show untranslated only"
-msgstr "Mostrar solo sin traducir"
-
-msgid "Untranslated"
-msgstr "Sin traducir"
-
-msgid "Download .po File"
-msgstr ""
-
-msgid "Manual translation approach: Fill in the empty translation fields above, then save to .po file. This ensures accuracy for content."
-msgstr ""
-
-msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
-msgstr ""
-
-msgid "Compiling..."
-msgstr ""
-
-msgid "Compilation failed: "
-msgstr ""
-
-msgid "Unknown error"
-msgstr ""
-
-msgid "Compilation request failed. Please try again."
-msgstr ""
-
-msgid "Image generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
-msgstr ""
-
-msgid "Network error: "
-msgstr ""
-
-msgid "API Error (%d): %s"
-msgstr ""
-
-msgid "Invalid response from image generation API"
-msgstr ""
-
-msgid "Google Gemini image generation is not available in your region or requires special access. This feature may be limited to certain accounts or geographic areas. Please use OpenAI (DALL-E) for reliable image generation."
-msgstr ""
-
-msgid "Gemini image generation is not available in your region or requires special access. API Error (%d): %s. Please use OpenAI (DALL-E) for image generation."
-msgstr ""
-
-msgid "Gemini image generation not available. Please use OpenAI (DALL-E) for image generation."
-msgstr ""
-
-msgid "Gemini image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
-msgstr ""
-
-msgid "Failed to process generated image"
-msgstr ""
-
-msgid "Anthropic Claude does not support direct image generation yet. However, Claude enhanced your prompt: "
-msgstr ""
-
-msgid "Please use OpenAI (DALL-E) or Google Gemini for actual image generation."
-msgstr ""
-
-msgid "Anthropic Claude does not support direct image generation. Please use OpenAI (DALL-E) or Google Gemini for image generation."
-msgstr ""
-
-msgid "Diagnostics"
-msgstr ""
-
-msgid "Yes"
-msgstr ""
-
-msgid "No"
-msgstr ""
-
-msgid "Found"
-msgstr ""
-
-msgid "Loaded"
-msgstr ""
-
-msgid "Not Loaded"
-msgstr ""
-
-msgid "Not Set"
-msgstr ""
-
-msgid "Writable"
-msgstr ""
-
-msgid "Read-only"
-msgstr ""
-
-msgid "Insufficient permissions"
-msgstr ""
-
-msgid "Language Loading Debug Test Results"
-msgstr ""
-
-msgid "Basic Information"
-msgstr ""
-
-msgid "WordPress Locale:"
-msgstr ""
-
-msgid "Custom Language Setting:"
-msgstr ""
-
-msgid "NOT SET"
-msgstr ""
-
-msgid "Plugin Textdomain Loaded:"
-msgstr ""
-
-msgid "YES"
-msgstr ""
-
-msgid "NO"
-msgstr ""
-
-msgid "Translation Tests"
-msgstr ""
-
-msgid "File Information"
-msgstr ""
-
-msgid "Expected .mo file:"
-msgstr ""
-
-msgid ".mo file exists:"
-msgstr ""
-
-msgid ".po file exists:"
-msgstr ""
-
-msgid "Available .mo files (%d):"
-msgstr ""
-
-msgid "Manual Language Loading Test"
-msgstr ""
-
-msgid "Unload result:"
-msgstr ""
-
-msgid "SUCCESS"
-msgstr ""
-
-msgid "FAILED"
-msgstr ""
-
-msgid "Custom load result:"
-msgstr ""
-
-msgid "Test translation after manual load:"
-msgstr ""
-
-msgid "FAILED - .mo file not found"
-msgstr ""
-
-msgid "Language loading test completed"
-msgstr ""
-
-msgid "API connection test completed"
-msgstr ""
-
-msgid "Language directory is writable"
-msgstr ""
-
-msgid "Language directory is not writable"
-msgstr ""
-
-msgid "AI Assistant Diagnostics"
-msgstr ""
-
-msgid "🔍 Diagnostics & System Information"
-msgstr ""
-
-msgid "This page provides comprehensive system information and debugging tools for troubleshooting AI Assistant issues."
-msgstr ""
-
-msgid "📊 System Status Dashboard"
-msgstr ""
-
-msgid "Version:"
-msgstr ""
-
-msgid "Plugin Active:"
-msgstr ""
-
-msgid "Directory:"
-msgstr ""
-
-msgid "Language System"
-msgstr ""
-
-msgid "WP Locale:"
-msgstr ""
-
-msgid "Plugin Language:"
-msgstr ""
-
-msgid "Textdomain:"
-msgstr ""
-
-msgid "AI API Status"
-msgstr ""
-
-msgid "Translation Files"
-msgstr ""
-
-msgid ".po Files:"
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1589
+msgid "..."
 msgstr ""
 
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:174
 msgid ".mo Files:"
 msgstr ""
 
-msgid "🖥️ System Environment"
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2643
+msgid ".mo Size:"
 msgstr ""
 
-msgid "WordPress Environment"
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:817
+msgid ".mo file exists:"
 msgstr ""
 
-msgid "WordPress Version:"
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:169
+msgid ".po Files:"
 msgstr ""
 
-msgid "WordPress Language:"
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2636
+msgid ".po Size:"
 msgstr ""
 
-msgid "Site URL:"
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:818
+msgid ".po file exists:"
 msgstr ""
 
-msgid "Multisite:"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:553
+msgid "A connection error occurred."
 msgstr ""
 
-msgid "Server Environment"
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:130
+msgid "AI API Status"
 msgstr ""
 
-msgid "PHP Version:"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:625
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:625
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:491
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:67
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:67
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:67
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:799
+msgid "AI Assistant"
+msgstr "Asistente IA"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:644
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:644
+msgid "AI Assistant (Compact)"
 msgstr ""
 
-msgid "MySQL Version:"
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1163
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1163
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:113
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:849
+msgid "AI Assistant Dashboard"
+msgstr "Panel de control del Asistente IA"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:57
+msgid "AI Assistant Diagnostics"
 msgstr ""
 
-msgid "Memory Limit:"
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:390
+msgid "AI Assistant History"
 msgstr ""
 
-msgid "Max Execution Time:"
-msgstr ""
-
-msgid "🔧 Diagnostic Tools"
-msgstr ""
-
-msgid "Language System Test"
-msgstr ""
-
-msgid "Test language loading functionality and view detailed debug information."
-msgstr ""
-
-msgid "Run Language Test"
-msgstr ""
-
-msgid "API Connection Test"
-msgstr ""
-
-msgid "Test API connections and verify configuration for all providers."
-msgstr ""
-
-msgid "Test API Connections"
-msgstr ""
-
-msgid "System Report Generator"
-msgstr ""
-
-msgid "Generate a comprehensive system report for troubleshooting and support requests."
-msgstr ""
-
-msgid "Generate Report"
-msgstr ""
-
-msgid "Database Health Check"
-msgstr ""
-
-msgid "Check database tables and data integrity for AI Assistant."
-msgstr ""
-
-msgid "Check Database"
-msgstr ""
-
-msgid "Running language loading test..."
-msgstr ""
-
-msgid "Language Test Results:"
-msgstr ""
-
-msgid "Error:"
-msgstr ""
-
-msgid "Test failed - AJAX error"
-msgstr ""
-
-msgid "Testing API connections..."
-msgstr ""
-
-msgid "API connection test feature coming soon..."
-msgstr ""
-
-msgid "Generating system report..."
-msgstr ""
-
-msgid "System Report Generated:"
-msgstr ""
-
-msgid "Copy the above information when reporting issues."
-msgstr ""
-
-msgid "Report generation failed - AJAX error"
-msgstr ""
-
-msgid "General Settings"
-msgstr ""
-
-msgid "API Keys"
-msgstr ""
-
-msgid "Custom Prompts"
-msgstr ""
-
-msgid "Enable AI Assistant"
-msgstr ""
-
-msgid "Default AI Model"
-msgstr "Modelo IA predeterminado"
-
-msgid "Preferred AI Provider"
-msgstr ""
-
-msgid "OpenAI API Key"
-msgstr "Clave API OpenAI"
-
-msgid "Anthropic API Key"
-msgstr "Clave API Anthropic"
-
-msgid "Gemini API Key"
-msgstr ""
-
-msgid "Translation Prompt"
-msgstr ""
-
-msgid "Content Suggestion Prompt"
-msgstr ""
-
-msgid "SEO Keywords Prompt"
-msgstr ""
-
-msgid "Configure general AI Assistant settings."
-msgstr ""
-
-msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
-msgstr ""
-
-msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
-msgstr ""
-
-msgid "Enable AI Assistant functionality"
-msgstr ""
-
-msgid "Select the default AI model to use for requests."
-msgstr ""
-
-msgid "Select your preferred AI provider for requests."
-msgstr ""
-
-msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
-msgstr ""
-
-msgid "Customize the prompt for content suggestions."
-msgstr ""
-
-msgid "Customize the prompt for SEO keyword suggestions."
-msgstr ""
-
-msgid "Invalid URL provided"
-msgstr ""
-
-msgid "No content found at the URL"
-msgstr ""
-
-msgid "Could not extract content from the URL"
-msgstr ""
-
-msgid "Could not detect language"
-msgstr ""
-
-
-# Metabox Guide Strings - v1.0.51
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:671
 msgid "AI Assistant Quick Guide"
 msgstr "Guía Rápida del Asistente IA"
 
-msgid "Show/Hide Tips"
-msgstr "Mostrar/Ocultar Consejos"
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:205
+msgid "AI Assistant Settings"
+msgstr "Configuración del asistente IA"
 
-msgid "Translate any text content. Paste your text, choose languages, and get instant translations."
-msgstr "Traduzca cualquier contenido de texto. Pegue su texto, elija idiomas y obtenga traducciones instantáneas."
-
-msgid "Translate entire articles from URLs. Enter a web address to fetch and translate content automatically."
-msgstr "Traduzca artículos completos desde URLs. Ingrese una dirección web para obtener y traducir contenido automáticamente."
-
-msgid "Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic."
-msgstr "Genere ideas de contenido, palabras clave SEO, meta descripciones o artículos completos basados en su tema."
-
-msgid "Generate custom images using AI. Describe what you want and get professional images for your posts."
-msgstr "Genere imágenes personalizadas usando IA. Describa lo que quiere y obtenga imágenes profesionales para sus publicaciones."
-
-msgid "Quick Workflow Tips:"
-msgstr "Consejos de Flujo de Trabajo Rápido:"
-
-msgid "Next Steps:"
-msgstr "Siguientes Pasos:"
-
-msgid "Pro Tip:"
-msgstr "Consejo Pro:"
-
-msgid "Image Tips:"
-msgstr "Consejos de Imagen:"
-
-
-# Additional Metabox Strings - v1.0.51
-msgid "Translate text content between languages. Use \"Use Post Content\" to quickly populate with your current post content, or paste any text to translate."
-msgstr "Traduzca contenido de texto entre idiomas. Use \"Usar Contenido de la Publicación\" para completar rápidamente con su contenido de publicación actual, o pegue cualquier texto para traducir."
-
-msgid "Translate entire articles from web URLs. Enter any article URL, fetch the content automatically, then translate it to your target language."
-msgstr "Traduzca artículos completos desde URLs web. Ingrese cualquier URL de artículo, obtenga el contenido automáticamente, luego tradúzcalo a su idioma objetivo."
-
-msgid "Generate content using AI. Choose content type (articles, keywords, descriptions), enter your topic, and let AI create professional content for your posts."
-msgstr "Genere contenido usando IA. Elija el tipo de contenido (artículos, palabras clave, descripciones), ingrese su tema y deje que la IA cree contenido profesional para sus publicaciones."
-
-msgid "Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts."
-msgstr "Genere imágenes personalizadas usando IA. Describa la imagen que desea en detalle, elija un estilo y cree imágenes profesionales para sus publicaciones."
-
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:957
 msgid "AI Assistant Tools Available:"
 msgstr "Herramientas de Asistente IA Disponibles:"
 
-msgid "✓ Content Translation"
-msgstr "✓ Traducción de Contenido"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:470
+msgid "AI Assistant Updated to v%s"
+msgstr ""
 
-msgid "✓ URL Article Translation"
-msgstr "✓ Traducción de Artículo URL"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:456
+msgid "AI Assistant for WordPress"
+msgstr ""
 
-msgid "✓ Content Generation"
-msgstr "✓ Generación de Contenido"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:469
+msgid "AI Assistant v%s - Major Enhancement!"
+msgstr ""
 
-msgid "✓ AI Image Creation"
-msgstr "✓ Creación de Imagen IA"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:740
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:740
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:740
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:740
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:672
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:672
+msgid "AI Model"
+msgstr "Modelo IA"
 
-msgid "Open AI Assistant Panel"
-msgstr "Abrir Panel de Asistente IA"
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1194
+msgid "AI Service not available. Please check plugin installation."
+msgstr ""
 
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2569
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1036
+msgid "AI Translate"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1225
+msgid "AI service not available."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1767
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:296
+msgid "API Configuration"
+msgstr "Configuración API"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:272
+msgid "API Connection Test"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:366
+msgid "API Connection Test Results:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1590
+msgid "API Error (%d): %s"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1396
+msgid "API Error: %s"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:47
+msgid "API Keys"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1393
+msgid "API authentication failed. Please check your API key configuration."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:219
+msgid "API configured"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:221
+msgid "API not configured"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:313
+msgid "API quota exceeded. Please try again later."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1389
+msgid "API rate limit exceeded. Please wait a few minutes before trying again."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:393
+msgid "API test failed - AJAX error. Check console for details."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:891
+msgid "Abstract"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:968
 msgid "Access the full-featured AI tools in the main content area below."
 msgstr "Acceda a las herramientas IA completas en el área de contenido principal a continuación."
 
-msgid "Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere."
-msgstr "Una vez que la traducción esté completa, puede insertarla directamente en el contenido de su publicación o copiarla para usar en otro lugar."
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2531
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:454
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:454
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:454
+msgid "Actions"
+msgstr "Acciones"
 
-msgid "For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active."
-msgstr "Para palabras clave SEO, las palabras clave generadas llenarán automáticamente los campos de Yoast SEO si el plugin está activo."
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:129
+msgid "Active AI models"
+msgstr "Modelos IA activos"
 
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:248
+msgid "Admin Interface Language"
+msgstr "Idioma de la interfaz de administración"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1400
+msgid "All %d translation attempts failed. "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:94
+msgid "Anthropic API Key"
+msgstr "Clave API Anthropic"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1482
+msgid "Anthropic API key not configured for the selected model."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:2095
+msgid "Anthropic Claude does not support direct image generation yet. However, Claude enhanced your prompt: "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:2105
+msgid "Anthropic Claude does not support direct image generation. Please use OpenAI (DALL-E) or Google Gemini for image generation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:858
+msgid "Apply to Yoast SEO"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:579
+msgid "Arabic"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:769
+msgid "Article URL"
+msgstr "URL del artículo"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:685
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:685
+msgid "Associated Post"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1047
+msgid "Auto Translate All Empty Strings"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:912
+msgid "Auto-Generate Prompt"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:576
+msgid "Auto-detect"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:824
+msgid "Available .mo files (%d):"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:589
+msgid "Azerbaijani"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:787
+msgid "Basic Information"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:940
 msgid "Be descriptive in your prompt for best results. Include style, colors, mood, and composition details."
 msgstr "Sea descriptivo en su solicitud para obtener mejores resultados. Incluya estilo, colores, estado de ánimo y detalles de composición."
 
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:474
+msgid "Bug fixes, improvements, and optimizations for better performance."
+msgstr ""
 
-msgid "💡 Use "Use Post Content" to quickly populate the translator with your existing content"
-msgstr "💡 Usa "Usar Contenido del Post" para llenar rápidamente el traductor con tu contenido existente"
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:308
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:308
+msgid "Check Database"
+msgstr ""
 
-msgid "🔄 Review and edit translations before inserting them into your post"
-msgstr "🔄 Revisa y edita las traducciones antes de insertarlas en tu publicación"
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:303
+msgid "Check database tables and data integrity for AI Assistant."
+msgstr ""
 
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:429
+msgid "Checking database health..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:428
+msgid "Checking..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:584
+msgid "Chinese"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:328
+msgid "Clear AI Cache"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:318
+msgid "Compilation Tools"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1599
+msgid "Compilation failed: "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1600
+msgid "Compilation request failed. Please try again."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1601
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:324
+msgid "Compile All .mo Files"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1584
+msgid "Compiling .mo files..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2614
+msgid "Complete"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2686
+msgid "Complete missing translations and compile .mo files to activate more languages."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:151
+msgid "Configure API keys for different AI providers. Currently using Gemini for translations, but you can configure multiple providers for future use."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:139
+msgid "Configure Settings"
+msgstr "Configurar ajustes"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:146
+msgid "Configure general AI Assistant settings."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1769
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:147
+msgid "Configured"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:456
+msgid "Connected"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:709
+msgid "Content Comparison"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:848
+msgid "Content Details"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:818
+msgid "Content Enhancement"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:118
+msgid "Content Suggestion Prompt"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:813
+msgid "Content Suggestions"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:535
+msgid "Content Suggestions History"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:691
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:691
+msgid "Content Tools"
+msgstr "Herramientas de contenido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:812
+msgid "Content Type"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:108
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:108
+msgid "Content cannot be empty"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:549
+msgid "Content fetched successfully!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:573
+msgid "Content for enhancement should be between 10 and 25,000 characters."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:552
+msgid "Content generation failed"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:572
+msgid "Content is too short for meaningful processing."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:125
+msgid "Content suggestions"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1391
+msgid "Content too long for API processing. Try translating fewer strings at once."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:840
+msgid "Context"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:412
+msgid "Copy the above information when reporting issues."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-translator.php:770
+msgid "Could not detect language"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-translator.php:564
+msgid "Could not extract content from the URL"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:143
+msgid "Create New Post"
+msgstr "Crear nueva entrada"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:790
+msgid "Custom Language Setting:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:54
+msgid "Custom Prompts"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:846
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:846
+msgid "Custom load result:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:289
+msgid "Customize the prompt for SEO keyword suggestions."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:277
+msgid "Customize the prompt for content suggestions."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:265
+msgid "Customize the prompt for translation requests. Use {source_language} and {target_language} as placeholders."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:158
+msgid "Customize the prompts sent to AI models. Use placeholders like {source_language} and {target_language} for translation prompts."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:588
+msgid "Danish"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1777
+msgid "Database"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:455
+msgid "Database Connection:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:302
+msgid "Database Health Check"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:436
+msgid "Database Health Check Results:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:465
+msgid "Database check failed - AJAX error"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:441
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:441
+msgid "Database error: %s"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:448
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:448
+msgid "Date"
+msgstr "Fecha"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:650
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:650
+msgid "Date & Time"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:70
+msgid "Default AI Model"
+msgstr "Modelo IA predeterminado"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:879
+msgid "Describe the image you want to generate (e.g., A modern office workspace with laptop and coffee)..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:35
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:35
+msgid "Diagnostics"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:888
+msgid "Digital Art"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:35
+msgid "Direct access not allowed."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:96
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:96
+msgid "Directory:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1760
+msgid "Disabled"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1050
+msgid "Download .po File"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:934
+msgid "Download Image"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:587
+msgid "Dutch"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:743
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:743
+msgid "Edit Associated Post"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:944
+msgid "Edit the plugin interface translations directly from .po files. Changes are saved to the language files and compiled automatically."
+msgstr "Edite las traducciones de la interfaz del plugin directamente desde archivos .po. Los cambios se guardan en los archivos de idioma y se compilan automáticamente."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:752
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:752
+msgid "Editable"
+msgstr "Editable"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:973
+msgid "Editing: %s"
+msgstr "Editando: %s"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:544
+msgid "Editor content is empty."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:62
+msgid "Enable AI Assistant"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:167
+msgid "Enable AI Assistant functionality"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1760
+msgid "Enabled"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:577
+msgid "English"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2528
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1002
+msgid "English Text (msgid)"
+msgstr "Texto en inglés (msgid)"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:541
+msgid "Enhance"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:292
+msgid "Enhanced content appears shorter than original. You may want to try again."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:473
+msgid "Enhanced features, improved performance, better error handling, and new capabilities. Your AI Assistant is more powerful than ever!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:542
+msgid "Enhancing..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:753
+msgid "Enter or paste content to translate..."
+msgstr "Ingrese o pegue contenido para traducir..."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:829
+msgid "Enter topic or paste existing content to improve..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2553
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1021
+msgid "Enter translation..."
+msgstr "Ingresar traducción..."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:537
+msgid "Error"
+msgstr "Error"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1578
+msgid "Error saving settings"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:339
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:339
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:339
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:339
+msgid "Error:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:444
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:444
+msgid "Exists"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:816
+msgid "Expected .mo file:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:840
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:840
+msgid "FAILED"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:851
+msgid "FAILED - .mo file not found"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:456
+msgid "Failed"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:305
+msgid "Failed to enhance content"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:550
+msgid "Failed to fetch content"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1955
+msgid "Failed to process generated image"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2253
+msgid "Failed to save translations. Please check file permissions."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:564
+msgid "Failed to set featured image"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1922
+msgid "Failed to set featured image."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:696
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:696
+msgid "Featured Image"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:563
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:563
+msgid "Featured image set successfully!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:546
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:778
+msgid "Fetch Content"
+msgstr "Obtener contenido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:784
+msgid "Fetched content will appear here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:539
+msgid "Fetching..."
+msgstr "Obteniendo..."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:809
+msgid "File Information"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:594
+msgid "Finnish"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:864
+msgid "For SEO keywords, the generated keywords will automatically populate Yoast SEO fields if the plugin is active."
+msgstr "Para palabras clave SEO, las palabras clave generadas llenarán automáticamente los campos de Yoast SEO si el plugin está activo."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:97
+msgid "Found"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:581
+msgid "French"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:450
+msgid "From"
+msgstr "De"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:814
+msgid "Full Article"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1684
+msgid "Gemini 2.0 API error (%d): %s"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:102
+msgid "Gemini API Key"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1944
+msgid "Gemini image generation feature is not enabled for your API key. Please use OpenAI (DALL-E) for image generation or try requesting access to Gemini image generation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1915
+msgid "Gemini image generation is not available in your region or requires special access. API Error (%d): %s. Please use OpenAI (DALL-E) for image generation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1496
+msgid "Gemini image generation is not available. Used OpenAI DALL-E instead."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1927
+msgid "Gemini image generation not available. Please use OpenAI (DALL-E) for image generation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:40
+msgid "General Settings"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:548
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:841
+msgid "Generate"
+msgstr "Generar"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:915
+msgid "Generate Image"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:293
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:293
+msgid "Generate Report"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:288
+msgid "Generate a comprehensive system report for troubleshooting and support requests."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:936
+msgid "Generate an image, then use the buttons above to set it as featured image or download"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:806
+msgid "Generate and enhance content using AI. Choose content type (articles, keywords, descriptions, or content improvements), enter your topic or paste existing content, and let AI create or improve professional content for your posts."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:692
+msgid "Generate content ideas, SEO keywords, meta descriptions, or complete articles based on your topic."
+msgstr "Genere ideas de contenido, palabras clave SEO, meta descripciones o artículos completos basados en su tema."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:872
+msgid "Generate custom images using AI. Describe the image you want in detail, choose a style, and create professional images for your posts."
+msgstr "Genere imágenes personalizadas usando IA. Describa la imagen que desea en detalle, elija un estilo y cree imágenes profesionales para sus publicaciones."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:697
+msgid "Generate custom images using AI. Describe what you want and get professional images for your posts."
+msgstr "Genere imágenes personalizadas usando IA. Describa lo que quiere y obtenga imágenes profesionales para sus publicaciones."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:848
+msgid "Generated Content"
+msgstr "Contenido generado"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:922
+msgid "Generated Image Preview"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:864
+msgid "Generated Suggestion"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:849
+msgid "Generated content will appear here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:924
+msgid "Generated image will appear here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:559
+msgid "Generating image..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:558
+msgid "Generating prompt..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:405
+msgid "Generating system report..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:540
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:404
+msgid "Generating..."
+msgstr "Generando..."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:582
+msgid "German"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:598
+msgid "Global"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:841
+msgid "Global suggestion (not associated with a specific post)"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:494
+msgid "Go to Settings"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1505
+msgid "Google Gemini API key not configured for the selected model."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:819
+msgid "Grammar & Style Enhancement"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1490
+msgid "HTML content not found or expired."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:887
+msgid "Illustration"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:878
+msgid "Image Description/Prompt"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:895
+msgid "Image Size"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:884
+msgid "Image Style"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:939
+msgid "Image Tips:"
+msgstr "Consejos de Imagen:"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:560
+msgid "Image generated successfully!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:561
+msgid "Image generation failed"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1853
+msgid "Image generation is not available. Please check your AI service configuration."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1534
+msgid "Image generation requires at least one configured AI provider (OpenAI, Google Gemini, or Anthropic Claude). Please configure your API keys in plugin settings."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:823
+msgid "Improve Engagement"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:820
+msgid "Improve Readability"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2617
+msgid "In Progress"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:552
+msgid "Input Text"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:852
+msgid "Input/Context"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:792
+msgid "Insert Translated Content"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:855
+msgid "Insert to Editor"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:740
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:740
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:740
+msgid "Insufficient permissions"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1074
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1074
+msgid "Insufficient permissions."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-translator.php:532
+msgid "Invalid URL provided"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1599
+msgid "Invalid response from image generation API"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:591
+msgid "Kyrgyz"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:898
+msgid "Landscape (1792x1024)"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:781
+msgid "Language Loading Debug Test Results"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:244
+msgid "Language Settings"
+msgstr "Configuración de idioma"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:105
+msgid "Language System"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:257
+msgid "Language System Test"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:337
+msgid "Language Test Results:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1580
+msgid "Language changed. The page will reload to apply the new language."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:926
+msgid "Language directory is not writable"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:926
+msgid "Language directory is writable"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:870
+msgid "Language loading test completed"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1432
+msgid "Language parameter missing."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1547
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:198
+msgid "Language settings saved successfully."
+msgstr "Configuración de idioma guardada exitosamente."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:191
+msgid "Language settings saved successfully. This is your personal language setting for AI Assistant."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:122
+msgid "Loaded"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2653
+msgid "Manage"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:319
+msgid "Manage .mo file compilation for all languages."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:836
+msgid "Manual Language Loading Test"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:486
+msgid "Manual Translation"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:235
+msgid "Max Execution Time:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:231
+msgid "Memory Limit:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:816
+msgid "Meta Description"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:889
+msgid "Minimalist"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2561
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:97
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:444
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:444
+msgid "Missing"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1215
+msgid "Missing language or no valid strings to translate found."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1894
+msgid "Missing post ID or image URL."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:452
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:452
+msgid "Model"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:160
+msgid "Multilingual Status"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:213
+msgid "Multisite:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:227
+msgid "MySQL Version:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+msgid "NO"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:790
+msgid "NOT SET"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1577
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1577
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1577
+msgid "Network error: "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:797
+msgid "Next Steps:"
+msgstr "Siguientes Pasos:"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:91
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:91
+msgid "No"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1238
+msgid "No AI service API keys configured. Please check your settings."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1769
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:907
+msgid "No API keys configured"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1473
+msgid "No cache key provided."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-translator.php:554
+msgid "No content found at the URL"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:2007
+msgid "No image generation models available. Please configure at least one AI provider."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1384
+msgid "No strings could be translated. "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:566
+msgid "No suggestions found. Start using the AI Assistant to generate content suggestions."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1291
+msgid "No text provided for suggestions."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1597
+msgid "No text to translate."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:964
+msgid "No translation file found - will create new"
+msgstr "No se encontró archivo de traducción - se creará uno nuevo"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2521
+msgid "No translations found for this language."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:463
+msgid "No translations found. Try performing some translations to see them here."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1585
+msgid "No untranslated strings found."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2610
+msgid "Not Available"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:122
+msgid "Not Loaded"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:147
+msgid "Not Set"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:283
+msgid "Note: Each user can choose their own preferred language for the AI Assistant plugin."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:798
+msgid "Once translation is complete, you can insert it directly into your post content or copy it for use elsewhere."
+msgstr "Una vez que la traducción esté completa, puede insertarla directamente en el contenido de su publicación o copiarla para usar en otro lugar."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:966
+msgid "Open AI Assistant Panel"
+msgstr "Abrir Panel de Asistente IA"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:86
+msgid "OpenAI API Key"
+msgstr "Clave API OpenAI"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:1471
+msgid "OpenAI API key not configured for the selected model."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:783
+msgid "Original Article"
+msgstr "Artículo original"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:713
+msgid "Original Content"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:223
+msgid "PHP Version:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:569
+msgid "Paste the content you want to adjust the tone for here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:567
+msgid "Paste the content you want to improve for grammar and style here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:574
+msgid "Paste the content you want to make more engaging here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:570
+msgid "Paste the content you want to optimize for SEO here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:568
+msgid "Paste the content you want to optimize for readability here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:585
+msgid "Persian"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:886
+msgid "Photorealistic"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1402
+msgid "Please check your API configuration and try again."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:492
+msgid "Please configure your AI provider API keys to start using the plugin."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:555
+msgid "Please enter a URL to fetch."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:556
+msgid "Please enter a topic or context."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:565
+msgid "Please enter an image description."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:554
+msgid "Please enter content to translate."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1184
+msgid "Please provide a topic or context for content generation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1826
+msgid "Please provide an image description."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1179
+msgid "Please provide content to improve for this operation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-ai-service.php:2095
+msgid "Please use OpenAI (DALL-E) or Google Gemini for actual image generation."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:90
+msgid "Plugin Active:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:115
+msgid "Plugin Language:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1758
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:79
+msgid "Plugin Status"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+msgid "Plugin Textdomain Loaded:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:899
+msgid "Portrait (1024x1792)"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:586
+msgid "Portuguese"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:556
+msgid "Post"
+msgstr "Entrada"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:596
+msgid "Post #%d"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:481
+msgid "Post #%d (deleted)"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:832
+msgid "Post ID: %d"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:449
+msgid "Post/URL"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:78
+msgid "Preferred AI Provider"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:863
+msgid "Pro Tip:"
+msgstr "Consejo Pro:"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:543
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1577
+msgid "Processing..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:890
+msgid "Professional/Business"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:135
+msgid "Quick Actions"
+msgstr "Acciones rápidas"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:701
+msgid "Quick Workflow Tips:"
+msgstr "Consejos de Flujo de Trabajo Rápido:"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:311
+msgid "Rate limit reached. Please try again in a few minutes."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:180
+msgid "Read-only"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:417
+msgid "Report generation failed - AJAX error"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:309
+msgid "Request timed out. Please try with shorter content or try again later."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:794
+msgid "Review and edit the translation above, then click to insert into WordPress editor"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:860
+msgid "Review the generated content above, then choose an action"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:263
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:263
+msgid "Run Language Test"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:330
+msgid "Running language loading test..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:583
+msgid "Russian"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:822
+msgid "SEO Content Optimization"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:815
+msgid "SEO Keywords"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:126
+msgid "SEO Keywords Prompt"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:840
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:840
+msgid "SUCCESS"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:300
+msgid "Save API Settings"
+msgstr "Guardar configuración de API"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:288
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:288
+msgid "Save Language Settings"
+msgstr "Guardar configuración de idioma"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1045
+msgid "Save Translations to .po File"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1576
+msgid "Saved!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1575
+msgid "Saving..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:988
+msgid "Search translations..."
+msgstr "Buscar traducciones..."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1070
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1070
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1070
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1070
+msgid "Security check failed."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:948
+msgid "Select Language to Edit"
+msgstr "Seleccionar idioma para editar"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:201
+msgid "Select the default AI model to use for requests."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:221
+msgid "Select your preferred AI provider for requests."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:220
+msgid "Server Environment"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:931
+msgid "Set as Featured Image"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:562
+msgid "Setting featured image..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:79
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:79
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:79
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:800
+msgid "Settings"
+msgstr "Configuración"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:995
+msgid "Show translate buttons for all strings"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:991
+msgid "Show untranslated only"
+msgstr "Mostrar solo sin traducir"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:674
+msgid "Show/Hide Tips"
+msgstr "Mostrar/Ocultar Consejos"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:209
+msgid "Site URL:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:752
+msgid "Source Content"
+msgstr "Contenido fuente"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:738
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:738
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:654
+msgid "Source Language"
+msgstr "Idioma de origen"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:696
+msgid "Source URL"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:580
+msgid "Spanish"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:897
+msgid "Square (1024x1024)"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2530
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:453
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:453
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:453
+msgid "Status"
+msgstr "Estado"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2630
+msgid "Strings:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1582
+msgid "Success!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1080
+msgid "Successfully compiled %d .mo files"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1595
+msgid "Successfully translated "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:553
+msgid "Suggestion"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:779
+msgid "Suggestion Details"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:790
+msgid "Suggestion ID"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:787
+msgid "Suggestion Information"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:809
+msgid "Suggestion Type"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:773
+msgid "Suggestion not found."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:400
+msgid "Suggestions"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:449
+msgid "Suggestions Table:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:539
+msgid "Suggestions history table does not exist. Please contact your administrator."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:568
+msgid "Suggestions history table not available."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2675
+msgid "Summary"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:412
+msgid "System Report Generated:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:287
+msgid "System Report Generator"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:153
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:153
+msgid "System Status"
+msgstr "Estado del sistema"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1779
+msgid "Tables created"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1779
+msgid "Tables missing"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:739
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:739
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:663
+msgid "Target Language"
+msgstr "Idioma de destino"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:306
+msgid "Test API Connection"
+msgstr "Probar conexión API"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:278
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:278
+msgid "Test API Connections"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:273
+msgid "Test API connections and verify configuration for all providers."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:310
+msgid "Test Gemini API"
+msgstr "Probar API de Gemini"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1583
+msgid "Test failed"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:342
+msgid "Test failed - AJAX error"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:258
+msgid "Test language loading functionality and view detailed debug information."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:849
+msgid "Test translation after manual load:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:307
+msgid "Test your Gemini API key to ensure it is working correctly."
+msgstr "Pruebe su clave API de Gemini para asegurar que funciona correctamente."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:357
+msgid "Testing API connections..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1581
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:329
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:329
+msgid "Testing..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:121
+msgid "Textdomain:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-content-analyzer.php:272
+msgid "The AI service returned an empty response. Please try again in a moment."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:63
+msgid "This page provides comprehensive system information and debugging tools for troubleshooting AI Assistant issues."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1586
+msgid "This will attempt to auto-translate "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:334
+msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1598
+msgid "This will compile all .po files to .mo files. Required for translations to work in WordPress. Continue?"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:817
+msgid "Title Ideas"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:451
+msgid "To"
+msgstr "A"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:821
+msgid "Tone & Style Adjustment"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:828
+msgid "Topic/Content"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:681
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:681
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1117
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:801
+msgid "Translate"
+msgstr "Traducir"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:547
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:779
+msgid "Translate Article"
+msgstr "Traducir artículo"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:545
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:747
+msgid "Translate Content"
+msgstr "Traducir contenido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:682
+msgid "Translate any text content. Paste your text, choose languages, and get instant translations."
+msgstr "Traduzca cualquier contenido de texto. Pegue su texto, elija idiomas y obtenga traducciones instantáneas."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:687
+msgid "Translate entire articles from URLs. Enter a web address to fetch and translate content automatically."
+msgstr "Traduzca artículos completos desde URLs. Ingrese una dirección web para obtener y traducir contenido automáticamente."
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:764
+msgid "Translate entire articles from web URLs. Enter any article URL, fetch the content automatically, then translate it to your target language."
+msgstr "Traduzca artículos completos desde URLs web. Ingrese cualquier URL de artículo, obtenga el contenido automáticamente, luego tradúzcalo a su idioma objetivo."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1590
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1590
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1029
+msgid "Translated"
+msgstr "Traducido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:787
+msgid "Translated Article"
+msgstr "Artículo traducido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:756
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:725
+msgid "Translated Content"
+msgstr "Contenido traducido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:788
+msgid "Translated article will appear here..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:538
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1588
+msgid "Translating..."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2529
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1003
+msgid "Translation (msgstr)"
+msgstr "Traducción (msgstr)"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:635
+msgid "Translation Details"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:158
+msgid "Translation Files"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:89
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:89
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:433
+msgid "Translation History"
+msgstr "Historial de traducciones"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:646
+msgid "Translation ID"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:643
+msgid "Translation Information"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:99
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:99
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:99
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:939
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:802
+msgid "Translation Management"
+msgstr "Gestión de traducciones"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-settings.php:110
+msgid "Translation Prompt"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:797
+msgid "Translation Tests"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:551
+msgid "Translation failed"
+msgstr "Traducción fallida"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1592
+msgid "Translation failed for this string."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1591
+msgid "Translation failed: "
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:961
+msgid "Translation file exists"
+msgstr "El archivo de traducción existe"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1441
+msgid "Translation file not found."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:437
+msgid "Translation history table does not exist. Please contact your administrator."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:465
+msgid "Translation history table not available."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:629
+msgid "Translation not found."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1593
+msgid "Translation request failed. Please try again."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:757
+msgid "Translation will appear here..."
+msgstr "La traducción aparecerá aquí..."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:396
+msgid "Translations"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:443
+msgid "Translations Table:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:229
+msgid "Translations loaded"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2244
+msgid "Translations saved successfully to %s and compiled to %s. Changes are now active in the plugin interface."
+msgstr "Traducciones guardadas exitosamente en %s y compiladas en %s. Los cambios están ahora activos en la interfaz del plugin."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:2248
+msgid "Translations saved successfully to %s. Warning: Failed to compile .mo file - translations may not appear in plugin interface."
+msgstr "Traducciones guardadas exitosamente en %s. Advertencia: Falló la compilación del archivo .mo - las traducciones pueden no aparecer en la interfaz del plugin."
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1535
+msgid "Translations saved successfully!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:121
+msgid "Translations this month"
+msgstr "Traducciones este mes"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:578
+msgid "Turkish"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:595
+msgid "Turkmen"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:554
+msgid "Type"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:686
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:686
+msgid "URL Translation"
+msgstr "Traducción de URL"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1186
+msgid "Unauthorized access."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:804
+msgid "Unknown User"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1594
+msgid "Unknown error"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:840
+msgid "Unload result:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1031
+msgid "Untranslated"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:593
+msgid "Urdu"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:117
+msgid "Usage Statistics"
+msgstr "Estadísticas de uso"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:1053
+msgid "Use AI to translate empty interface strings automatically, or fill them manually for better accuracy."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:746
+msgid "Use Post Content"
+msgstr "Usar contenido de la entrada"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:838
+msgid "Use Post Title"
+msgstr "Usar título de la entrada"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:551
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:551
+msgid "User"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:592
+msgid "Uyghur"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:590
+msgid "Uzbek"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:84
+msgid "Version:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:500
+msgid "View"
+msgstr "Ver"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:603
+msgid "View Details"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:236
+msgid "View Diagnostics"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:147
+msgid "View History"
+msgstr "Ver historial"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:110
+msgid "WP Locale:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:198
+msgid "WordPress Environment"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:205
+msgid "WordPress Language:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:789
+msgid "WordPress Locale:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:201
+msgid "WordPress Version:"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:180
+msgid "Writable"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:791
+msgid "YES"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:91
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:91
+msgid "Yes"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:1033
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:715
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:715
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:715
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:715
+msgid "characters"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:457
+msgid "has been successfully activated!"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:226
+msgid "languages available"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:444
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:444
+msgid "records"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:977
+msgid "total strings"
+msgstr "cadenas totales"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:980
+msgid "translated"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:983
+msgid "untranslated"
+msgstr "sin traducir"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:637
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:637
+msgid "← Back to History"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:781
+#: D:\Work\WordPress\ai-assistant\includes\class-admin.php:781
+msgid "← Back to Suggestions"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:705
 msgid "⚙️ Configure your API keys in Settings for enhanced translation quality"
 msgstr "⚙️ Configura tus claves API en Configuración para una calidad de traducción mejorada"
 
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:962
+msgid "✓ AI Image Creation"
+msgstr "✓ Creación de Imagen IA"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:961
+msgid "✓ Content Generation"
+msgstr "✓ Generación de Contenido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:959
+msgid "✓ Content Translation"
+msgstr "✓ Traducción de Contenido"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:960
+msgid "✓ URL Article Translation"
+msgstr "✓ Traducción de Artículo URL"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:69
+msgid "📊 System Status Dashboard"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:706
 msgid "📝 Generated content can be directly inserted into your WordPress editor"
 msgstr "📝 El contenido generado se puede insertar directamente en tu editor de WordPress"
+
+#: D:\Work\WordPress\ai-assistant\ai-assistant.php:704
+msgid "🔄 Review and edit translations before inserting them into your post"
+msgstr "🔄 Revisa y edita las traducciones antes de insertarlas en tu publicación"
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:62
+msgid "🔍 Diagnostics & System Information"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:248
+msgid "🔧 Diagnostic Tools"
+msgstr ""
+
+#: D:\Work\WordPress\ai-assistant\includes\class-diagnostics.php:192
+msgid "🖥️ System Environment"
+msgstr ""
+

@@ -1,6 +1,6 @@
 /**
  * AI Assistant Admin Styles
- * Version: 1.0.58
+ * Version: 1.0.71
  */
 
 /* ==========================================================================
@@ -500,6 +500,11 @@
     padding: 2px 6px;
 }
 
+.actions-cell {
+    text-align: center;
+    min-width: 80px;
+}
+
 /* Compilation Tools Section */
 .compile-tools-section {
     background: #f8f9fa;
@@ -960,14 +965,14 @@ textarea:focus {
     max-width: 300px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .input-text-preview {
     max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: normal;
     font-style: italic;
     color: #666;
 }

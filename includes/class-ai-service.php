@@ -154,11 +154,12 @@ class AI_Assistant_AI_Service {
                 'model' => $this->get_current_model()
             );
             
-            // Cache the result
+            // Cache the result only if successful
             $this->set_cached_result($cache_key, $result);
             
             return $result;
         } else {
+            // Don't cache failed responses
             return $response;
         }
     }
@@ -195,19 +196,20 @@ class AI_Assistant_AI_Service {
      *
      * @param string $prompt The prompt to send
      * @param string $model Optional model to use
+     * @param array $options Optional parameters like temperature, max_tokens
      * @return array Response data
      */
-    private function make_api_request($prompt, $model = '') {
+    private function make_api_request($prompt, $model = '', $options = array()) {
         $provider = $this->get_current_provider();
         
         switch ($provider) {
             case 'openai':
-                return $this->make_openai_request($prompt, $model);
+                return $this->make_openai_request($prompt, $model, $options);
             case 'anthropic':
-                return $this->make_anthropic_request($prompt, $model);
+                return $this->make_anthropic_request($prompt, $model, $options);
             case 'gemini':
             default:
-                return $this->make_gemini_request($prompt, $model);
+                return $this->make_gemini_request($prompt, $model, $options);
         }
     }
     
@@ -224,9 +226,9 @@ class AI_Assistant_AI_Service {
     private function map_model_name($model) {
         $model_mapping = array(
             // Current recommended models (2025)
-            'gemini-2.5-pro' => 'gemini-2.5-pro',
             'gemini-2.5-flash' => 'gemini-2.5-flash',
             'gemini-2.5-flash-lite' => 'gemini-2.5-flash-lite',
+            'gemini-2.5-pro' => 'gemini-2.5-pro',
             'gemini-2.0-flash' => 'gemini-2.0-flash',
             
             // Legacy mappings for backward compatibility (deprecated models)
@@ -249,9 +251,10 @@ class AI_Assistant_AI_Service {
      *
      * @param string $prompt The prompt to send
      * @param string $model Optional model to use
+     * @param array $options Optional parameters like temperature, max_tokens
      * @return array Response data
      */
-    private function make_gemini_request($prompt, $model = '') {
+    private function make_gemini_request($prompt, $model = '', $options = array()) {
         // Use provided model or get current default
         $selected_model = !empty($model) ? $model : $this->get_current_model();
         
@@ -277,22 +280,53 @@ class AI_Assistant_AI_Service {
         
         $url = "https://generativelanguage.googleapis.com/v1beta/models/{$api_model_name}:generateContent?key=" . $this->api_key;
         
-        $body = array(
-            'contents' => array(
-                array(
-                    'parts' => array(
-                        array(
-                            'text' => $prompt
-                        )
+        // Default generation config
+        $generation_config = array(
+            'temperature' => isset($options['temperature']) ? $options['temperature'] : 0.3,
+            'topK' => 40,
+            'topP' => 0.95,
+            'maxOutputTokens' => isset($options['max_tokens']) ? $options['max_tokens'] : 16384,
+        );
+        
+        // For simple translations, try to minimize reasoning tokens
+        if (isset($options['simple_translation']) && $options['simple_translation']) {
+            $generation_config['temperature'] = 0.1;
+            $generation_config['topK'] = 1;
+            $generation_config['topP'] = 0.1;
+        }
+        
+        // For content enhancement, try to balance creativity with efficiency
+        if (isset($options['content_enhancement']) && $options['content_enhancement']) {
+            $generation_config['topK'] = 20; // Reduced from default 40 to limit reasoning
+            $generation_config['topP'] = 0.8; // Reduced from default 0.95 to focus responses
+        }
+        
+        $contents = array(
+            array(
+                'parts' => array(
+                    array(
+                        'text' => $prompt
                     )
-                )
-            ),
-            'generationConfig' => array(
-                'temperature' => 0.3,
-                'topK' => 40,
-                'topP' => 0.95,
-                'maxOutputTokens' => 16384, // Increased for longer translations
-            ),
+                ),
+                'role' => 'user'
+            )
+        );
+        
+        // Add system instruction for simple translations to reduce reasoning
+        if (isset($options['simple_translation']) && $options['simple_translation']) {
+            array_unshift($contents, array(
+                'parts' => array(
+                    array(
+                        'text' => 'You are a direct translator. Provide only the translation without reasoning or explanation.'
+                    )
+                ),
+                'role' => 'user'
+            ));
+        }
+        
+        $body = array(
+            'contents' => $contents,
+            'generationConfig' => $generation_config,
             'safetySettings' => array(
                 array(
                     'category' => 'HARM_CATEGORY_HARASSMENT',
@@ -342,6 +376,17 @@ class AI_Assistant_AI_Service {
             
             if (isset($error_data['error']['message'])) {
                 $error_message .= ': ' . $error_data['error']['message'];
+            } elseif (isset($error_data['error']['details'])) {
+                // Some APIs provide details in different structure
+                $error_message .= ': ' . (is_array($error_data['error']['details']) ? 
+                    implode(', ', $error_data['error']['details']) : 
+                    $error_data['error']['details']);
+            } elseif ($response_code === 429) {
+                // Rate limiting - provide specific message
+                $error_message = 'Rate limit exceeded. Please wait a few minutes before trying again.';
+            } elseif ($response_code === 403) {
+                // Quota exceeded
+                $error_message = 'API quota exceeded. Please check your API key or try again later.';
             }
             
             if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -361,6 +406,12 @@ class AI_Assistant_AI_Service {
             AIAssistant::log('Gemini API response code: ' . $response_code, true);
             AIAssistant::log('Gemini API full response: ' . $response_body, true);
             AIAssistant::log('Gemini API response data structure: ' . print_r(array_keys($data), true), true);
+            
+            // Check for finish reason
+            if (isset($data['candidates'][0]['finishReason'])) {
+                AIAssistant::log('Gemini API finish reason: ' . $data['candidates'][0]['finishReason'], true);
+            }
+            
             if (isset($data['candidates'][0]['content']['parts'][0]['text'])) {
                 $response_text = $data['candidates'][0]['content']['parts'][0]['text'];
                 AIAssistant::log('Gemini API response text length: ' . strlen($response_text), true);
@@ -370,6 +421,7 @@ class AI_Assistant_AI_Service {
             }
         }
         
+        // Check if response structure is valid
         if (!isset($data['candidates'][0]['content']['parts'][0]['text'])) {
             return array(
                 'success' => false,
@@ -377,9 +429,26 @@ class AI_Assistant_AI_Service {
             );
         }
         
+        $response_text = trim($data['candidates'][0]['content']['parts'][0]['text']);
+        
+        // Check for MAX_TOKENS finish reason with empty content
+        if (isset($data['candidates'][0]['finishReason']) && 
+            $data['candidates'][0]['finishReason'] === 'MAX_TOKENS' && 
+            empty($response_text)) {
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log('Gemini API hit MAX_TOKENS with empty response - treating as failure', true);
+            }
+            
+            return array(
+                'success' => false,
+                'error' => 'Response truncated due to token limit (MAX_TOKENS)'
+            );
+        }
+        
         return array(
             'success' => true,
-            'content' => trim($data['candidates'][0]['content']['parts'][0]['text'])
+            'content' => $response_text
         );
     }
     
@@ -428,9 +497,10 @@ class AI_Assistant_AI_Service {
      *
      * @param string $prompt The prompt to send
      * @param string $model Optional model to use
+     * @param array $options Optional parameters like temperature, max_tokens
      * @return array Response data
      */
-    private function make_openai_request($prompt, $model = '') {
+    private function make_openai_request($prompt, $model = '', $options = array()) {
         $url = 'https://api.openai.com/v1/chat/completions';
         
         // Use provided model or default
@@ -444,8 +514,8 @@ class AI_Assistant_AI_Service {
                     'content' => $prompt
                 )
             ),
-            'temperature' => 0.3,
-            'max_tokens' => 2000
+            'temperature' => isset($options['temperature']) ? $options['temperature'] : 0.3,
+            'max_tokens' => isset($options['max_tokens']) ? $options['max_tokens'] : 2000
         );
           $args = array(
             'body' => wp_json_encode($body),
@@ -502,9 +572,10 @@ class AI_Assistant_AI_Service {
      *
      * @param string $prompt The prompt to send
      * @param string $model Optional model to use
+     * @param array $options Optional parameters like temperature, max_tokens
      * @return array Response data
      */
-    private function make_anthropic_request($prompt, $model = '') {
+    private function make_anthropic_request($prompt, $model = '', $options = array()) {
         $url = 'https://api.anthropic.com/v1/messages';
         
         // Use provided model or default
@@ -512,7 +583,7 @@ class AI_Assistant_AI_Service {
         
         $body = array(
             'model' => $selected_model,
-            'max_tokens' => 2000,
+            'max_tokens' => isset($options['max_tokens']) ? $options['max_tokens'] : 2000,
             'messages' => array(
                 array(
                     'role' => 'user',
@@ -520,6 +591,11 @@ class AI_Assistant_AI_Service {
                 )
             )
         );
+        
+        // Add temperature if specified (Anthropic API supports it)
+        if (isset($options['temperature'])) {
+            $body['temperature'] = $options['temperature'];
+        }
           $args = array(
             'body' => wp_json_encode($body),
             'headers' => array(
@@ -630,11 +706,12 @@ class AI_Assistant_AI_Service {
                 'model' => $this->get_current_model()
             );
             
-            // Set cache
+            // Cache the result only if successful
             $this->set_cached_result($cache_key, $result);
             
             return $result;
         } else {
+            // Don't cache failed responses
             return $response;
         }
     }
@@ -816,7 +893,7 @@ class AI_Assistant_AI_Service {
         if (!empty($api_keys['openai'])) {
             $configured['openai'] = array(
                 'name' => 'OpenAI',
-                'models' => array('gpt-4', 'gpt-4.1', 'gpt-4o-mini')
+                'models' => array('gpt-4.1', 'gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo')
             );
         }
         
@@ -831,9 +908,9 @@ class AI_Assistant_AI_Service {
             $configured['gemini'] = array(
                 'name' => 'Google Gemini',
                 'models' => array(
-                    'gemini-2.5-pro', 
-                    'gemini-2.5-flash', 
+                    'gemini-2.5-flash',
                     'gemini-2.5-flash-lite',
+                    'gemini-2.5-pro',  
                     'gemini-2.0-flash'
                 )
             );
@@ -903,7 +980,7 @@ class AI_Assistant_AI_Service {
         // Otherwise, use provider defaults
         switch ($provider) {
             case 'openai':
-                return 'gpt-4.1';
+                return 'gpt-4.1'; // Latest flagship model
             case 'anthropic':
                 return 'claude-opus-4-20250514';
             case 'gemini':
@@ -927,24 +1004,69 @@ class AI_Assistant_AI_Service {
         
         $options = array_merge($default_options, $options);
         
-        // Check cache for suggestions (with shorter cache time for real-time feel)
-        $cache_key = $this->get_cache_key($prompt, 'suggestion');
+        // Create appropriate cache key based on usage context
+        $cache_context = 'suggestion';
+        if (strpos($prompt, 'ALL original') !== false || strpos($prompt, 'COMPLETE meaning') !== false) {
+            $cache_context = 'enhancement';
+        } elseif (strpos($prompt, 'translate') !== false) {
+            $cache_context = 'translation';
+        }
+        
+        // Check cache with context-specific key
+        $cache_key = $this->get_cache_key($prompt, $cache_context);
         $cached_result = get_transient($cache_key);
         if ($cached_result !== false) {
             return $cached_result;
         }
         
         try {
-            $response = $this->make_api_request($prompt, '', $options);
+            $model = isset($options['model']) ? $options['model'] : '';
+            $response = $this->make_api_request($prompt, $model, $options);
             
-            // Cache successful results for 5 minutes only for suggestions
-            if ($response && isset($response['content'])) {
+            // Debug: Log the raw API response
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                AIAssistant::log("make_api_request_public raw response: " . wp_json_encode($response), true);
+            }
+            
+            // Check if response indicates an error first
+            if (isset($response['success']) && $response['success'] === false) {
+                // Return the error response directly
+                return $response;
+            }
+            
+            // Cache successful results with context-specific timeout - BUT ONLY if content is not empty
+            if ($response && isset($response['content']) && !empty(trim($response['content']))) {
                 $success_response = array(
                     'success' => true,
                     'content' => $response['content']
                 );
-                set_transient($cache_key, $success_response, 300);
+                
+                // Different cache times for different contexts
+                $cache_timeout = 300; // Default 5 minutes for suggestions
+                if ($cache_context === 'enhancement') {
+                    $cache_timeout = 600; // 10 minutes for enhancements (more expensive)
+                } elseif ($cache_context === 'translation') {
+                    $cache_timeout = 1800; // 30 minutes for translations (most expensive)
+                }
+                
+                // Debug: Log successful caching
+                if (defined('WP_DEBUG') && WP_DEBUG) {
+                    AIAssistant::log("Caching successful response with context '{$cache_context}' for {$cache_timeout}s. Content length: " . strlen($response['content']), true);
+                }
+                
+                set_transient($cache_key, $success_response, $cache_timeout);
                 return $success_response;
+            }
+            
+            // Debug: Log when content is missing or empty
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                if (!isset($response['content'])) {
+                    AIAssistant::log("make_api_request_public: No content field in response - NOT caching", true);
+                } elseif (empty(trim($response['content']))) {
+                    AIAssistant::log("make_api_request_public: Content is empty - NOT caching", true);
+                } else {
+                    AIAssistant::log("make_api_request_public: Content exists but response structure invalid - NOT caching", true);
+                }
             }
             
             return array(
@@ -1175,17 +1297,18 @@ class AI_Assistant_AI_Service {
         foreach ($configured_providers as $provider) {
             switch ($provider) {
                 case 'gemini':
-                    $models['gemini-2.5-pro'] = 'Gemini 2.5 Pro (Most Advanced - Thinking Model)';
                     $models['gemini-2.5-flash'] = 'Gemini 2.5 Flash (Latest & Fast - Best Price-Performance)';
                     $models['gemini-2.5-flash-lite'] = 'Gemini 2.5 Flash-Lite (Most Cost-Efficient)';
+                    $models['gemini-2.5-pro'] = 'Gemini 2.5 Pro (Most Advanced - Thinking Model)';
                     $models['gemini-2.0-flash'] = 'Gemini 2.0 Flash (Next Generation Features)';
                     break;
                     
                 case 'openai':
-                    $models['gpt-4o'] = 'GPT-4o (Latest)';
-                    $models['gpt-4o-mini'] = 'GPT-4o Mini (Fast & Efficient)';
-                    $models['gpt-4.1'] = 'GPT-4.1 (Advanced)';
-                    $models['gpt-3.5-turbo'] = 'GPT-3.5 Turbo (Economical)';
+                    $models['gpt-4.1'] = 'GPT-4.1 (Latest Flagship Model)';
+                    $models['gpt-4o'] = 'GPT-4o (Advanced Reasoning Model)';
+                    $models['gpt-4o-mini'] = 'GPT-4o Mini (Fast Reasoning Model)';
+                    $models['gpt-4-turbo'] = 'GPT-4 Turbo (Legacy - High Performance)';
+                    $models['gpt-4'] = 'GPT-4 (Legacy - Reliable)';
                     break;
                     
                 case 'anthropic':
@@ -1217,9 +1340,9 @@ class AI_Assistant_AI_Service {
             switch ($provider) {
                 case 'openai':
                     // OpenAI supports DALL-E for image generation
-                    $models['gpt-4o'] = 'DALL-E via GPT-4o (Latest)';
-                    $models['gpt-4o-mini'] = 'DALL-E via GPT-4o Mini (Fast)';
-                    $models['gpt-4.1'] = 'DALL-E via GPT-4.1 (Advanced)';
+                    $models['gpt-4.1'] = 'DALL-E via GPT-4.1 (Latest Flagship)';
+                    $models['gpt-4o'] = 'DALL-E via GPT-4o (Advanced Reasoning)';
+                    $models['gpt-4o-mini'] = 'DALL-E via GPT-4o Mini (Fast Reasoning)';
                     break;
                     
                 case 'gemini':
@@ -1339,7 +1462,7 @@ class AI_Assistant_AI_Service {
         // If specific model is provided, use the corresponding provider
         if (!empty($model)) {
             // OpenAI models
-            if (in_array($model, array('gpt-4o', 'gpt-4o-mini', 'gpt-4.1', 'dall-e-3', 'dall-e-2'))) {
+            if (in_array($model, array('gpt-4.1', 'gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4', 'dall-e-3', 'dall-e-2'))) {
                 if (!empty($api_keys['openai'])) {
                     return $this->generate_image_openai($prompt, $size, $api_keys['openai']);
                 } else {
@@ -1558,7 +1681,7 @@ class AI_Assistant_AI_Service {
             
             return array(
                 'success' => false,
-                'error' => sprintf('Gemini 2.0 API error (%d): %s', $response_code, $error_message),
+                'error' => sprintf(__('Gemini 2.0 API error (%d): %s', 'ai-assistant'), $response_code, $error_message),
                 'provider' => 'gemini'
             );
         }

@@ -1,5 +1,5 @@
 /**
- * AI Assistant Editor JavaScript - v1.0.69
+ * AI Assistant Editor JavaScript - v1.0.71
  * 
  * Handles meta box UI, tabs, and AJAX calls for translation, content generation, 
  * and image generation in the WordPress post editor.
@@ -12,7 +12,7 @@
  * - Multi-tab interface with accessibility support
  * 
  * @package AIAssistant
- * @version 1.0.69
+ * @version 1.0.78
  * @since 1.0.0
  */
 (function($) {
@@ -25,10 +25,225 @@
     const AIAssistant = {
         
         /**
+         * Debug utility methods
+         */
+        debug: function(...args) {
+            // Only log in debug mode or development
+            if (window.console && (typeof aiAssistant !== 'undefined' && aiAssistant.debug)) {
+                console.log('AI Assistant:', ...args);
+            }
+        },
+        
+        error: function(...args) {
+            // Always log errors
+            if (window.console) {
+                console.error('AI Assistant:', ...args);
+            }
+        },
+        
+        /**
+         * Retry mechanism for failed AJAX requests
+         */
+        retryAjax: function(action, data, maxRetries = 2, retryDelay = 2000) {
+            let retryCount = 0;
+            
+            const attemptRequest = () => {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: aiAssistant.ajaxUrl,
+                        type: 'POST',
+                        data: {
+                            action: action,
+                            nonce: aiAssistant.nonce,
+                            ...data
+                        },
+                        timeout: 90000,
+                        success: function(response) {
+                            if (response.success) {
+                                resolve(response);
+                            } else {
+                                reject(new Error(response.data || 'Request failed'));
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            reject(new Error(error || 'Network error'));
+                        }
+                    });
+                });
+            };
+            
+            const retry = () => {
+                return attemptRequest().catch(error => {
+                    retryCount++;
+                    this.debug('Retry attempt', retryCount, 'for action', action, 'Error:', error.message);
+                    
+                    if (retryCount < maxRetries && 
+                        (error.message.includes('timeout') || 
+                         error.message.includes('Network') ||
+                         error.message.includes('temporarily unavailable'))) {
+                        
+                        this.showMessage(`Request failed. Retrying in ${retryDelay/1000} seconds... (${retryCount}/${maxRetries})`, 'info');
+                        
+                        return new Promise(resolve => {
+                            setTimeout(() => resolve(retry()), retryDelay);
+                        });
+                    } else {
+                        throw error;
+                    }
+                });
+            };
+            
+            return retry();
+        },
+
+        /**
+         * Validation utilities
+         */
+        validateInput: function(input, type) {
+            if (!input) return false;
+            
+            switch(type) {
+                case 'content':
+                    const trimmed = input.trim();
+                    return trimmed.length > 0 && trimmed.length <= 50000;
+                case 'url':
+                    const urlPattern = /^https?:\/\/.+/i;
+                    return urlPattern.test(input.trim());
+                case 'language':
+                    return input && input.length >= 2 && input.length <= 10;
+                case 'model':
+                    return input && input.trim().length > 0;
+                case 'enhancement_content':
+                    const enhancementTrimmed = input.trim();
+                    return enhancementTrimmed.length >= 10 && enhancementTrimmed.length <= 25000;
+                default:
+                    return input.trim().length > 0;
+            }
+        },
+
+        sanitizeContent: function(content) {
+            if (!content) return '';
+            // Basic sanitization - remove dangerous HTML tags but keep formatting
+            return content
+                .replace(/<script[^>]*>.*?<\/script>/gi, '')
+                .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '')
+                .replace(/<object[^>]*>.*?<\/object>/gi, '')
+                .replace(/<embed[^>]*>.*?<\/embed>/gi, '')
+                .replace(/javascript:/gi, '')
+                .replace(/on\w+\s*=/gi, '') // Remove event handlers
+                .trim();
+        },
+
+        /**
+         * Validate content before processing
+         */
+        validateContentForProcessing: function(content, type) {
+            const sanitized = this.sanitizeContent(content);
+            
+            if (!this.validateInput(sanitized, 'content')) {
+                this.showMessage(aiAssistant.strings.enterContent || 'Please enter valid content.', 'error');
+                return false;
+            }
+            
+            // Check for content enhancement specific validation
+            if (type === 'enhancement' && !this.validateInput(sanitized, 'enhancement_content')) {
+                this.showMessage(aiAssistant.strings.contentLengthError, 'error');
+                return false;
+            }
+            
+            // Check for potentially problematic content patterns
+            if (sanitized.length < 3) {
+                this.showMessage(aiAssistant.strings.contentTooShort, 'error');
+                return false;
+            }
+            
+            return sanitized;
+        },
+
+        /**
+         * Show loading spinner with optional progress text
+         */
+        showLoading: function(button, text) {
+            if (!button || !button.length) return;
+            
+            button.prop('disabled', true);
+            const originalText = button.data('original-text') || button.val() || button.text();
+            if (!button.data('original-text')) {
+                button.data('original-text', originalText);
+            }
+            
+            const loadingText = text || aiAssistant.strings.processing || 'Processing...';
+            const spinner = '<span class="ai-spinner" style="display:inline-block;width:16px;height:16px;border:2px solid #f3f3f3;border-top:2px solid #666;border-radius:50%;animation:spin 1s linear infinite;margin-right:5px;"></span>';
+            
+            if (button.is('input')) {
+                button.val(loadingText);
+            } else {
+                button.html(spinner + loadingText);
+            }
+            
+            // Add CSS animation if not already present
+            if (!$('#ai-spinner-style').length) {
+                $('<style id="ai-spinner-style">@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>').appendTo('head');
+            }
+        },
+
+        /**
+         * Hide loading spinner and restore original text
+         */
+        hideLoading: function(button) {
+            if (!button || !button.length) return;
+            
+            button.prop('disabled', false);
+            const originalText = button.data('original-text');
+            if (originalText) {
+                if (button.is('input')) {
+                    button.val(originalText);
+                } else {
+                    button.text(originalText);
+                }
+            }
+        },
+        /**
          * Cache for storing recent API responses
          * Reduces redundant API calls and improves performance
          */
         cache: new Map(),
+        maxCacheSize: 50, // Limit cache size to prevent memory issues
+        
+        /**
+         * Clear cache when it gets too large
+         */
+        maintainCache: function() {
+            if (this.cache.size > this.maxCacheSize) {
+                // Remove oldest entries (FIFO)
+                const keysToDelete = Array.from(this.cache.keys()).slice(0, this.maxCacheSize / 2);
+                keysToDelete.forEach(key => this.cache.delete(key));
+                this.debug('Cache cleaned, removed', keysToDelete.length, 'entries');
+            }
+        },
+        
+        /**
+         * Enhanced cache key generation
+         */
+        generateCacheKey: function(content, options = {}) {
+            // Create a more specific cache key that includes options
+            const optionsString = JSON.stringify(options);
+            const combinedString = content + '|' + optionsString;
+            
+            // Use a simple hash for better performance than the unicode-safe version for short strings
+            if (combinedString.length < 1000) {
+                let hash = 0;
+                for (let i = 0; i < combinedString.length; i++) {
+                    const char = combinedString.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash; // Convert to 32-bit integer
+                }
+                return Math.abs(hash).toString(36);
+            }
+            
+            // Use the existing unicode-safe hash for longer content
+            return this.unicodeSafeHash(combinedString);
+        },
         
         /**
          * Rate limiting variables
@@ -50,7 +265,7 @@
                 return;
             }
             
-            console.log('AI Assistant: Initializing editor script v1.0.69');
+            console.log('AI Assistant: Initializing editor script v1.0.71');
             this.initializeTabs();
             this.populateLanguageDropdowns();
             this.bindEvents();
@@ -150,7 +365,7 @@
             if (content) {
                 $('#ai-source-content').val(content);
             } else {
-                AIAssistant.showMessage('Editor content is empty.', 'error');
+                AIAssistant.showMessage(aiAssistant.strings.editorEmpty || 'Editor content is empty.', 'error');
             }
         },
 
@@ -292,24 +507,54 @@
             const context = $('#ai-content-context').val();
             const model = $('#ai-content-model-select').val() || 'gemini-2.5-flash';
             
-            if (!context.trim()) {
+            // Check requirements based on content type
+            const enhancementTypes = ['grammar-check', 'readability', 'tone-adjustment', 'seo-optimization', 'engagement'];
+            const isEnhancement = enhancementTypes.includes(contentType);
+            
+            // Get content to improve for enhancement features
+            let contentToImprove = '';
+            if (isEnhancement) {
+                // For enhancement features, content to improve should be in the main textarea
+                const $contentTextarea = $('#ai-generated-content');
+                contentToImprove = $contentTextarea.length ? ($contentTextarea.val() || '').trim() : '';
+                if (!contentToImprove) {
+                    AIAssistant.showMessage('Please paste the content you want to improve in the large text area above.', 'error');
+                    return;
+                }
+            } else if (!context.trim()) {
                 AIAssistant.showMessage('Please enter a topic or context.', 'error');
                 return;
             }
 
             console.log(`AI Assistant: Generating ${contentType} content for: ${context} using model: ${model}`);
+            console.log('AI Assistant: Content to improve length:', contentToImprove ? contentToImprove.length : 0);
+            console.log('AI Assistant: Content to improve preview:', contentToImprove ? contentToImprove.substring(0, 100) + '...' : 'no content');
             
             // Get existing content for context if available
             const existingContent = AIAssistant.getEditorContent();
+
+            // Determine button text for loading state
+            const buttonText = isEnhancement ? (aiAssistant.strings.enhance || 'Enhance') : (aiAssistant.strings.generateContent || 'Generate');
+            const loadingText = isEnhancement ? (aiAssistant.strings.enhancing || 'Enhancing...') : (aiAssistant.strings.generating || 'Generating...');
 
             AIAssistant.performAjax('ai_assistant_generate_content', {
                 content_type: contentType,
                 context: context,
                 model: model,
-                existing_content: existingContent || ''
-            }, $button, 'Generating...', 'Generate', function(response) {
+                existing_content: existingContent || '',
+                content_to_improve: contentToImprove
+            }, $button, loadingText, buttonText, function(response) {
                 console.log('AI Assistant: Content generation successful.', response);
-                $('#ai-generated-content').val(response.data.content);
+                console.log('AI Assistant: Response content length:', response.data && response.data.content ? response.data.content.length : 'undefined/null');
+                console.log('AI Assistant: Response content preview:', response.data && response.data.content ? response.data.content.substring(0, 100) + '...' : 'no content');
+                
+                if (response.data && response.data.content) {
+                    $('#ai-generated-content').val(response.data.content);
+                } else {
+                    console.error('AI Assistant: No content in response:', response);
+                    AIAssistant.showMessage('No content received from AI service.', 'error');
+                    return;
+                }
                 
                 // Store HTML content info for insertion
                 if (response.data.html_cache_key) {
@@ -318,7 +563,10 @@
                 }
                 
                 AIAssistant.toggleGeneratedButtons();
-                AIAssistant.showMessage(`${contentType.charAt(0).toUpperCase() + contentType.slice(1)} generated successfully!`, 'success');
+                const successMessage = isEnhancement ? 
+                    `Content ${contentType.replace('-', ' ')} completed successfully!` : 
+                    `${contentType.charAt(0).toUpperCase() + contentType.slice(1)} generated successfully!`;
+                AIAssistant.showMessage(successMessage, 'success');
             });
         },
 
@@ -402,6 +650,10 @@
         handleContentTypeChange: function(e) {
             const contentType = $(this).val();
             const $keywordBtn = $('.ai-apply-keywords-btn');
+            const $topicLabel = $('label[for="ai-content-context"]');
+            const $topicInput = $('#ai-content-context');
+            const $generateTextarea = $('#ai-generated-content');
+            const $generateBtn = $('.ai-generate-content-btn');
             
             // Show/hide keyword application button based on content type
             if (contentType === 'keywords') {
@@ -409,16 +661,40 @@
             } else {
                 $keywordBtn.hide();
             }
-              // Update button text and placeholder based on type
-            const placeholders = {
-                'suggestions': 'Content suggestions will appear here...',
-                'full-article': 'Full article content will appear here...',
-                'keywords': 'SEO keywords will appear here...',
-                'meta-description': 'Meta descriptions will appear here...',
-                'title-ideas': 'Title ideas will appear here...'
-            };
             
-            $('#ai-generated-content').attr('placeholder', placeholders[contentType] || 'Generated content will appear here...');
+            // Handle enhancement types vs regular generation
+            const enhancementTypes = ['grammar-check', 'readability', 'tone-adjustment', 'seo-optimization', 'engagement'];
+            if (enhancementTypes.includes(contentType)) {
+                // For enhancement: topic is optional, main textarea is for content to improve
+                $topicLabel.text(aiAssistant.strings.topicContentOptional || 'Content Topic (Optional)');
+                $topicInput.attr('placeholder', aiAssistant.strings.enterTopicOptional || 'Optional: Enter the main topic or leave blank...');
+                $generateBtn.text(aiAssistant.strings.enhance || 'Enhance'); // Change button text for enhancement features
+                
+                // Update main textarea placeholder for content to improve
+                const enhancementPlaceholders = {
+                    'grammar-check': aiAssistant.strings.grammarCheckPlaceholder,
+                    'readability': aiAssistant.strings.readabilityPlaceholder,
+                    'tone-adjustment': aiAssistant.strings.toneAdjustmentPlaceholder,
+                    'seo-optimization': aiAssistant.strings.seoOptimizationPlaceholder,
+                    'engagement': aiAssistant.strings.engagementPlaceholder
+                };
+                $generateTextarea.attr('placeholder', enhancementPlaceholders[contentType]);
+            } else {
+                // For regular generation: topic is required, main textarea is for generated output
+                $topicLabel.text(aiAssistant.strings.topicContent || 'Topic/Content');
+                $topicInput.attr('placeholder', aiAssistant.strings.enterTopicGeneration || 'Enter topic for content generation...');
+                $generateBtn.text(aiAssistant.strings.generateContent || 'Generate'); // Keep "Generate" for content generation
+                
+                // Update placeholder for regular content generation output
+                const placeholders = {
+                    'suggestions': aiAssistant.strings.contentSuggestionsPlaceholder || 'Content suggestions will appear here...',
+                    'full-article': aiAssistant.strings.fullArticlePlaceholder || 'Full article content will appear here...',
+                    'keywords': aiAssistant.strings.keywordsPlaceholder || 'SEO keywords will appear here...',
+                    'meta-description': aiAssistant.strings.metaDescriptionPlaceholder || 'Meta descriptions will appear here...',
+                    'title-ideas': aiAssistant.strings.titleIdeasPlaceholder || 'Title ideas will appear here...'
+                };
+                $generateTextarea.attr('placeholder', placeholders[contentType] || (aiAssistant.strings.generatedContentPlaceholder || 'Generated content will appear here...'));
+            }
         },
 
         toggleInsertButton: function() {
@@ -1104,7 +1380,7 @@
                 url: aiAssistant.ajaxUrl,
                 type: 'POST',
                 data: ajaxData,
-                timeout: 60000, // 60 seconds timeout
+                timeout: 90000, // 90 seconds timeout - increased for large content processing
                 success: function(response) {
                     if (response.success) {
                         if (typeof successCallback === 'function') {
@@ -1130,6 +1406,23 @@
                                 errorMessage = 'Translation timed out. The content might be too complex. Please try again or use shorter content.';
                             } else if (errorMessage.toLowerCase().includes('quota') || errorMessage.toLowerCase().includes('limit')) {
                                 errorMessage = 'AI service quota exceeded. Please try again later or contact your administrator.';
+                            } else if (errorMessage.toLowerCase().includes('api')) {
+                                errorMessage = 'AI service temporarily unavailable. Please try again in a few moments.';
+                            }
+                        }
+                        
+                        // For content generation/enhancement failures, provide specific guidance
+                        if (action.includes('generate_content')) {
+                            if (errorMessage.toLowerCase().includes('content too long')) {
+                                errorMessage = 'Content is too long for enhancement. Please try with shorter text or break it into smaller parts.';
+                            } else if (errorMessage.toLowerCase().includes('timeout') || errorMessage.toLowerCase().includes('timed out')) {
+                                errorMessage = 'Content enhancement timed out. The content might be too large or complex. Please try with shorter content.';
+                            } else if (errorMessage.toLowerCase().includes('empty response')) {
+                                errorMessage = 'AI service returned an empty response. Please try again or contact support if this persists.';
+                            } else if (errorMessage.toLowerCase().includes('quota') || errorMessage.toLowerCase().includes('limit')) {
+                                errorMessage = 'AI service quota exceeded. Please try again later or contact your administrator.';
+                            } else if (errorMessage.toLowerCase().includes('rate limit')) {
+                                errorMessage = 'Rate limit reached. Please wait a few minutes before trying again.';
                             } else if (errorMessage.toLowerCase().includes('api')) {
                                 errorMessage = 'AI service temporarily unavailable. Please try again in a few moments.';
                             }
